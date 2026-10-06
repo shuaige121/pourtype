@@ -52,3 +52,23 @@ body.lp main.lp-main { max-width:1040px; padding:24px 20px 40px; }
 .lp-privacy { padding:26px; border-radius:18px; background:var(--card); border:1px solid var(--cardline); } .lp-privacy p { margin:0 0 10px; } .lp-privacy p:last-child { margin:0; }
 .lp-foot { max-width:1040px; margin:0 auto; padding:30px 20px 56px; border-top:1px solid var(--line); color:var(--dim); font-size:14px; } .lp-foot p { margin:4px 0; }
 @media (max-width: 820px) { .lp-hero { grid-template-columns:1fr; gap:28px; } .cards, .lp-control ul, .how { grid-template-columns:1fr; } .lp-main section { margin-top:52px; } .lp-main h2 { font-size:24px; } }
+
+/* ---- guide pages ---- */
+.guide { max-width:760px !important; }
+.guide h1 { font-size:clamp(28px,4vw,38px); line-height:1.2; letter-spacing:-.01em; margin:8px 0 10px; text-wrap:balance; word-break:auto-phrase; }
+.guide h2 { font-size:22px !important; margin:36px 0 10px !important; }
+.guide h2.small { font-size:16px !important; color:var(--dim); }
+.guide p, .guide li { line-height:1.75; }
+.guide ol, .guide ul { padding-left:22px; } .guide li { margin:6px 0; }
+.guide code { font:14px ui-monospace,"SF Mono",Menlo,monospace; padding:1px 6px; border-radius:6px; background:var(--card); border:1px solid var(--cardline); }
+.crumbs { font-size:14px; color:var(--dim); } .crumbs a { text-decoration:none; }
+.meta { font-size:14px; color:var(--dim); margin:0 0 22px; }
+.answer { padding:18px 22px; border-radius:16px; background:var(--card); border:1px solid var(--cardline); border-left:4px solid var(--a2); margin:0 0 26px; }
+.answer p { margin:6px 0 0; }
+.note { font-size:14px; color:var(--dim); }
+.cta { margin:44px 0 10px; padding:24px 26px; border-radius:18px; background:linear-gradient(135deg,rgba(94,155,255,.10),rgba(162,123,255,.10) 55%,rgba(255,111,181,.10)); border:1px solid var(--cardline); }
+.cta h2 { margin-top:0 !important; }
+.sources { font-size:14px; } .sources a { overflow-wrap:anywhere; }
+.guide-list { list-style:none; padding:0; } .guide-list li { padding:16px 0; border-top:1px solid var(--line); } .guide-list p { margin:4px 0 0; color:var(--dim); font-size:15px; }
+html:lang(ja) body { font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", system-ui, sans-serif; }
+html:lang(zh-Hant) body { font-family: -apple-system, "PingFang TC", system-ui, sans-serif; }
