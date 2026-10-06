@@ -41,12 +41,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menu.delegate = self
         status.menu = menu
 
-        let hk = HotKeys.shared
-        let cmdShift = cmdKey | shiftKey, ctrlAltCmd = controlKey | optionKey | cmdKey
-        settings.typeHotkeyOK = hk.register(1, key: 9, modifiers: cmdShift) { [weak self] in self?.typeClipboard(mode: "normal") }
-        settings.grabHotkeyOK = hk.register(2, key: 8, modifiers: cmdShift) { [weak self] in self?.grab() }
-        settings.slowHotkeyOK = hk.register(3, key: 11, modifiers: ctrlAltCmd) { [weak self] in self?.typeClipboard(mode: "slow") }
-        hk.register(4, key: 47, modifiers: ctrlAltCmd) { [weak self] in self?.stopPlain() }
+        registerHotkeys()
+        NotificationCenter.default.addObserver(forName: Shortcuts.changed, object: nil, queue: .main) { [weak self] _ in
+            self?.registerHotkeys()
+        }
+        NotificationCenter.default.addObserver(forName: Shortcuts.recording, object: nil, queue: .main) { _ in
+            HotKeys.shared.unregisterAll()
+        }
 
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleURL(_:_:)),
                                                      forEventClass: AEEventClass(kInternetEventClass),
@@ -54,9 +55,22 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // first run (or a run interrupted by "Quit & Reopen" while granting): the guide
         if !UserDefaults.standard.bool(forKey: "onboarding.done") || !Permissions.accessibility { openWelcome() }
         if !settings.typeHotkeyOK || !settings.grabHotkeyOK {
-            Toast.shared.show(L.t("⌘⇧V 或 ⌘⇧C 被别的 App 占用，可以从菜单栏使用", "⌘⇧V or ⌘⇧C is taken by another app; use the menu bar"),
+            Toast.shared.show(L.t("快捷键被别的 App 占用，可在设置里更换，或从菜单栏使用", "A shortcut is taken by another app: change it in Settings, or use the menu bar"),
                               seconds: 4, warn: true)
         }
+    }
+
+    private func registerHotkeys() {
+        let hk = HotKeys.shared
+        hk.unregisterAll()
+        func reg(_ a: Action, _ f: @escaping () -> Void) -> Bool {
+            let sc = Shortcuts.get(a)
+            return hk.register(a.hotKeyID, key: sc.keyCode, modifiers: sc.modifiers, f)
+        }
+        settings.typeHotkeyOK = reg(.type) { [weak self] in self?.typeClipboard(mode: "normal") }
+        settings.grabHotkeyOK = reg(.grab) { [weak self] in self?.grab() }
+        settings.slowHotkeyOK = reg(.slow) { [weak self] in self?.typeClipboard(mode: "slow") }
+        hk.register(4, key: 47, modifiers: controlKey | optionKey | cmdKey) { [weak self] in self?.stopPlain() }
     }
 
     // MARK: menu
@@ -74,8 +88,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             item(L.t("停止输入", "Stop Typing"), ".", [.control, .option, .command], #selector(stopPlainAction), "stop.circle")
             menu.addItem(.separator())
         }
-        item(L.t("打出剪贴板", "Type Clipboard"), "v", [.command, .shift], #selector(typeAction), "keyboard")
-        item(L.t("截图识字", "Grab Text"), "c", [.command, .shift], #selector(grabAction), "text.viewfinder")
+        let t = Shortcuts.get(.type), g = Shortcuts.get(.grab)
+        item(L.t("打出剪贴板", "Type Clipboard"), t.key.count == 1 ? t.key.lowercased() : "", t.menuModifiers, #selector(typeAction), "keyboard")
+        item(L.t("截图识字", "Grab Text"), g.key.count == 1 ? g.key.lowercased() : "", g.menuModifiers, #selector(grabAction), "text.viewfinder")
         item(L.t("历史记录…", "History…"), "", [], #selector(historyAction), "clock.arrow.circlepath")
         menu.addItem(.separator())
         item(L.t("设置…", "Settings…"), ",", [.command], #selector(settingsAction), "gearshape")

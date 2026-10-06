@@ -99,6 +99,11 @@ final class HotKeys {
         }, 1, &spec, nil, nil)
     }
 
+    func unregisterAll() {
+        for (_, r) in refs { UnregisterEventHotKey(r) }
+        refs = [:]
+    }
+
     /// false when another app already owns that combination.
     @discardableResult
     func register(_ id: UInt32, key: Int, modifiers: Int, _ action: @escaping () -> Void) -> Bool {
@@ -174,4 +179,11 @@ final class Toast {
         p.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .stationary, .ignoresCycle]
         return p
     }
+}
+
+// MARK: - our icon as Finder and the Dock show it (from AppIcon.icon); NSApp.applicationIconImage
+// still comes from the legacy .icns, which macOS 26+ draws on a white plate
+
+enum AppIcon {
+    static let image: NSImage = NSWorkspace.shared.icon(forFile: Bundle.main.bundlePath)
 }

@@ -165,7 +165,7 @@ private struct Welcome: View {
     let next: () -> Void
     var body: some View {
         VStack(spacing: 18) {
-            Image(nsImage: NSApp.applicationIconImage).resizable().frame(width: 96, height: 96)
+            Image(nsImage: AppIcon.image).resizable().frame(width: 96, height: 96)
                 .shadow(color: Color(hex: 0xA27BFF).opacity(0.35), radius: 18, y: 6)
                 .padding(.top, 28)
             Text("Pourtype").font(.system(size: 30, weight: .bold, design: .rounded))
@@ -173,11 +173,11 @@ private struct Welcome: View {
                      "Type your clipboard into fields that block paste,\nand grab any text you can see on screen."))
                 .font(.system(size: 15)).multilineTextAlignment(.center).foregroundStyle(.secondary)
             HStack(spacing: 14) {
-                Feature(keys: "⌘⇧V", title: L.t("打出剪贴板", "Type the clipboard"),
+                Feature(keys: Shortcuts.get(.type).display, title: L.t("打出剪贴板", "Type the clipboard"),
                         text: L.t("先复制，点一下要输入的地方，按下快捷键，它替你一个字一个字地打进去。按 Esc 随时停。",
                                   "Copy, click where it should go, press the shortcut. It types it for you. Esc stops."),
                         symbol: "keyboard")
-                Feature(keys: "⌘⇧C", title: L.t("截图识字", "Grab text"),
+                Feature(keys: Shortcuts.get(.grab).display, title: L.t("截图识字", "Grab text"),
                         text: L.t("拖一个框，框里的中英文自动识别并复制，图片、PDF、视频里的字都行。",
                                   "Drag a box; the text inside is recognised and copied — from images, PDFs, videos."),
                         symbol: "text.viewfinder")
@@ -231,7 +231,7 @@ private struct PermissionStep: View {
                     Text(L.t("在打开的「\(pane)」列表里：", "In the \(pane) list that opens:"))
                         .font(.system(size: 12.5, weight: .medium)).foregroundStyle(.secondary)
                     HStack(spacing: 10) {
-                        Image(nsImage: NSApp.applicationIconImage).resizable().frame(width: 22, height: 22)
+                        Image(nsImage: AppIcon.image).resizable().frame(width: 22, height: 22)
                         Text("Pourtype").font(.system(size: 13))
                         Spacer()
                         Capsule().fill(Color.accentColor).frame(width: 34, height: 20)
@@ -316,7 +316,7 @@ private struct Practice: View {
                     HStack(spacing: 4) {
                         Text(L.t("点一下下面的输入框（它禁止粘贴），然后按", "Click the box below (it blocks paste), then press"))
                             .font(.system(size: 13, weight: .medium))
-                        Keycap(text: "⌘⇧V")
+                        Keycap(text: Shortcuts.get(.type).display)
                     }
                     NoPasteField(text: $model.practice)
                         .frame(height: 64)

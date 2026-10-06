@@ -16,7 +16,7 @@ Everything runs locally. The app makes no network requests and collects no data.
 |---|---|
 | Esc | stop now, give the keyboard and mouse back |
 | hold ↑ / ↓ | faster / slower (3–150 characters per second) |
-| hold ← / → | steadier / more random, human-like rhythm |
+| hold ← / → | steadier / more random rhythm |
 
 The card shows the app and window being typed into, the text streaming past, progress and time left. On other displays a small card points to the one being typed on. Typing stops by itself if another app comes to the front or the displays change. Newlines go in as Shift+Return so chat boxes do not send early; tabs become spaces.
 

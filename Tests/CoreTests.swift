@@ -74,4 +74,16 @@ final class CoreTests: XCTestCase {
         XCTAssertTrue(store.items.isEmpty)
         XCTAssertFalse(FileManager.default.fileExists(atPath: img.path))
     }
+
+    func testShortcuts() {
+        XCTAssertEqual(Action.type.defaultShortcut.display, "⇧⌘V")
+        XCTAssertEqual(Action.slow.defaultShortcut.display, "⌃⌥⌘B")
+        let key = "shortcut.grab"
+        let before = UserDefaults.standard.data(forKey: key)
+        defer { UserDefaults.standard.set(before, forKey: key) }
+        Shortcuts.set(.grab, Shortcut(keyCode: 1, modifiers: 256 | 2048, key: "S"))   // cmdKey | optionKey
+        XCTAssertEqual(Shortcuts.get(.grab).display, "⌥⌘S")
+        Shortcuts.set(.grab, nil)
+        XCTAssertEqual(Shortcuts.get(.grab), Action.grab.defaultShortcut)
+    }
 }

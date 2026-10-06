@@ -11,12 +11,14 @@
 		1D66CA0F251F4BA8AFAF7334 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF32D39C66B0D9409D3686A3 /* Support.swift */; };
 		1F7D8D6550BC2440F0FE22DE /* hud.html in Resources */ = {isa = PBXBuildFile; fileRef = AB928CA2C4A1AA020D9DB28B /* hud.html */; };
 		254DC2BBA13AACDF8ECA3C9A /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD5A26629301D75AA3F0E86 /* HistoryView.swift */; };
+		31312D13E93F8A6D2C0DA024 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 4BA2DC961B3593AB7E818F15 /* AppIcon.icon */; };
 		4454960BA20B59928ED9AE99 /* TypeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327590DCE29A383BABFDDD20 /* TypeSession.swift */; };
 		4F0D9EB9364EB097580C14EC /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB66ACF853DB71C5A3D1B1B4 /* Overlay.swift */; };
 		7C64D953273D693B44632F15 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24C93BB7D0D64803004C678D /* Assets.xcassets */; };
 		80C9CCE82C2D5C81C042A150 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0845FF9AF5F164F9951D9CFE /* App.swift */; };
 		81964DF472B5BA7A36136008 /* Grabber.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68D101A4FDF5170AB647456 /* Grabber.swift */; };
 		8AAEAE5C9AEA00085131874B /* RegionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BFC504B0D3ED8163592406 /* RegionPicker.swift */; };
+		95D7393D042EFD12DD4203D9 /* Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B09CFACE8F070405A32949 /* Shortcuts.swift */; };
 		9B7D5A93187B0E293336FFA2 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324E13A5BA46332B93823AEA /* Target.swift */; };
 		BC75A0B10319A3ED112822AE /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E99A0C954CECA8B1203227 /* OnboardingView.swift */; };
 		C75F2434B5864B5EAB0352FC /* HistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC179E499D26086C222E5FED /* HistoryStore.swift */; };
@@ -40,6 +42,7 @@
 		24C93BB7D0D64803004C678D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		324E13A5BA46332B93823AEA /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
 		327590DCE29A383BABFDDD20 /* TypeSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeSession.swift; sourceTree = "<group>"; };
+		4BA2DC961B3593AB7E818F15 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		73698E7853EEB1D55E15F936 /* PourtypeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PourtypeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A9F2F247C68F2F5869A1EBD /* CoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTests.swift; sourceTree = "<group>"; };
 		7AD5A26629301D75AA3F0E86 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
@@ -48,6 +51,7 @@
 		AB928CA2C4A1AA020D9DB28B /* hud.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = hud.html; sourceTree = "<group>"; };
 		B68D101A4FDF5170AB647456 /* Grabber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grabber.swift; sourceTree = "<group>"; };
 		B8427C665087ACBC142C38DF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B9B09CFACE8F070405A32949 /* Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
 		CB66ACF853DB71C5A3D1B1B4 /* Overlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overlay.swift; sourceTree = "<group>"; };
 		CF32D39C66B0D9409D3686A3 /* Support.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Support.swift; sourceTree = "<group>"; };
 		DC179E499D26086C222E5FED /* HistoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryStore.swift; sourceTree = "<group>"; };
@@ -67,6 +71,7 @@
 		2B02C44F6813FE8A245496A9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4BA2DC961B3593AB7E818F15 /* AppIcon.icon */,
 				24C93BB7D0D64803004C678D /* Assets.xcassets */,
 				AB928CA2C4A1AA020D9DB28B /* hud.html */,
 			);
@@ -111,6 +116,7 @@
 			children = (
 				18E99A0C954CECA8B1203227 /* OnboardingView.swift */,
 				B8427C665087ACBC142C38DF /* SettingsView.swift */,
+				B9B09CFACE8F070405A32949 /* Shortcuts.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -225,6 +231,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31312D13E93F8A6D2C0DA024 /* AppIcon.icon in Resources */,
 				7C64D953273D693B44632F15 /* Assets.xcassets in Resources */,
 				1F7D8D6550BC2440F0FE22DE /* hud.html in Resources */,
 			);
@@ -254,6 +261,7 @@
 				4F0D9EB9364EB097580C14EC /* Overlay.swift in Sources */,
 				8AAEAE5C9AEA00085131874B /* RegionPicker.swift in Sources */,
 				CE1078958351E144D5113BE3 /* SettingsView.swift in Sources */,
+				95D7393D042EFD12DD4203D9 /* Shortcuts.swift in Sources */,
 				1D66CA0F251F4BA8AFAF7334 /* Support.swift in Sources */,
 				9B7D5A93187B0E293336FFA2 /* Target.swift in Sources */,
 				4454960BA20B59928ED9AE99 /* TypeSession.swift in Sources */,
@@ -307,7 +315,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = VKSJ2FY567;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -393,7 +401,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VKSJ2FY567;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -507,7 +515,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = VKSJ2FY567;
 				ENABLE_HARDENED_RUNTIME = YES;

@@ -7,7 +7,7 @@ struct SettingsView: View {
         Form {
             Section {
                 HStack(spacing: 14) {
-                    Image(nsImage: NSApp.applicationIconImage).resizable().frame(width: 52, height: 52)
+                    Image(nsImage: AppIcon.image).resizable().frame(width: 52, height: 52)
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Pourtype").font(.system(size: 17, weight: .semibold))
                         Text(L.t("版本 ", "Version ") + (Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""))
@@ -25,15 +25,15 @@ struct SettingsView: View {
                               granted: model.accessibility,
                               grant: { Permissions.requestAccessibility(); Permissions.open("Privacy_Accessibility") })
                 PermissionRow(title: L.t("屏幕录制", "Screen Recording"),
-                              detail: L.t("只在 ⌘⇧C 截取你框选的区域时使用。", "Only for the area you select with ⌘⇧C."),
+                              detail: L.t("只在 \(Shortcuts.get(.grab).display) 截取你框选的区域时使用。", "Only for the area you select with \(Shortcuts.get(.grab).display)."),
                               granted: model.screenRecording,
                               grant: { Permissions.requestScreenRecording(); Permissions.open("Privacy_ScreenCapture") })
             }
             Section(L.t("快捷键", "Shortcuts")) {
-                ShortcutRow(keys: "⌘⇧V", title: L.t("打出剪贴板", "Type the clipboard"), ok: model.typeHotkeyOK)
-                ShortcutRow(keys: "⌘⇧C", title: L.t("截图识字", "Grab text"), ok: model.grabHotkeyOK)
-                ShortcutRow(keys: "⌃⌥⌘B", title: L.t("慢速打出（更像人手）", "Type slowly, human-paced"), ok: model.slowHotkeyOK)
-                Text(L.t("打字时：↑↓ 调速度，←→ 调节奏，Esc 停止。", "While typing: ↑↓ speed, ←→ rhythm, Esc stops."))
+                ShortcutRecorder(action: .type, ok: model.typeHotkeyOK)
+                ShortcutRecorder(action: .grab, ok: model.grabHotkeyOK)
+                ShortcutRecorder(action: .slow, ok: model.slowHotkeyOK)
+                Text(L.t("点击快捷键可以更换。打字时：↑↓ 调速度，←→ 调节奏，Esc 停止。", "Click a shortcut to change it. While typing: ↑↓ speed, ←→ rhythm, Esc stops."))
                     .font(.caption).foregroundStyle(.secondary)
             }
             Section(L.t("打字", "Typing")) {
@@ -100,22 +100,6 @@ private struct PermissionRow: View {
             }
             Spacer()
             if !granted { Button(L.t("授权…", "Grant…"), action: grant) }
-        }
-    }
-}
-
-private struct ShortcutRow: View {
-    let keys: String, title: String, ok: Bool
-    var body: some View {
-        HStack {
-            Text(title)
-            Spacer()
-            if !ok {
-                Text(L.t("被别的 App 占用", "In use by another app")).font(.caption).foregroundStyle(.orange)
-            }
-            Text(keys).font(.system(.body, design: .rounded)).monospaced()
-                .padding(.horizontal, 6).padding(.vertical, 2)
-                .background(RoundedRectangle(cornerRadius: 5).stroke(.quaternary))
         }
     }
 }
