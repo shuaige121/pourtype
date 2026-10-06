@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Website won&#x27;t let you paste? How to fill it in on a Mac</title>
+<meta name="description" content="When a site or app blocks paste, these Mac methods still work: password-manager autofill, browser settings, scripts that type the text, and Pourtype.">
+<link rel="canonical" href="https://shuaige121.github.io/pourtype/guides/paste-blocked-mac/">
+<link rel="alternate" hreflang="en" href="https://shuaige121.github.io/pourtype/guides/paste-blocked-mac/">
+<link rel="alternate" hreflang="zh-Hans" href="https://shuaige121.github.io/pourtype/zh-hans/guides/paste-blocked-mac/">
+<link rel="alternate" hreflang="zh-Hant" href="https://shuaige121.github.io/pourtype/zh-hant/guides/paste-blocked-mac/">
+<link rel="alternate" hreflang="ja" href="https://shuaige121.github.io/pourtype/ja/guides/paste-blocked-mac/">
+<link rel="alternate" hreflang="x-default" href="https://shuaige121.github.io/pourtype/guides/paste-blocked-mac/">
+<meta name="theme-color" content="#0E0F1A">
+<link rel="icon" type="image/png" href="https://shuaige121.github.io/pourtype/img/icon.png">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Pourtype">
+<meta property="og:title" content="Website won&#x27;t let you paste? How to fill it in on a Mac"><meta property="og:description" content="When a site or app blocks paste, these Mac methods still work: password-manager autofill, browser settings, scripts that type the text, and Pourtype.">
+<meta property="og:url" content="https://shuaige121.github.io/pourtype/guides/paste-blocked-mac/"><meta property="og:image" content="https://shuaige121.github.io/pourtype/img/og.png">
+<meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="https://shuaige121.github.io/pourtype/_style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Website won't let you paste? How to fill it in on a Mac",
+  "description": "When a site or app blocks paste, these Mac methods still work: password-manager autofill, browser settings, scripts that type the text, and Pourtype.",
+  "inLanguage": "en",
+  "author": {
+    "@type": "Person",
+    "name": "Leonard Chow"
+  },
+  "datePublished": "2026-10-06",
+  "dateModified": "2026-10-06",
+  "mainEntityOfPage": "https://shuaige121.github.io/pourtype/guides/paste-blocked-mac/",
+  "publisher": {
+    "@type": "Person",
+    "name": "Leonard Chow"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://shuaige121.github.io/pourtype/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Guides",
+      "item": "https://shuaige121.github.io/pourtype/guides/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Website won't let you paste? How to fill it in on a Mac",
+      "item": "https://shuaige121.github.io/pourtype/guides/paste-blocked-mac/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "en",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is it safe?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Autofill and typing by hand are. Typing tools need Accessibility access, so grant it only to apps you trust. Pourtype runs locally, makes no network requests and collects no data."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it work in password fields?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. In password fields (Secure Input) Pourtype falls back to plain typing without holding input, and Control-Option-Command-Period stops it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it type Chinese or Japanese?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pourtype can type Chinese, Japanese, Korean and emoji. Keyboard Maestro's wiki says its typing action cannot type emoji, and AppleScript with non-English text should be tested with your own text first."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I stop it halfway?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Esc stops Pourtype at once. In a password field, press Control-Option-Command-Period."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Pourtype send my text anywhere?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It runs locally, makes no network requests and collects no data."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it work in remote desktops?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not tested; we make no claim."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="lp guide-page">
+<header class="lp-top"><a class="lp-brand" href="https://shuaige121.github.io/pourtype/"><span class="lp-dot" aria-hidden="true"></span>Pourtype</a>
+<nav class="lp-lang" aria-label="Language"><a href="https://shuaige121.github.io/pourtype/guides/paste-blocked-mac/" hreflang="en" lang="en" aria-current="page">English</a> · <a href="https://shuaige121.github.io/pourtype/zh-hans/guides/paste-blocked-mac/" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> · <a href="https://shuaige121.github.io/pourtype/zh-hant/guides/paste-blocked-mac/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> · <a href="https://shuaige121.github.io/pourtype/ja/guides/paste-blocked-mac/" hreflang="ja" lang="ja">日本語</a></nav></header>
+<main class="lp-main guide">
+<nav class="crumbs"><a href="https://shuaige121.github.io/pourtype/">Home</a> › <a href="https://shuaige121.github.io/pourtype/guides/">Guides</a></nav>
+<h1>Website won't let you paste? How to fill it in on a Mac</h1>
+<p class="meta">By Leonard Chow, developer of Pourtype · Updated <time datetime="2026-10-06">2026-10-06</time> · Pourtype's typing was tested on macOS 27.0.1 with a paste-blocked web form in Safari.<br>I make Pourtype. This page lists every method, including free ones.</p>
+<div class="answer"><strong>Short answer</strong><p>Start free: let your password manager fill the field, or switch off JavaScript for that one site in Chrome. If the field still refuses paste, something has to type the text for you as real keystrokes: an AppleScript, Keyboard Maestro, Hammerspoon, or a menu-bar app such as Pourtype. For a few characters, typing by hand is the simplest option.</p></div>
+<h2>Why some fields block paste</h2>
+<p>A page can run a small script that cancels the paste action in a field. Sites usually do this to force people to retype an email address or a password. For password fields it works against you: pasting is how a password manager's long random passwords get in.</p>
+<p>The current NIST guidance on digital identity says verifiers "SHOULD permit claimants to use the 'paste' function when entering a password to facilitate password manager use when password autofill APIs are unavailable" (section 3.1.1.2 of SP 800-63B-4). The same section says verifiers "SHALL allow the use of password managers and autofill functionality." A site that blocks paste is going against that advice.</p>
+<h2>Check it is the site, not your clipboard</h2>
+<ol><li>Paste into another field on the same page, or into a plain note. If that works, only this field blocks paste.</li><li>Open the same page in a different browser. If paste works there, the cause is a setting or extension in your first browser.</li><li>Check the keys: paste is Command-V. Apple also lists Option-Shift-Command-V as Paste and Match Style, which pastes plain text in the style of the surrounding content. It is a different action and may be handled differently by the page.</li><li>Use the Edit menu in the menu bar and choose Paste. A few pages only listen for the keyboard shortcut.</li></ol>
+<p>If paste works everywhere except one field, the field is blocking it on purpose.</p>
+<h2>Let your password manager fill it</h2>
+<p>For logins this is the best route. Autofill fills the stored login for you, so you do not need to paste. In Safari, Apple says you click in the user name field and choose your user name, or use Touch ID to fill in your stored user name and password. They are stored in the Passwords app.</p>
+<p>Limits: it only helps with stored logins. It does not fill arbitrary text such as a code you copied from an email.</p>
+<h2>Turn off the page's script for that site</h2>
+<p>Because the block is a page script, turning off JavaScript for the page can stop it. In Chrome you can do this per site: open the page, click the site information icon to the left of the address, choose Site settings, and change the JavaScript permission to block.</p>
+<p>In Safari the switch is global, not per site: Apple's guide places it under Safari &gt; Settings &gt; Security (Enable JavaScript). Turning it off affects every site until you turn it back on.</p>
+<p>What can break: Apple warns that "some websites can't work properly if you disable JavaScript." Login forms, buttons and submit actions often depend on it, so this works best for a plain form you only need to fill in and then reload with scripts back on.</p>
+<h2>Have the Mac type the text for you</h2>
+<p>A paste block stops the paste action. Key events sent to the field still arrive like ordinary typing, so tools that type the text for you get it in. Three well-known tools do this:</p>
+<ul><li><strong>AppleScript</strong> (free, built in): the <code>System Events</code> app has a <code>keystroke</code> command. It needs Accessibility access for the app that runs the script, which you grant yourself in System Settings. How it handles non-English text is not covered here: test it with your own text first.</li><li><strong>Keyboard Maestro</strong> (paid macro app): its Insert Text by Typing action. Its own wiki says it "is slow for large amounts of text and can't type exotic characters like Emoji" and suits text "up to say 30 or 40 characters."</li><li><strong>Hammerspoon</strong> (free, Lua): <code>hs.eventtap.keyStrokes(text[, application])</code> "generates and emits keystroke events for the supplied text." You write the Lua yourself.</li></ul>
+<p>For the full comparison of these routes, see <a href="../type-clipboard-as-keystrokes-mac/">Type the clipboard as keystrokes on a Mac</a>.</p>
+<h2>Pourtype: Command-Shift-V types the clipboard</h2>
+<p>Pourtype is a macOS menu-bar app (macOS 14 or later) by Leonard Chow. Copy the text, click the field that blocks paste, and press Command-Shift-V. Pourtype types the clipboard into the focused field as real keystrokes.</p>
+<ul><li>While it types, the screen is frosted except the target window, and the keyboard and mouse are held. Esc stops it at once, and it also stops if another app comes to the front. Keystrokes go only to the target app.</li><li>Hold Up or Down to change speed (3 to 150 characters per second). Hold Left or Right to change the rhythm from steady to random.</li><li>It can type Chinese, Japanese, Korean and emoji.</li><li>In password fields (Secure Input) it falls back to plain typing without holding input; Control-Option-Command-Period stops it.</li><li>Shortcuts can be changed in Settings. It runs locally, makes no network requests and collects no data. It needs the Accessibility and Screen Recording permissions.</li></ul>
+<p>Pourtype costs US$2.99 one-time on the Mac App Store once it is on sale. Pourtype is source-available under PolyForm Noncommercial 1.0.0, not open source. <a href="https://github.com/shuaige121/pourtype">source on GitHub</a>.</p>
+<h2>Which method to use</h2>
+<div class="table-wrap"><table><thead><tr><th>Method</th><th>Works where</th><th>Needs</th><th>Limits</th></tr></thead><tbody><tr><td>Password manager autofill</td><td>Saved logins in Safari and apps that support it</td><td>A saved login</td><td>Not for arbitrary text</td></tr><tr><td>JavaScript off (Chrome, per site)</td><td>Pages that block paste with a script</td><td>A few clicks, then reverse it</td><td>Pages may stop working; Safari's switch is global</td></tr><tr><td>AppleScript keystroke</td><td>Most focused fields</td><td>Accessibility access for the script's app; script writing</td><td>Non-English text: test it first</td></tr><tr><td>Keyboard Maestro</td><td>Most focused fields</td><td>Paid app</td><td>Slow for long text; cannot type emoji (its wiki)</td></tr><tr><td>Hammerspoon</td><td>Most focused fields</td><td>Free app, Lua code</td><td>You write and maintain the script</td></tr><tr><td>Pourtype</td><td>Focused text fields (tested: a paste-blocked web form in Safari); password fields with plain typing</td><td>macOS 14+, Accessibility and Screen Recording permissions</td><td>Not on sale yet (in App Review)</td></tr><tr><td>Typing by hand</td><td>Everywhere</td><td>Time</td><td>Fine for short text only</td></tr></tbody></table></div>
+<h2>When not to do this</h2>
+<p>If a platform forbids pasting as a rule, such as an exam, an assessment or coursework, follow that rule. These methods are for fields that block paste by accident or by habit, like your own passwords and long account numbers.</p>
+<aside class="cta"><h2>Pourtype does this in one shortcut</h2><p>Pourtype is a small Mac menu-bar app made for these problems. Press ⌘⇧V and it types your clipboard into the field as real keystrokes; press ⌘⇧C and drag a box to copy any text you can see. It runs locally and collects no data. US$2.99, one-time, on the Mac App Store.</p><p class="note">Pourtype is in App Review and not on sale yet.</p><p><a class="btn" href="https://shuaige121.github.io/pourtype/">About Pourtype</a></p></aside>
+<section class="faq"><h2>Questions</h2><details><summary>Is it safe?</summary><p>Autofill and typing by hand are. Typing tools need Accessibility access, so grant it only to apps you trust. Pourtype runs locally, makes no network requests and collects no data.</p></details><details><summary>Does it work in password fields?</summary><p>Yes. In password fields (Secure Input) Pourtype falls back to plain typing without holding input, and Control-Option-Command-Period stops it.</p></details><details><summary>Does it type Chinese or Japanese?</summary><p>Pourtype can type Chinese, Japanese, Korean and emoji. Keyboard Maestro's wiki says its typing action cannot type emoji, and AppleScript with non-English text should be tested with your own text first.</p></details><details><summary>Can I stop it halfway?</summary><p>Yes. Esc stops Pourtype at once. In a password field, press Control-Option-Command-Period.</p></details><details><summary>Does Pourtype send my text anywhere?</summary><p>No. It runs locally, makes no network requests and collects no data.</p></details><details><summary>Does it work in remote desktops?</summary><p>Not tested; we make no claim.</p></details></section>
+<h2>Related guides</h2><ul><li><a href="https://shuaige121.github.io/pourtype/guides/type-clipboard-as-keystrokes-mac/">Type the clipboard as keystrokes on a Mac: 4 ways</a></li><li><a href="https://shuaige121.github.io/pourtype/guides/copy-text-from-screen-mac/">Copy text from an image, video or screen on a Mac</a></li></ul>
+<h2 class="small">Sources</h2><ul class="sources"><li><a href="https://pages.nist.gov/800-63-4/sp800-63b.html" rel="nofollow">NIST SP 800-63B-4, section 3.1.1.2 (password verifiers)</a></li><li><a href="https://support.apple.com/102650" rel="nofollow">Mac keyboard shortcuts - Apple Support</a></li><li><a href="https://support.google.com/chrome/answer/114662" rel="nofollow">Google Chrome Help: change site permissions (JavaScript)</a></li><li><a href="https://support.apple.com/guide/safari/security-ibrw1074/mac" rel="nofollow">Change Security settings in Safari on Mac - Apple Support</a></li><li><a href="https://support.apple.com/guide/safari/autofill-user-name-and-password-info-ibrwf71ba236/mac" rel="nofollow">Autofill your user name and password in Safari on Mac - Apple Support</a></li><li><a href="https://wiki.keyboardmaestro.com/action/Insert_Text" rel="nofollow">Keyboard Maestro wiki: Insert Text by Typing</a></li><li><a href="https://www.hammerspoon.org/docs/hs.eventtap.html" rel="nofollow">Hammerspoon: hs.eventtap</a></li><li><a href="https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/AutomatetheUserInterface.html" rel="nofollow">Mac Automation Scripting Guide: Automate the user interface</a></li></ul>
+</main>
+<footer class="lp-foot"><p>By Leonard Chow, developer of Pourtype</p><p><a href="https://shuaige121.github.io/pourtype/">Pourtype</a> · <a href="https://shuaige121.github.io/pourtype/guides/">Guides</a> · <a href="https://github.com/shuaige121/pourtype">GitHub</a> · <a href="https://shuaige121.github.io/pourtype/privacy.html">Privacy</a></p></footer>
+</body></html>

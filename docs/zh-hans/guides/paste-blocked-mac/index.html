@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="zh-Hans"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>网页禁止粘贴怎么办？Mac 上的几种输入方法</title>
+<meta name="description" content="网页不让粘贴时，Mac 上可用的办法：密码管理器、浏览器设置、脚本按键输入，以及 Pourtype（⌘⇧V 逐字输入）。附对比表。">
+<link rel="canonical" href="https://shuaige121.github.io/pourtype/zh-hans/guides/paste-blocked-mac/">
+<link rel="alternate" hreflang="en" href="https://shuaige121.github.io/pourtype/guides/paste-blocked-mac/">
+<link rel="alternate" hreflang="zh-Hans" href="https://shuaige121.github.io/pourtype/zh-hans/guides/paste-blocked-mac/">
+<link rel="alternate" hreflang="zh-Hant" href="https://shuaige121.github.io/pourtype/zh-hant/guides/paste-blocked-mac/">
+<link rel="alternate" hreflang="ja" href="https://shuaige121.github.io/pourtype/ja/guides/paste-blocked-mac/">
+<link rel="alternate" hreflang="x-default" href="https://shuaige121.github.io/pourtype/guides/paste-blocked-mac/">
+<meta name="theme-color" content="#0E0F1A">
+<link rel="icon" type="image/png" href="https://shuaige121.github.io/pourtype/img/icon.png">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Pourtype">
+<meta property="og:title" content="网页禁止粘贴怎么办？Mac 上的几种输入方法"><meta property="og:description" content="网页不让粘贴时，Mac 上可用的办法：密码管理器、浏览器设置、脚本按键输入，以及 Pourtype（⌘⇧V 逐字输入）。附对比表。">
+<meta property="og:url" content="https://shuaige121.github.io/pourtype/zh-hans/guides/paste-blocked-mac/"><meta property="og:image" content="https://shuaige121.github.io/pourtype/img/og.png">
+<meta property="og:locale" content="zh_CN"><meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="https://shuaige121.github.io/pourtype/_style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "网页禁止粘贴怎么办？Mac 上的几种输入方法",
+  "description": "网页不让粘贴时，Mac 上可用的办法：密码管理器、浏览器设置、脚本按键输入，以及 Pourtype（⌘⇧V 逐字输入）。附对比表。",
+  "inLanguage": "zh-Hans",
+  "author": {
+    "@type": "Person",
+    "name": "Leonard Chow"
+  },
+  "datePublished": "2026-10-06",
+  "dateModified": "2026-10-06",
+  "mainEntityOfPage": "https://shuaige121.github.io/pourtype/zh-hans/guides/paste-blocked-mac/",
+  "publisher": {
+    "@type": "Person",
+    "name": "Leonard Chow"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://shuaige121.github.io/pourtype/zh-hans/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "使用指南",
+      "item": "https://shuaige121.github.io/pourtype/zh-hans/guides/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "网页禁止粘贴怎么办？Mac 上的几种输入方法",
+      "item": "https://shuaige121.github.io/pourtype/zh-hans/guides/paste-blocked-mac/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "zh-Hans",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "能输入中文吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "可以。Pourtype 能输入中文、日文、韩文和 emoji。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "怎么中途停止？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "按 Esc 立即停止。如果有别的 App 来到前台，它也会自动停下。在密码框里按 Control-Option-Command-句号停止。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "密码框可以吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "可以。在密码框（Secure Input）里，Pourtype 改为普通输入，不接管键盘和鼠标。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "会上传我的文字吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不会。Pourtype 在本机运行，不发起网络请求，也不收集数据。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "远程桌面能用吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "未测试，不作承诺。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么不直接禁用 JavaScript？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "可以试，但它可能让同一页面的提交按钮、校验等功能一起失效，并且只对靠 JavaScript 拦截粘贴的网页有效。"
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="lp guide-page">
+<header class="lp-top"><a class="lp-brand" href="https://shuaige121.github.io/pourtype/zh-hans/"><span class="lp-dot" aria-hidden="true"></span>Pourtype</a>
+<nav class="lp-lang" aria-label="Language"><a href="https://shuaige121.github.io/pourtype/guides/paste-blocked-mac/" hreflang="en" lang="en">English</a> · <a href="https://shuaige121.github.io/pourtype/zh-hans/guides/paste-blocked-mac/" hreflang="zh-Hans" lang="zh-Hans" aria-current="page">简体中文</a> · <a href="https://shuaige121.github.io/pourtype/zh-hant/guides/paste-blocked-mac/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> · <a href="https://shuaige121.github.io/pourtype/ja/guides/paste-blocked-mac/" hreflang="ja" lang="ja">日本語</a></nav></header>
+<main class="lp-main guide">
+<nav class="crumbs"><a href="https://shuaige121.github.io/pourtype/zh-hans/">首页</a> › <a href="https://shuaige121.github.io/pourtype/zh-hans/guides/">使用指南</a></nav>
+<h1>网页禁止粘贴怎么办？Mac 上的几种输入方法</h1>
+<p class="meta">作者：Leonard Chow（Pourtype 开发者） · 更新于 <time datetime="2026-10-06">2026-10-06</time> · Pourtype 的逐字输入已在 macOS 27.0.1 上测试，测试对象是 Safari 中一个禁止粘贴的网页表单。<br>利益相关：我是 Pourtype 的开发者。本文列出所有方法，包括免费的。</p>
+<div class="answer"><strong>简短回答</strong><p>先试免费办法：确认不是剪贴板的问题，再让密码管理器自动填充；少量文字直接手打最省事。如果一个禁止粘贴的输入框要填很长的内容，可以用 Pourtype：复制好文字，点进输入框，按 ⌘⇧V，它把剪贴板里的内容当作键盘按键逐字输入。</p></div>
+<p>本文列出 Mac 上的各种办法，包括免费的，并写明各自的限制。我是 Pourtype 的作者；它目前在 App Review 中，尚未上架。</p>
+<h2>为什么有的输入框禁止粘贴</h2>
+<p>网页通常用 JavaScript 的事件处理（如 <code>onpaste</code>）拦截粘贴动作。这是网站自己的设置，和你的 Mac 无关。</p>
+<p>不过，美国 NIST 的数字身份指南（SP 800-63-4，第 3.1.1.2 节）写道：验证方「应当（SHOULD）允许用户在输入密码时使用粘贴功能」，以便使用密码管理器。也就是说，对密码框禁止粘贴并不是业界推荐的做法。</p>
+<p>常见的禁止粘贴场景是注册页的「确认邮箱」「确认密码」、后台管理页和一些企业内部表单。</p>
+<h2>先确认不是剪贴板本身的问题</h2>
+<p>先排除自己这边的原因，花不了一分钟：</p>
+<ul><li>按 Command-C 重新拷贝一次，再在备忘录等 App 里按 Command-V，看内容能否粘出来。</li><li>在输入框里试一下菜单栏「编辑」&gt;「粘贴」，Apple 的说明里除了 Command-V，还有「编辑」菜单这条路径。</li><li>换一个浏览器、换一个输入框试试。如果别处能粘贴、只有这一个框不行，那就是网站拦截了粘贴。</li></ul>
+<h2>用密码管理器自动填充</h2>
+<p>如果被拦的是登录框或密码框，优先让密码管理器直接填入，而不是粘贴。NIST 的那句话也提到：粘贴是为了在「自动填充接口不可用」时方便密码管理器。</p>
+<p>能不能自动填充，取决于网站和你用的密码管理器，需要自己试一次。限制很明确：它只适合账号密码这类已保存的内容，不能用来填一段任意的长文字。</p>
+<h2>对该网站禁用 JavaScript，或使用扩展（以及可能的副作用）</h2>
+<p>这是中文技术博客里最常见的办法。腾讯云开发者社区一篇 2019 年的文章写道：多数限制是用 JavaScript 实现的，因此直接禁用 JavaScript 就可以；具体做法是打开浏览器开发者工具，在设置里勾选「Disable JavaScript」，用完要记得恢复。</p>
+<p>Chrome 也可以只对单个网站调整：点击地址栏左侧的网站信息图标，选择「网站设置」，再修改 JavaScript 的权限（来源：Google Chrome 帮助）。</p>
+<p>副作用要想清楚。Chrome 帮助页说明，JavaScript 负责网页上的交互功能，包括网页表单。关掉它以后，提交按钮、校验、下拉菜单等都可能失效，所以有些表单粘贴上去了却没法提交。它也不保证一定有效：如果拦截不是靠 JavaScript 实现的，就没有用。</p>
+<p>至于专门解除粘贴限制的浏览器扩展，我没有逐个核实，不在此推荐具体产品；安装前请自行确认来源和权限。</p>
+<h2>让 Mac 按键输入（Keyboard Maestro、Hammerspoon）</h2>
+<p>另一类办法是让 Mac 自己敲键盘。Keyboard Maestro 有「Insert Text by Typing」动作，Hammerspoon 有 <code>hs.eventtap.keyStrokes</code>（官方说明：为给定文字生成并发出按键事件）。</p>
+<p>它们的限制也要知道。Keyboard Maestro 的官方 Wiki 说，这个动作处理大量文字时很慢，不能输入 emoji 之类的特殊字符，适合不超过三四十个字符的短文字。Hammerspoon 和 Keyboard Maestro 都需要你自己配置动作或写脚本。</p>
+<p>用脚本输入中文等非英文文字的表现各不相同，请先用自己的文字测试一下再用。</p>
+<h2>Pourtype：⌘⇧V 把剪贴板逐字输入当前输入框</h2>
+<p>Pourtype 是 macOS 14 及以上的菜单栏 App，作者 Leonard Chow。复制好文字，点进目标输入框，按 ⌘⇧V，它会把剪贴板内容作为真实的按键，一个字一个字输入进去，所以对禁止粘贴的输入框也可用。</p>
+<ul><li>输入时，屏幕会被磨砂遮罩盖住，只露出目标窗口，键盘和鼠标暂时被接管；按 Esc 立即停止。</li><li>如果有别的 App 跳到前台，它会自动停下；按键只发给目标 App。</li><li>输入过程中按上下方向键调速度（每秒 3 到 150 个字符），按左右方向键调节奏，从匀速到随机。</li><li>可以输入中文、日文、韩文和 emoji。</li><li>在密码框（Secure Input）里，它改为普通输入，不接管键盘鼠标；按 Control-Option-Command-句号 可停止。</li><li>快捷键可在设置里修改。程序在本机运行，不发起网络请求，不收集数据。需要「辅助功能」和「屏幕录制」权限。</li></ul>
+<p>价格是 Mac App Store 一次性买断 2.99 美元，但目前仍在 App Review 中，尚未上架，所以现在还不能购买。源码在 <a href="https://github.com/shuaige121/pourtype">GitHub</a>，采用 PolyForm Noncommercial 1.0.0 协议：源码可见（source-available），不是开源。</p>
+<h2>各方法对比</h2>
+<div class="table-wrap"><table><thead><tr><th>方法</th><th>适用场合</th><th>需要</th><th>限制</th></tr></thead><tbody><tr><td>手动输入</td><td>几个到几十个字</td><td>无</td><td>文字长时费时，容易出错</td></tr><tr><td>密码管理器自动填充</td><td>账号、密码框</td><td>已保存的登录信息</td><td>不能填任意文字；是否生效取决于网站</td></tr><tr><td>禁用 JavaScript（开发者工具或网站设置）</td><td>靠 JavaScript 拦截的网页</td><td>浏览器，几步设置</td><td>可能让表单其他功能失效，不保证有效，用完要恢复</td></tr><tr><td>Keyboard Maestro / Hammerspoon</td><td>较短的英文文字</td><td>安装软件，自己配置或写脚本</td><td>官方说明长文字慢、不能输入 emoji；其他语言先自己测试</td></tr><tr><td>Pourtype ⌘⇧V</td><td>禁止粘贴的输入框，长文字、中日韩文</td><td>macOS 14+，辅助功能和屏幕录制权限</td><td>目前尚未上架（App Review 中）；输入期间键鼠被接管</td></tr></tbody></table></div>
+<h2>哪些场合不应该这样做</h2>
+<p>如果平台明确规定不能粘贴，请遵守规定。考试、测评、作业和在线课程平台往往出于公平考虑禁止粘贴，这类场合不要用本文的任何方法绕过。</p>
+<p>本文适合的是正常的表单场景：自己的内容、自己有权填写的页面，只是网站的粘贴限制妨碍了操作。</p>
+<aside class="cta"><h2>用 Pourtype，一个快捷键搞定</h2><p>Pourtype 是专为这类问题做的 Mac 菜单栏小工具：按 ⌘⇧V，它把剪贴板里的文字当作真实按键打进输入框；按 ⌘⇧C 拖一个框，屏幕上看得见的文字就能复制。全部在本机完成，不收集任何数据。Mac App Store 一次买断 US$2.99。</p><p class="note">Pourtype 正在接受 App Store 审核，尚未开卖。</p><p><a class="btn" href="https://shuaige121.github.io/pourtype/zh-hans/">了解 Pourtype</a></p></aside>
+<section class="faq"><h2>常见问题</h2><details><summary>能输入中文吗？</summary><p>可以。Pourtype 能输入中文、日文、韩文和 emoji。</p></details><details><summary>怎么中途停止？</summary><p>按 Esc 立即停止。如果有别的 App 来到前台，它也会自动停下。在密码框里按 Control-Option-Command-句号停止。</p></details><details><summary>密码框可以吗？</summary><p>可以。在密码框（Secure Input）里，Pourtype 改为普通输入，不接管键盘和鼠标。</p></details><details><summary>会上传我的文字吗？</summary><p>不会。Pourtype 在本机运行，不发起网络请求，也不收集数据。</p></details><details><summary>远程桌面能用吗？</summary><p>未测试，不作承诺。</p></details><details><summary>为什么不直接禁用 JavaScript？</summary><p>可以试，但它可能让同一页面的提交按钮、校验等功能一起失效，并且只对靠 JavaScript 拦截粘贴的网页有效。</p></details></section>
+<h2>相关指南</h2><ul><li><a href="https://shuaige121.github.io/pourtype/zh-hans/guides/copy-text-from-screen-mac/">Mac 截图识别文字：图片、视频、PDF 文字提取</a></li></ul>
+<h2 class="small">参考来源</h2><ul class="sources"><li><a href="https://support.apple.com/zh-cn/guide/mac-help-cn/mchl5252f3de/mac" rel="nofollow">Apple：在 Mac 上拷贝和粘贴</a></li><li><a href="https://pages.nist.gov/800-63-4/sp800-63b.html" rel="nofollow">NIST SP 800-63B-4，3.1.1.2 节</a></li><li><a href="https://cloud.tencent.com/developer/article/1456091" rel="nofollow">腾讯云开发者社区：网页复制粘贴限制的实现与破解（2019-07-03）</a></li><li><a href="https://support.google.com/chrome/answer/114662" rel="nofollow">Google Chrome 帮助：对特定网站允许或阻止 JavaScript</a></li><li><a href="https://wiki.keyboardmaestro.com/action/Insert_Text" rel="nofollow">Keyboard Maestro Wiki：Insert Text by Typing</a></li><li><a href="https://www.hammerspoon.org/docs/hs.eventtap.html" rel="nofollow">Hammerspoon：hs.eventtap</a></li></ul>
+</main>
+<footer class="lp-foot"><p>作者：Leonard Chow（Pourtype 开发者）</p><p><a href="https://shuaige121.github.io/pourtype/zh-hans/">Pourtype</a> · <a href="https://shuaige121.github.io/pourtype/zh-hans/guides/">使用指南</a> · <a href="https://github.com/shuaige121/pourtype">GitHub</a> · <a href="https://shuaige121.github.io/pourtype/privacy.html">Privacy</a></p></footer>
+</body></html>

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>網頁禁止貼上怎麼辦？Mac 輸入方法整理</title>
+<meta name="description" content="網頁或 App 不讓貼上時，Mac 可用的方法：密碼管理自動填入、瀏覽器設定、用按鍵輸入的腳本，以及 Pourtype（⌘⇧V 逐字輸入剪貼簿內容）。">
+<link rel="canonical" href="https://shuaige121.github.io/pourtype/zh-hant/guides/paste-blocked-mac/">
+<link rel="alternate" hreflang="en" href="https://shuaige121.github.io/pourtype/guides/paste-blocked-mac/">
+<link rel="alternate" hreflang="zh-Hans" href="https://shuaige121.github.io/pourtype/zh-hans/guides/paste-blocked-mac/">
+<link rel="alternate" hreflang="zh-Hant" href="https://shuaige121.github.io/pourtype/zh-hant/guides/paste-blocked-mac/">
+<link rel="alternate" hreflang="ja" href="https://shuaige121.github.io/pourtype/ja/guides/paste-blocked-mac/">
+<link rel="alternate" hreflang="x-default" href="https://shuaige121.github.io/pourtype/guides/paste-blocked-mac/">
+<meta name="theme-color" content="#0E0F1A">
+<link rel="icon" type="image/png" href="https://shuaige121.github.io/pourtype/img/icon.png">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Pourtype">
+<meta property="og:title" content="網頁禁止貼上怎麼辦？Mac 輸入方法整理"><meta property="og:description" content="網頁或 App 不讓貼上時，Mac 可用的方法：密碼管理自動填入、瀏覽器設定、用按鍵輸入的腳本，以及 Pourtype（⌘⇧V 逐字輸入剪貼簿內容）。">
+<meta property="og:url" content="https://shuaige121.github.io/pourtype/zh-hant/guides/paste-blocked-mac/"><meta property="og:image" content="https://shuaige121.github.io/pourtype/img/og.png">
+<meta property="og:locale" content="zh_TW"><meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="https://shuaige121.github.io/pourtype/_style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "網頁禁止貼上怎麼辦？Mac 輸入方法整理",
+  "description": "網頁或 App 不讓貼上時，Mac 可用的方法：密碼管理自動填入、瀏覽器設定、用按鍵輸入的腳本，以及 Pourtype（⌘⇧V 逐字輸入剪貼簿內容）。",
+  "inLanguage": "zh-Hant",
+  "author": {
+    "@type": "Person",
+    "name": "Leonard Chow"
+  },
+  "datePublished": "2026-10-06",
+  "dateModified": "2026-10-06",
+  "mainEntityOfPage": "https://shuaige121.github.io/pourtype/zh-hant/guides/paste-blocked-mac/",
+  "publisher": {
+    "@type": "Person",
+    "name": "Leonard Chow"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首頁",
+      "item": "https://shuaige121.github.io/pourtype/zh-hant/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "使用指南",
+      "item": "https://shuaige121.github.io/pourtype/zh-hant/guides/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "網頁禁止貼上怎麼辦？Mac 輸入方法整理",
+      "item": "https://shuaige121.github.io/pourtype/zh-hant/guides/paste-blocked-mac/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "zh-Hant",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "「禁止複製」和「禁止貼上」有什麼不同？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "禁止複製是來源的文字取不出來，禁止貼上是目的欄位不接受貼上。前者要設法擷取畫面上的文字，後者要設法把已有的文字送進欄位，兩者的做法不同。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Pourtype 能輸入中文嗎？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "可以輸入中文、日文、韓文與表情符號。不過在中文或日文輸入法啟用時輸入的結果，我們還沒有測試，請先用自己的文字試一次。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "輸入到一半怎麼停止？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "按 Esc 會立刻停止；如果有別的 App 跳到最前面，也會自動停止。在密碼欄位（Secure Input）則按 Control-Option-Command-句號停止。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "密碼欄位可以用嗎？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "可以，但會改成單純輸入，不鎖住鍵盤和滑鼠，所以輸入時請不要去按其他鍵。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Pourtype 會上傳我的文字嗎？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不會。它在 Mac 上本機執行，不發出網路請求，也不蒐集資料。App 內的輸入與擷取記錄只存在本機，可以搜尋，也可以清除。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "遠端桌面可以用嗎？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "沒有測試過，因此不作任何承諾。"
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="lp guide-page">
+<header class="lp-top"><a class="lp-brand" href="https://shuaige121.github.io/pourtype/zh-hant/"><span class="lp-dot" aria-hidden="true"></span>Pourtype</a>
+<nav class="lp-lang" aria-label="Language"><a href="https://shuaige121.github.io/pourtype/guides/paste-blocked-mac/" hreflang="en" lang="en">English</a> · <a href="https://shuaige121.github.io/pourtype/zh-hans/guides/paste-blocked-mac/" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> · <a href="https://shuaige121.github.io/pourtype/zh-hant/guides/paste-blocked-mac/" hreflang="zh-Hant" lang="zh-Hant" aria-current="page">繁體中文</a> · <a href="https://shuaige121.github.io/pourtype/ja/guides/paste-blocked-mac/" hreflang="ja" lang="ja">日本語</a></nav></header>
+<main class="lp-main guide">
+<nav class="crumbs"><a href="https://shuaige121.github.io/pourtype/zh-hant/">首頁</a> › <a href="https://shuaige121.github.io/pourtype/zh-hant/guides/">使用指南</a></nav>
+<h1>網頁禁止貼上怎麼辦？Mac 輸入方法整理</h1>
+<p class="meta">作者：Leonard Chow（Pourtype 開發者） · 更新於 <time datetime="2026-10-06">2026-10-06</time> · Pourtype 的輸入功能已在 macOS 27.0.1 上，以 Safari 中禁止貼上的網頁表單測試過。<br>利益揭露：我是 Pourtype 的開發者。本文列出所有方法，包括免費的。</p>
+<div class="answer"><strong>簡短回答</strong><p>先分清楚是「欄位不讓貼上」還是「來源不讓複製」：前者可以讓密碼管理工具自動填入，或改用按鍵把文字一個字一個字打進欄位；後者要先把畫面上的文字擷取出來。短文字最簡單的辦法是自己打；文字很長、或含中文與表情符號時，再考慮用腳本或 Pourtype 的 ⌘⇧V 逐字輸入。</p></div>
+<p>本頁整理 Mac 上常見的做法，先講內建與免費的，每種都附上限制，最後才是 Pourtype，並附比較表。</p>
+<h2>「禁止複製」和「禁止貼上」不一樣</h2>
+<p>搜尋「禁止貼上」，結果常常把兩件事混在一起。它們的症狀看起來都是「文字進不去」，但卡住的地方不同，解法也不同。</p>
+<div class="table-wrap"><table><thead><tr><th></th><th>禁止複製</th><th>禁止貼上</th></tr></thead><tbody><tr><td>卡在哪裡</td><td>來源：網頁、圖片或 PDF 上的文字選不起來，或拷貝不出來</td><td>目的地：欄位按 ⌘V 沒有反應，或貼上後被清掉</td></tr><tr><td>你手上有沒有文字</td><td>沒有，文字還在畫面上</td><td>有，已經在剪貼簿裡</td></tr><tr><td>要解決的事</td><td>把畫面上的文字取出來</td><td>把剪貼簿的文字送進欄位</td></tr><tr><td>可用方法</td><td>截圖後用原況文字辨識，或框選螢幕文字辨識（見<a href="../copy-text-from-screen-mac/">另一篇指南</a>）</td><td>密碼管理自動填入、停用 JavaScript、按鍵輸入（本頁）</td></tr></tbody></table></div>
+<p>兩個問題可能同時出現：先用辨識把文字取出來，再用本頁的方法把它送進禁止貼上的欄位。</p>
+<h2>先確認不是剪貼簿的問題</h2>
+<p>在判斷是網站擋住之前，先排除自己的環境：</p>
+<ol><li>把同一段文字貼到「備忘錄」或「文字編輯」，確認剪貼簿裡真的有東西。</li><li>在同一個網站換一個欄位貼貼看；如果只有特定欄位不行，通常就是那個欄位被設定成不接受貼上。</li><li>換另一個瀏覽器試一次，排除延伸功能或瀏覽器本身的問題。</li></ol>
+<p>如果其他地方都能貼，只有那個欄位不行，再看下面的方法。</p>
+<h2>用密碼管理自動填入</h2>
+<p>如果被擋的是登入或密碼欄位，最簡單的是讓密碼管理工具（例如 Mac 內建的「密碼」App，或你自己使用的第三方工具）直接填入，不經過貼上。這條路不需要任何腳本，也不會動到網站。</p>
+<p>限制：只適用於已存好的帳號密碼，無法填入一般文字，例如「確認電子郵件」欄位。本頁沒有查到 Apple 繁體中文頁面對「密碼」App 自動填入的逐項說明，因此不在此列出操作步驟，請以你使用的工具自己的說明為準。</p>
+<h2>對該網站停用 JavaScript 或使用延伸功能</h2>
+<p>有些網站是靠頁面上的程式（JavaScript）擋住貼上，所以關掉 JavaScript 有時就能貼。副作用要先知道：Apple 的 Safari 說明寫明，JavaScript「有些網站會使用它來製作按鈕、表單和其他內容」，停用後「會導致部分網站無法正常運作」，表單本身也可能送不出去。</p>
+<ul><li><strong>Safari</strong>：選單列的 Safari &gt;「設定」&gt;「安全性」，取消勾選「啟用 JavaScript」。這是整個 Safari 的總開關，不是單一網站，用完請記得改回來。</li><li><strong>Chrome</strong>：打開要變更的網站，按網址左側的「查看網站資訊」圖示，選「網站設定」，再變更該網站的權限；Google 的說明將 JavaScript 列為可變更的網站權限之一。</li><li><strong>延伸功能</strong>：另有專門解除貼上限制的瀏覽器延伸功能。本頁沒有逐一查證，不推薦特定項目；安裝前請先檢查權限與評價。</li></ul>
+<p class="note">這種做法的結果取決於網站怎麼寫，無法保證有效；也可能讓頁面其他功能一起失效。</p>
+<h2>讓 Mac 用按鍵輸入（AppleScript、Keyboard Maestro）</h2>
+<p>貼上被擋，不代表打字被擋。可以請 Mac 把文字當成鍵盤輸入一個字一個字送出：</p>
+<ul><li><strong>AppleScript</strong>：透過「System Events」的 keystroke 指令輸入文字，免費、內建。非英文文字的表現本頁沒有測試過，請先拿你自己的文字小量試試。</li><li><strong>Keyboard Maestro</strong>（付費的巨集軟體）的「Insert Text by Typing」：官方說明寫它「對大量文字很慢，也無法輸入像 Emoji 這樣的特殊字元」，適合大約 30、40 個字元以內的純文字。</li><li><strong>Hammerspoon</strong>（免費，使用 Lua 設定）的 <code>hs.eventtap.keyStrokes</code>：官方文件的說明是「為指定的文字產生並送出按鍵事件」，可以選擇送給特定的 App。</li></ul>
+<p>共同的限制：需要自己寫或設定腳本；這些工具要在「系統設定」中取得控制電腦的權限；而且輸入進行時，如果你切到別的視窗，文字可能跑到錯的地方。</p>
+<h2>Pourtype：⌘⇧V 把剪貼簿逐字輸入</h2>
+<p>Pourtype 是一個 macOS 選單列 App（需要 macOS 14 或以上，作者 Leonard Chow）。複製好文字後，在被擋的欄位按 <strong>⌘⇧V</strong>，它會把剪貼簿內容當成真的按鍵，輸入目前選取的欄位。</p>
+<ul><li>輸入時，螢幕除了目標視窗之外會呈霜面效果，鍵盤和滑鼠暫時被鎖住；按 Esc 會立刻停止。</li><li>如果有別的 App 跳到最前面就會停下，按鍵只會送給目標 App。</li><li>按上／下調整速度（每秒 3 到 150 個字元），按左／右調整節奏，從平穩到隨機。</li><li>可以輸入中文、日文、韓文與表情符號。</li><li>遇到密碼欄位（Secure Input）時，會改成單純輸入、不鎖住鍵盤和滑鼠，這時要停止請按 Control-Option-Command-句號。</li><li>快捷鍵可在 App 的設定中變更。App 介面有英文、簡體中文、繁體中文與日文。</li></ul>
+<p>它在 Mac 上本機執行，不發出任何網路請求，也不蒐集資料；需要「輔助使用」與「螢幕錄製」權限。原始碼放在 <a href="https://github.com/shuaige121/pourtype">GitHub</a>，授權為 PolyForm Noncommercial 1.0.0，屬於「可取得原始碼」但不是開放原始碼。</p>
+<p>價格與狀態：預定在 Mac App Store 以 US$2.99 買斷，目前還在 App 審核中，<strong>尚未開賣</strong>。</p>
+<p>沒有測試過的情況，不作承諾：使用中文或日文輸入法並處於啟用狀態時輸入、遠端桌面、虛擬機器或終端機主控台。請先在不重要的欄位用你自己的文字測試。</p>
+<h2>方法比較</h2>
+<div class="table-wrap"><table><thead><tr><th>方法</th><th>適用情況</th><th>需要</th><th>限制</th></tr></thead><tbody><tr><td>自己打字</td><td>短文字</td><td>無</td><td>長文字費時、容易打錯</td></tr><tr><td>密碼管理自動填入</td><td>登入帳號與密碼欄位</td><td>已存好的密碼</td><td>不能填一般文字</td></tr><tr><td>停用 JavaScript</td><td>靠頁面程式擋貼上的網站</td><td>Safari 或 Chrome 設定</td><td>可能讓頁面或表單壞掉；不保證有效</td></tr><tr><td>AppleScript</td><td>短的英文文字</td><td>自己寫腳本、控制電腦權限</td><td>非英文文字請先測試</td></tr><tr><td>Keyboard Maestro</td><td>約 30、40 字元內的純文字</td><td>付費軟體</td><td>官方說明：大量文字很慢、無法輸入 Emoji</td></tr><tr><td>Hammerspoon</td><td>會寫 Lua 的使用者</td><td>免費，需自己設定</td><td>需要寫設定</td></tr><tr><td>Pourtype ⌘⇧V</td><td>較長的文字，含中日韓文與表情符號</td><td>macOS 14 以上、輔助使用與螢幕錄製權限；尚未開賣</td><td>未測試輸入法啟用時、遠端桌面等情況</td></tr></tbody></table></div>
+<h2>不該這樣做的場合</h2>
+<p>有些欄位禁止貼上是平台刻意的規定。如果是考試、作業、測驗或線上課程的頁面，請遵守該平台的規則，不要用這些方法繞過去。銀行、公司內部系統等也一樣：先確認規定允許，再動手。</p>
+<aside class="cta"><h2>用 Pourtype，一個快速鍵完成</h2><p>Pourtype 是專為這類問題做的 Mac 選單列小工具：按 ⌘⇧V，它會把剪貼簿裡的文字當作真實按鍵輸入到欄位中；按 ⌘⇧C 拖曳一個框，螢幕上看得到的文字就能複製。全部在本機完成，不收集任何資料。Mac App Store 一次買斷 US$2.99。</p><p class="note">Pourtype 正在接受 App Store 審查，尚未開賣。</p><p><a class="btn" href="https://shuaige121.github.io/pourtype/zh-hant/">認識 Pourtype</a></p></aside>
+<section class="faq"><h2>常見問題</h2><details><summary>「禁止複製」和「禁止貼上」有什麼不同？</summary><p>禁止複製是來源的文字取不出來，禁止貼上是目的欄位不接受貼上。前者要設法擷取畫面上的文字，後者要設法把已有的文字送進欄位，兩者的做法不同。</p></details><details><summary>Pourtype 能輸入中文嗎？</summary><p>可以輸入中文、日文、韓文與表情符號。不過在中文或日文輸入法啟用時輸入的結果，我們還沒有測試，請先用自己的文字試一次。</p></details><details><summary>輸入到一半怎麼停止？</summary><p>按 Esc 會立刻停止；如果有別的 App 跳到最前面，也會自動停止。在密碼欄位（Secure Input）則按 Control-Option-Command-句號停止。</p></details><details><summary>密碼欄位可以用嗎？</summary><p>可以，但會改成單純輸入，不鎖住鍵盤和滑鼠，所以輸入時請不要去按其他鍵。</p></details><details><summary>Pourtype 會上傳我的文字嗎？</summary><p>不會。它在 Mac 上本機執行，不發出網路請求，也不蒐集資料。App 內的輸入與擷取記錄只存在本機，可以搜尋，也可以清除。</p></details><details><summary>遠端桌面可以用嗎？</summary><p>沒有測試過，因此不作任何承諾。</p></details></section>
+<h2>相關指南</h2><ul><li><a href="https://shuaige121.github.io/pourtype/zh-hant/guides/copy-text-from-screen-mac/">Mac 圖片轉文字：截圖、影片、PDF 的文字擷取</a></li></ul>
+<h2 class="small">參考來源</h2><ul class="sources"><li><a href="https://support.apple.com/zh-tw/guide/safari/ibrw1074/mac" rel="nofollow">在 Mac 上的 Safari 中更改「安全性」設定 - Apple 支援 (台灣)</a></li><li><a href="https://support.google.com/chrome/answer/114662?hl=zh-Hant" rel="nofollow">針對特定網站變更 JavaScript 設定 - Google Chrome 說明</a></li><li><a href="https://wiki.keyboardmaestro.com/action/Insert_Text" rel="nofollow">Keyboard Maestro Wiki: Insert Text</a></li><li><a href="https://www.hammerspoon.org/docs/hs.eventtap.html" rel="nofollow">Hammerspoon: hs.eventtap</a></li></ul>
+</main>
+<footer class="lp-foot"><p>作者：Leonard Chow（Pourtype 開發者）</p><p><a href="https://shuaige121.github.io/pourtype/zh-hant/">Pourtype</a> · <a href="https://shuaige121.github.io/pourtype/zh-hant/guides/">使用指南</a> · <a href="https://github.com/shuaige121/pourtype">GitHub</a> · <a href="https://shuaige121.github.io/pourtype/privacy.html">Privacy</a></p></footer>
+</body></html>

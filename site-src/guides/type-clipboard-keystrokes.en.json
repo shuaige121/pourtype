@@ -1,0 +1,203 @@
+{
+ "group": "type-clipboard-keystrokes",
+ "lang": "en",
+ "slug": "type-clipboard-as-keystrokes-mac",
+ "title": "Type the clipboard as keystrokes on a Mac: 4 ways",
+ "description": "Paste as keystrokes on macOS: an AppleScript one-liner, Keyboard Maestro, Hammerspoon, or a menu-bar app. What each one can type, and where each stops.",
+ "h1": "Type the clipboard as keystrokes on a Mac: 4 ways",
+ "updated": "2026-10-06",
+ "tested": "Pourtype's typing was tested on macOS 27.0.1 with a paste-blocked web form in Safari.",
+ "answer": "The free routes are an AppleScript that sends `keystroke` through System Events, or a short Hammerspoon script using `hs.eventtap.keyStrokes`. Keyboard Maestro does it with a paid macro, and menu-bar apps such as Pourtype do it with a shortcut. All of them need Accessibility access, and they differ mainly in non-English text, emoji and speed.",
+ "sections": [
+  {
+   "h2": "What \"typing the clipboard\" means",
+   "body": [
+    {
+     "p": "Normal paste hands the clipboard contents straight to a field. Some fields refuse that. Typing the clipboard instead sends a series of key events, one per character, as if the keys were pressed. The field sees typing, not a paste."
+    },
+    {
+     "p": "Any tool that does this has to be allowed to control your Mac. Apple's automation guide says that by default accessibility control of apps is disabled, and that the user must enable it manually for each app, including script apps. See also [Website won't let you paste?](../paste-blocked-mac/)."
+    }
+   ]
+  },
+  {
+   "h2": "AppleScript (free, built in)",
+   "body": [
+    {
+     "p": "The `System Events` app has a `keystroke` command, which you can call from Script Editor, a Shortcuts action or Terminal's `osascript`. You grant Accessibility access to whichever app runs it."
+    },
+    {
+     "p": "Limits: you write the script and feed it the text. How `keystroke` handles non-English text is not covered here: test it with your own text first."
+    }
+   ]
+  },
+  {
+   "h2": "Keyboard Maestro (paid macro app)",
+   "body": [
+    {
+     "p": "Keyboard Maestro has an Insert Text by Typing action. Its own wiki says it \"is slow for large amounts of text and can't type exotic characters like Emoji\" and that it fits text \"up to say 30 or 40 characters.\" It is a good fit for short, plain snippets you type often."
+    }
+   ]
+  },
+  {
+   "h2": "Hammerspoon (free, Lua)",
+   "body": [
+    {
+     "p": "Hammerspoon exposes `hs.eventtap.keyStrokes(text[, application])`, which \"generates and emits keystroke events for the supplied text.\" Its docs point to `hs.eventtap.keyStroke()` for single keystrokes with modifiers such as Command-V. You bind it to a hotkey in your Lua config. The page does not state limits for non-ASCII text, so test it yourself."
+    }
+   ]
+  },
+  {
+   "h2": "Menu-bar apps",
+   "body": [
+    {
+     "p": "Pourtype: a macOS 14+ menu-bar app by Leonard Chow. Command-Shift-V types the clipboard into the focused field as real keystrokes. The screen is frosted except the target window, the keyboard and mouse are held, Esc stops it at once, and it stops if another app comes to the front. Keystrokes go only to the target app. Hold Up/Down for speed (3 to 150 characters per second) and Left/Right for rhythm from steady to random. It can type Chinese, Japanese, Korean and emoji. Shortcuts can be changed. It is local and collects no data. US$2.99 one-time on the Mac App Store; it is in App Review and not on sale yet. Pourtype is source-available under PolyForm Noncommercial 1.0.0, not open source. [source on GitHub](https://github.com/shuaige121/pourtype)."
+    },
+    {
+     "p": "Other apps, each described by its own page (read 2026-10-06):"
+    },
+    {
+     "ul": [
+      "[KeyType](https://github.com/steingmo/keytype): \"A tiny native macOS app that 'pastes' by typing — it sends your text as real keystrokes\".",
+      "[TypeClipboard](https://typeclipboard.nexuscloud.ie/): headline \"Paste where you can't paste.\" Listed as free, for macOS 13 or newer.",
+      "[TypeAround](https://typearound.ericpullen.com/): \"simulating keyboard input, one keystroke at a time.\" Listed as free, for macOS 12 or newer."
+     ]
+    },
+    {
+     "p": "We have not tested these three, so we make no claim about what they can or cannot type."
+    }
+   ]
+  },
+  {
+   "h2": "Non-English text, emoji and speed: what to check",
+   "body": [
+    {
+     "p": "Before you rely on any of them, type a test string with your own characters into a harmless field: accented letters, Chinese or Japanese text, an emoji, and a few hundred characters."
+    },
+    {
+     "ul": [
+      "Does every character arrive correctly?",
+      "How long does the long string take, and can you stop it?",
+      "Does it still work when the field is a different app?"
+     ]
+    },
+    {
+     "p": "Keyboard Maestro's wiki states it is slow for large text and cannot type emoji. Pourtype's speed is adjustable from 3 to 150 characters per second. Typing while a Japanese or Chinese input method is active has not been tested for Pourtype."
+    }
+   ]
+  },
+  {
+   "h2": "Password fields and Secure Input",
+   "body": [
+    {
+     "p": "macOS protects password entry with Secure Input. Apple's Technical Note TN2150 explains that standard password controls (such as Cocoa's `NSSecureTextField`) secure keyboard events only when necessary, and that custom password fields have to turn it on and off themselves."
+    },
+    {
+     "p": "In password fields, Pourtype falls back to plain typing without holding input; Control-Option-Command-Period stops it. For the other tools, test with a throwaway password field first."
+    }
+   ]
+  },
+  {
+   "h2": "Comparison",
+   "body": [
+    {
+     "table": {
+      "head": [
+       "Method",
+       "Works where",
+       "Needs",
+       "Limits"
+      ],
+      "rows": [
+       [
+        "AppleScript keystroke",
+        "The focused field",
+        "Accessibility access; a script",
+        "Non-English text: test it first"
+       ],
+       [
+        "Keyboard Maestro",
+        "The focused field",
+        "Paid app",
+        "Slow for large text; no emoji (its wiki)"
+       ],
+       [
+        "Hammerspoon",
+        "The focused field",
+        "Free app, Lua code",
+        "You write the script"
+       ],
+       [
+        "Pourtype",
+        "The focused field (tested: a paste-blocked web form in Safari); password fields with plain typing",
+        "macOS 14+; Accessibility and Screen Recording permissions",
+        "Not on sale yet"
+       ],
+       [
+        "KeyType, TypeClipboard, TypeAround",
+        "See each page",
+        "See each page",
+        "Not tested here"
+       ]
+      ]
+     }
+    }
+   ]
+  }
+ ],
+ "faq": [
+  {
+   "q": "Which method is free?",
+   "a": "AppleScript is built in, and Hammerspoon is free. Both need you to write a short script."
+  },
+  {
+   "q": "Can these type emoji or Chinese?",
+   "a": "Pourtype can type Chinese, Japanese, Korean and emoji. Keyboard Maestro's wiki says its typing action cannot type emoji. For AppleScript and Hammerspoon, test with your own text first."
+  },
+  {
+   "q": "Why do they need Accessibility access?",
+   "a": "Sending key events to other apps is a form of controlling the Mac. Apple's guide says accessibility control is disabled by default and must be enabled per app."
+  },
+  {
+   "q": "Can I stop typing in the middle?",
+   "a": "With Pourtype, Esc stops it at once; in password fields, Control-Option-Command-Period."
+  },
+  {
+   "q": "Does Pourtype send my text anywhere?",
+   "a": "No. It runs locally, makes no network requests and collects no data."
+  }
+ ],
+ "sources": [
+  {
+   "title": "Mac Automation Scripting Guide: Automate the user interface",
+   "url": "https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/AutomatetheUserInterface.html"
+  },
+  {
+   "title": "Keyboard Maestro wiki: Insert Text by Typing",
+   "url": "https://wiki.keyboardmaestro.com/action/Insert_Text"
+  },
+  {
+   "title": "Hammerspoon: hs.eventtap",
+   "url": "https://www.hammerspoon.org/docs/hs.eventtap.html"
+  },
+  {
+   "title": "Apple Technical Note TN2150: Secure Event Input",
+   "url": "https://developer.apple.com/library/archive/technotes/tn2150/_index.html"
+  },
+  {
+   "title": "KeyType (GitHub)",
+   "url": "https://github.com/steingmo/keytype"
+  },
+  {
+   "title": "TypeClipboard",
+   "url": "https://typeclipboard.nexuscloud.ie/"
+  },
+  {
+   "title": "TypeAround",
+   "url": "https://typearound.ericpullen.com/"
+  }
+ ],
+ "related": [
+  "paste-blocked"
+ ]
+}

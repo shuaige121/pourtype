@@ -14,6 +14,8 @@ Website: <https://shuaige121.github.io/pourtype/> · Privacy policy: [docs/priva
 
 The shortcuts can be changed in Settings. The app is in English, Simplified Chinese, Traditional Chinese and Japanese.
 
+Guides: [website won't let you paste on a Mac](https://shuaige121.github.io/pourtype/guides/paste-blocked-mac/) · [type the clipboard as keystrokes](https://shuaige121.github.io/pourtype/guides/type-clipboard-as-keystrokes-mac/) · [copy text from an image, video or screen](https://shuaige121.github.io/pourtype/guides/copy-text-from-screen-mac/) · [简体中文](https://shuaige121.github.io/pourtype/zh-hans/guides/) · [繁體中文](https://shuaige121.github.io/pourtype/zh-hant/guides/) · [日本語](https://shuaige121.github.io/pourtype/ja/guides/)
+
 ## While it types
 
 | Key | Effect |

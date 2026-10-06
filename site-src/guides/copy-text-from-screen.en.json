@@ -1,0 +1,173 @@
+{
+ "group": "copy-text-from-screen",
+ "lang": "en",
+ "slug": "copy-text-from-screen-mac",
+ "title": "Copy text from an image, video or screen on a Mac",
+ "description": "Live Text copies text from photos, Preview and paused Safari or QuickTime video. For other apps, scanned PDFs or screen shares, drag a box and copy.",
+ "h1": "Copy text from an image, video or screen on a Mac",
+ "updated": "2026-10-06",
+ "answer": "In Photos, Preview and Safari, hold the pointer over text in a picture, drag to select it, then Control-click and choose Copy. This is Live Text and it is free. For anywhere Live Text does not reach, take a screenshot and run the Shortcuts \"Extract Text from Image\" action, or drag a box with a screen-grab app such as Pourtype.",
+ "sections": [
+  {
+   "h2": "Photos, Preview and Quick Look: Live Text",
+   "body": [
+    {
+     "p": "Apple's guides give the same steps in each app. In Preview: hold the pointer over the text and drag to select it, then Control-click the selection and choose Copy Text. If selection does not work, choose Tools > Text Selection. In Photos: open a photo that shows text, position the pointer over it, Control-click and choose Copy Text. In Safari: move the pointer over text in a picture, drag to highlight it, Control-click and choose Copy."
+    },
+    {
+     "p": "Limits: it works on images and photos, not on text inside an app's own interface. Apple's feature page lists the languages Live Text supports, including Chinese (Simplified), Chinese (Traditional) and English. Check Apple's current list for your language."
+    }
+   ]
+  },
+  {
+   "h2": "Paused video: where Live Text works and where it does not",
+   "body": [
+    {
+     "p": "MacRumors reports that, since macOS Ventura, \"Live Text works in macOS in Photos, Quick Look, Safari, and other apps that support video.\" Pause the video on the frame with text, click and drag to select it, then right-click or Control-click and choose Copy."
+    },
+    {
+     "p": "We have not tested which other apps and browsers support it, so we only state what that article says. If it does not work in your player, take a screenshot of the paused frame instead."
+    }
+   ]
+  },
+  {
+   "h2": "Screenshots: screenshot plus Shortcuts",
+   "body": [
+    {
+     "p": "Shift-Command-4 turns the pointer into a crosshair so you can drag over an area (Apple's \"Take a screenshot on Mac\" page). The Shortcuts app has an \"Extract Text from Image\" action. MacMost shows a shortcut that chains Take Screenshot (set to a custom area), Extract Text From Image, Combine Text and Copy to Clipboard, and notes it suits \"websites and apps where text cannot normally be selected and copied.\""
+    },
+    {
+     "p": "Limits: you build the shortcut once, and it is a few steps per grab. Opening a screenshot in Preview and selecting the text also works, since Preview uses Live Text on images."
+    }
+   ]
+  },
+  {
+   "h2": "Scanned or locked PDFs",
+   "body": [
+    {
+     "p": "Open the PDF in Preview and try to select the text. Apple's Preview guide covers Live Text on photos; we have not verified how it treats every scanned or protected PDF. If the text cannot be selected, grab the area from the screen with one of the methods below. Respect the document owner's terms when a PDF is locked."
+    }
+   ]
+  },
+  {
+   "h2": "Anything else on screen: Pourtype",
+   "body": [
+    {
+     "p": "Pourtype is a macOS menu-bar app (macOS 14 or later) by Leonard Chow. Press Command-Shift-C, drag a box anywhere on screen, and the text inside is recognised on your Mac with Apple Vision (Simplified Chinese, Traditional Chinese, English and Japanese) and copied. It keeps a local, searchable history of grabbed and typed text, and you can clear it."
+    },
+    {
+     "p": "Shortcuts can be changed in Settings. It runs locally, makes no network requests and collects no data, and needs the Accessibility and Screen Recording permissions. US$2.99 one-time on the Mac App Store; it is in App Review and not on sale yet. Pourtype is source-available under PolyForm Noncommercial 1.0.0, not open source. [source on GitHub](https://github.com/shuaige121/pourtype)."
+    },
+    {
+     "p": "Got the text but the field will not take a paste? See [Website won't let you paste?](../paste-blocked-mac/)."
+    }
+   ]
+  },
+  {
+   "h2": "Which method to use",
+   "body": [
+    {
+     "table": {
+      "head": [
+       "Method",
+       "Works where",
+       "Needs",
+       "Limits"
+      ],
+      "rows": [
+       [
+        "Live Text in Photos, Preview, Safari",
+        "Pictures and photos",
+        "Nothing extra",
+        "Not for text in app windows"
+       ],
+       [
+        "Live Text in paused video",
+        "Photos, Quick Look, Safari and other video apps (MacRumors)",
+        "macOS Ventura or later",
+        "Other apps not tested here"
+       ],
+       [
+        "Screenshot + Shortcuts",
+        "Anything you can capture",
+        "A shortcut you build",
+        "Several steps"
+       ],
+       [
+        "Pourtype Command-Shift-C",
+        "Anywhere on screen",
+        "macOS 14+; Accessibility and Screen Recording permissions",
+        "Four recognition languages; not on sale yet"
+       ],
+       [
+        "Online OCR sites",
+        "Uploaded images",
+        "A browser",
+        "Your image leaves your Mac"
+       ]
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "h2": "Privacy: on-device versus upload",
+   "body": [
+    {
+     "p": "Online OCR sites need you to upload the image, so what is on it goes to someone else's server. Check their policy before you upload anything private. Live Text, Shortcuts and Pourtype recognise the text on your Mac. Pourtype makes no network requests."
+    }
+   ]
+  }
+ ],
+ "faq": [
+  {
+   "q": "Which languages?",
+   "a": "Pourtype recognises Simplified Chinese, Traditional Chinese, English and Japanese. Live Text has its own list on Apple's feature page, which includes Chinese (Simplified), Chinese (Traditional) and English."
+  },
+  {
+   "q": "Does it upload my screen?",
+   "a": "No. Pourtype recognises text on the Mac with Apple Vision and makes no network requests."
+  },
+  {
+   "q": "Where is the history kept?",
+   "a": "Pourtype keeps a local, searchable history of grabbed and typed text on your Mac. You can clear it."
+  },
+  {
+   "q": "Can I change the shortcut?",
+   "a": "Yes. Command-Shift-C and Command-Shift-V can be changed in Settings."
+  }
+ ],
+ "sources": [
+  {
+   "title": "Interact with text in a photo using Live Text in Preview on Mac - Apple Support",
+   "url": "https://support.apple.com/guide/preview/interact-with-text-in-a-photo-prvw625a5b2c/mac"
+  },
+  {
+   "title": "Interact with text in a picture in Safari on Mac - Apple Support",
+   "url": "https://support.apple.com/guide/safari/interact-with-text-in-a-picture-ibrw20183ad7/mac"
+  },
+  {
+   "title": "Use Live Text to interact with text in a photo on Mac - Apple Support",
+   "url": "https://support.apple.com/guide/photos/live-text-interact-a-photo-pht6bc6bd5f5/mac"
+  },
+  {
+   "title": "MacRumors: How to Use Live Text to Copy and Share Text in Video",
+   "url": "https://www.macrumors.com/how-to/copy-share-text-in-video-macos/"
+  },
+  {
+   "title": "macOS feature availability - Apple",
+   "url": "https://www.apple.com/macos/feature-availability/"
+  },
+  {
+   "title": "Take a screenshot on Mac - Apple Support",
+   "url": "https://support.apple.com/102646"
+  },
+  {
+   "title": "MacMost: macOS Shortcuts, Capture Text From Your Screen",
+   "url": "https://macmost.com/macos-shortcuts-capture-text-from-your-screen.html"
+  }
+ ],
+ "related": [
+  "paste-blocked"
+ ]
+}

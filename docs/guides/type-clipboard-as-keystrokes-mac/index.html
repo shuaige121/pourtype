@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Type the clipboard as keystrokes on a Mac: 4 ways</title>
+<meta name="description" content="Paste as keystrokes on macOS: an AppleScript one-liner, Keyboard Maestro, Hammerspoon, or a menu-bar app. What each one can type, and where each stops.">
+<link rel="canonical" href="https://shuaige121.github.io/pourtype/guides/type-clipboard-as-keystrokes-mac/">
+<link rel="alternate" hreflang="en" href="https://shuaige121.github.io/pourtype/guides/type-clipboard-as-keystrokes-mac/">
+<link rel="alternate" hreflang="x-default" href="https://shuaige121.github.io/pourtype/guides/type-clipboard-as-keystrokes-mac/">
+<meta name="theme-color" content="#0E0F1A">
+<link rel="icon" type="image/png" href="https://shuaige121.github.io/pourtype/img/icon.png">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Pourtype">
+<meta property="og:title" content="Type the clipboard as keystrokes on a Mac: 4 ways"><meta property="og:description" content="Paste as keystrokes on macOS: an AppleScript one-liner, Keyboard Maestro, Hammerspoon, or a menu-bar app. What each one can type, and where each stops.">
+<meta property="og:url" content="https://shuaige121.github.io/pourtype/guides/type-clipboard-as-keystrokes-mac/"><meta property="og:image" content="https://shuaige121.github.io/pourtype/img/og.png">
+<meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="https://shuaige121.github.io/pourtype/_style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Type the clipboard as keystrokes on a Mac: 4 ways",
+  "description": "Paste as keystrokes on macOS: an AppleScript one-liner, Keyboard Maestro, Hammerspoon, or a menu-bar app. What each one can type, and where each stops.",
+  "inLanguage": "en",
+  "author": {
+    "@type": "Person",
+    "name": "Leonard Chow"
+  },
+  "datePublished": "2026-10-06",
+  "dateModified": "2026-10-06",
+  "mainEntityOfPage": "https://shuaige121.github.io/pourtype/guides/type-clipboard-as-keystrokes-mac/",
+  "publisher": {
+    "@type": "Person",
+    "name": "Leonard Chow"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://shuaige121.github.io/pourtype/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Guides",
+      "item": "https://shuaige121.github.io/pourtype/guides/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Type the clipboard as keystrokes on a Mac: 4 ways",
+      "item": "https://shuaige121.github.io/pourtype/guides/type-clipboard-as-keystrokes-mac/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "en",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Which method is free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AppleScript is built in, and Hammerspoon is free. Both need you to write a short script."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can these type emoji or Chinese?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pourtype can type Chinese, Japanese, Korean and emoji. Keyboard Maestro's wiki says its typing action cannot type emoji. For AppleScript and Hammerspoon, test with your own text first."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why do they need Accessibility access?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sending key events to other apps is a form of controlling the Mac. Apple's guide says accessibility control is disabled by default and must be enabled per app."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I stop typing in the middle?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "With Pourtype, Esc stops it at once; in password fields, Control-Option-Command-Period."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Pourtype send my text anywhere?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It runs locally, makes no network requests and collects no data."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="lp guide-page">
+<header class="lp-top"><a class="lp-brand" href="https://shuaige121.github.io/pourtype/"><span class="lp-dot" aria-hidden="true"></span>Pourtype</a>
+<nav class="lp-lang" aria-label="Language"><a href="https://shuaige121.github.io/pourtype/guides/type-clipboard-as-keystrokes-mac/" hreflang="en" lang="en" aria-current="page">English</a> · <a href="https://shuaige121.github.io/pourtype/zh-hans/" hreflang="zh-Hans" lang="zh-Hans">简体中文</a> · <a href="https://shuaige121.github.io/pourtype/zh-hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> · <a href="https://shuaige121.github.io/pourtype/ja/" hreflang="ja" lang="ja">日本語</a></nav></header>
+<main class="lp-main guide">
+<nav class="crumbs"><a href="https://shuaige121.github.io/pourtype/">Home</a> › <a href="https://shuaige121.github.io/pourtype/guides/">Guides</a></nav>
+<h1>Type the clipboard as keystrokes on a Mac: 4 ways</h1>
+<p class="meta">By Leonard Chow, developer of Pourtype · Updated <time datetime="2026-10-06">2026-10-06</time> · Pourtype's typing was tested on macOS 27.0.1 with a paste-blocked web form in Safari.<br>I make Pourtype. This page lists every method, including free ones.</p>
+<div class="answer"><strong>Short answer</strong><p>The free routes are an AppleScript that sends <code>keystroke</code> through System Events, or a short Hammerspoon script using <code>hs.eventtap.keyStrokes</code>. Keyboard Maestro does it with a paid macro, and menu-bar apps such as Pourtype do it with a shortcut. All of them need Accessibility access, and they differ mainly in non-English text, emoji and speed.</p></div>
+<h2>What "typing the clipboard" means</h2>
+<p>Normal paste hands the clipboard contents straight to a field. Some fields refuse that. Typing the clipboard instead sends a series of key events, one per character, as if the keys were pressed. The field sees typing, not a paste.</p>
+<p>Any tool that does this has to be allowed to control your Mac. Apple's automation guide says that by default accessibility control of apps is disabled, and that the user must enable it manually for each app, including script apps. See also <a href="../paste-blocked-mac/">Website won't let you paste?</a>.</p>
+<h2>AppleScript (free, built in)</h2>
+<p>The <code>System Events</code> app has a <code>keystroke</code> command, which you can call from Script Editor, a Shortcuts action or Terminal's <code>osascript</code>. You grant Accessibility access to whichever app runs it.</p>
+<p>Limits: you write the script and feed it the text. How <code>keystroke</code> handles non-English text is not covered here: test it with your own text first.</p>
+<h2>Keyboard Maestro (paid macro app)</h2>
+<p>Keyboard Maestro has an Insert Text by Typing action. Its own wiki says it "is slow for large amounts of text and can't type exotic characters like Emoji" and that it fits text "up to say 30 or 40 characters." It is a good fit for short, plain snippets you type often.</p>
+<h2>Hammerspoon (free, Lua)</h2>
+<p>Hammerspoon exposes <code>hs.eventtap.keyStrokes(text[, application])</code>, which "generates and emits keystroke events for the supplied text." Its docs point to <code>hs.eventtap.keyStroke()</code> for single keystrokes with modifiers such as Command-V. You bind it to a hotkey in your Lua config. The page does not state limits for non-ASCII text, so test it yourself.</p>
+<h2>Menu-bar apps</h2>
+<p>Pourtype: a macOS 14+ menu-bar app by Leonard Chow. Command-Shift-V types the clipboard into the focused field as real keystrokes. The screen is frosted except the target window, the keyboard and mouse are held, Esc stops it at once, and it stops if another app comes to the front. Keystrokes go only to the target app. Hold Up/Down for speed (3 to 150 characters per second) and Left/Right for rhythm from steady to random. It can type Chinese, Japanese, Korean and emoji. Shortcuts can be changed. It is local and collects no data. US$2.99 one-time on the Mac App Store; it is in App Review and not on sale yet. Pourtype is source-available under PolyForm Noncommercial 1.0.0, not open source. <a href="https://github.com/shuaige121/pourtype">source on GitHub</a>.</p>
+<p>Other apps, each described by its own page (read 2026-10-06):</p>
+<ul><li><a href="https://github.com/steingmo/keytype">KeyType</a>: "A tiny native macOS app that 'pastes' by typing — it sends your text as real keystrokes".</li><li><a href="https://typeclipboard.nexuscloud.ie/">TypeClipboard</a>: headline "Paste where you can't paste." Listed as free, for macOS 13 or newer.</li><li><a href="https://typearound.ericpullen.com/">TypeAround</a>: "simulating keyboard input, one keystroke at a time." Listed as free, for macOS 12 or newer.</li></ul>
+<p>We have not tested these three, so we make no claim about what they can or cannot type.</p>
+<h2>Non-English text, emoji and speed: what to check</h2>
+<p>Before you rely on any of them, type a test string with your own characters into a harmless field: accented letters, Chinese or Japanese text, an emoji, and a few hundred characters.</p>
+<ul><li>Does every character arrive correctly?</li><li>How long does the long string take, and can you stop it?</li><li>Does it still work when the field is a different app?</li></ul>
+<p>Keyboard Maestro's wiki states it is slow for large text and cannot type emoji. Pourtype's speed is adjustable from 3 to 150 characters per second. Typing while a Japanese or Chinese input method is active has not been tested for Pourtype.</p>
+<h2>Password fields and Secure Input</h2>
+<p>macOS protects password entry with Secure Input. Apple's Technical Note TN2150 explains that standard password controls (such as Cocoa's <code>NSSecureTextField</code>) secure keyboard events only when necessary, and that custom password fields have to turn it on and off themselves.</p>
+<p>In password fields, Pourtype falls back to plain typing without holding input; Control-Option-Command-Period stops it. For the other tools, test with a throwaway password field first.</p>
+<h2>Comparison</h2>
+<div class="table-wrap"><table><thead><tr><th>Method</th><th>Works where</th><th>Needs</th><th>Limits</th></tr></thead><tbody><tr><td>AppleScript keystroke</td><td>The focused field</td><td>Accessibility access; a script</td><td>Non-English text: test it first</td></tr><tr><td>Keyboard Maestro</td><td>The focused field</td><td>Paid app</td><td>Slow for large text; no emoji (its wiki)</td></tr><tr><td>Hammerspoon</td><td>The focused field</td><td>Free app, Lua code</td><td>You write the script</td></tr><tr><td>Pourtype</td><td>The focused field (tested: a paste-blocked web form in Safari); password fields with plain typing</td><td>macOS 14+; Accessibility and Screen Recording permissions</td><td>Not on sale yet</td></tr><tr><td>KeyType, TypeClipboard, TypeAround</td><td>See each page</td><td>See each page</td><td>Not tested here</td></tr></tbody></table></div>
+<aside class="cta"><h2>Pourtype does this in one shortcut</h2><p>Pourtype is a small Mac menu-bar app made for these problems. Press ⌘⇧V and it types your clipboard into the field as real keystrokes; press ⌘⇧C and drag a box to copy any text you can see. It runs locally and collects no data. US$2.99, one-time, on the Mac App Store.</p><p class="note">Pourtype is in App Review and not on sale yet.</p><p><a class="btn" href="https://shuaige121.github.io/pourtype/">About Pourtype</a></p></aside>
+<section class="faq"><h2>Questions</h2><details><summary>Which method is free?</summary><p>AppleScript is built in, and Hammerspoon is free. Both need you to write a short script.</p></details><details><summary>Can these type emoji or Chinese?</summary><p>Pourtype can type Chinese, Japanese, Korean and emoji. Keyboard Maestro's wiki says its typing action cannot type emoji. For AppleScript and Hammerspoon, test with your own text first.</p></details><details><summary>Why do they need Accessibility access?</summary><p>Sending key events to other apps is a form of controlling the Mac. Apple's guide says accessibility control is disabled by default and must be enabled per app.</p></details><details><summary>Can I stop typing in the middle?</summary><p>With Pourtype, Esc stops it at once; in password fields, Control-Option-Command-Period.</p></details><details><summary>Does Pourtype send my text anywhere?</summary><p>No. It runs locally, makes no network requests and collects no data.</p></details></section>
+<h2>Related guides</h2><ul><li><a href="https://shuaige121.github.io/pourtype/guides/paste-blocked-mac/">Website won't let you paste? How to fill it in on a Mac</a></li></ul>
+<h2 class="small">Sources</h2><ul class="sources"><li><a href="https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/AutomatetheUserInterface.html" rel="nofollow">Mac Automation Scripting Guide: Automate the user interface</a></li><li><a href="https://wiki.keyboardmaestro.com/action/Insert_Text" rel="nofollow">Keyboard Maestro wiki: Insert Text by Typing</a></li><li><a href="https://www.hammerspoon.org/docs/hs.eventtap.html" rel="nofollow">Hammerspoon: hs.eventtap</a></li><li><a href="https://developer.apple.com/library/archive/technotes/tn2150/_index.html" rel="nofollow">Apple Technical Note TN2150: Secure Event Input</a></li><li><a href="https://github.com/steingmo/keytype" rel="nofollow">KeyType (GitHub)</a></li><li><a href="https://typeclipboard.nexuscloud.ie/" rel="nofollow">TypeClipboard</a></li><li><a href="https://typearound.ericpullen.com/" rel="nofollow">TypeAround</a></li></ul>
+</main>
+<footer class="lp-foot"><p>By Leonard Chow, developer of Pourtype</p><p><a href="https://shuaige121.github.io/pourtype/">Pourtype</a> · <a href="https://shuaige121.github.io/pourtype/guides/">Guides</a> · <a href="https://github.com/shuaige121/pourtype">GitHub</a> · <a href="https://shuaige121.github.io/pourtype/privacy.html">Privacy</a></p></footer>
+</body></html>
