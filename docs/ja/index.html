@@ -106,6 +106,22 @@
     },
     {
       "@type": "Question",
+      "name": "ショートカットは変更できますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "できます。設定でショートカットをクリックし、新しい組み合わせを押してください。Command・Control・Option のいずれかが必要です。初期設定は、クリップボードの入力が Command-Shift-V、文字の取り込みが Command-Shift-C です。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "どの言語に対応していますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "アプリの表示は日本語、英語、簡体字中国語、繁体字中国語に対応し、Mac の言語設定に合わせて切り替わります。"
+      }
+    },
+    {
+      "@type": "Question",
       "name": "いくらですか？どこで入手できますか？",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -131,7 +147,7 @@
 <section id="features"><h2>できること</h2><div class="cards"><article class="card"><div class="key">⌘⇧V</div><h3>クリップボードを入力</h3><p>貼り付けを受け付けないサイトやダイアログがあります。いつも通りコピーして、入力欄をクリックし、ショートカットを押すだけ。Pourtype が 1 文字ずつ打ち込みます。改行は Shift+Return で入力するので、チャットが途中で送信されません。</p></article><article class="card"><div class="key">⌘⇧C</div><h3>画面の文字をコピー</h3><p>画面上の好きな場所をドラッグして囲むだけ。画像の中の文字でも大丈夫です。Pourtype が Apple の Vision で Mac 上で認識し、コピーします。簡体字中国語、繁体字中国語、英語、日本語を読み取れます。</p></article><article class="card"><div class="key">履歴</div><h3>あとで探せる</h3><p>コピーした文字も入力した文字も、Mac 内の検索できる一覧に残ります。もう一度コピーも、もう一度入力もできます。いつでも消去でき、保存期間は 7・30・90・365 日から選べます。</p></article></div></section>
 <section class="lp-control"><h2>入力中も、操作はあなたの手の中</h2><ul><li>入力中は画面にすりガラス状のベールがかかり、入力先のウインドウだけが見えます。キーボードとマウスは固定され、フォーカスは動きません。</li><li>Esc キーですぐに停止します。別の App が前面に来たときも停止し、キー入力は入力先の App にだけ届きます。</li><li>↑ または ↓ を押し続けると速度を変更できます（毎秒 3〜150 文字）。← または → を押し続けると、一定のリズムからランダムなリズムまで変えられます。</li><li>カードに、入力先の App とウインドウ、流れていく文字、進行状況、残り秒数が表示されます。複数のディスプレイでは、ほかのディスプレイに入力先を示す小さなカードが出ます。</li></ul></section>
 <section id="how"><h2>使い方</h2><div class="how"><div><h3>クリップボードを入力</h3><ol><li>いつも通り文字をコピーします。</li><li>貼り付け禁止の入力欄をクリックして、⌘⇧V を押します。</li><li>カードを見ているだけで OK。止めたいときは Esc。</li></ol></div><div><h3>画面の文字をコピー</h3><ol><li>⌘⇧C を押します。</li><li>文字の上をドラッグして囲むと、クリップボードにコピーされます。</li></ol></div></div></section>
-<section id="faq"><h2>よくある質問</h2><details><summary>Mac で貼り付け禁止の入力欄に文字を入れるには？</summary><p>文字をコピーして入力欄をクリックし、Command-Shift-V を押します。Pourtype がクリップボードの文字を実際のキー入力として打ち込むので、貼り付けが禁止されている場所でも使えます。入力中は入力先のウインドウ以外がすりガラス状になり、Esc キーですぐに止められます。</p></details><details><summary>Mac で画像の中の文字をコピーするには？</summary><p>Command-Shift-C を押して、文字の上をドラッグして囲みます。Pourtype が Apple の Vision で Mac 上で文字を認識し、クリップボードにコピーします。簡体字中国語、繁体字中国語、英語、日本語に対応しています。</p></details><details><summary>安全ですか？データはどこかに送られますか？</summary><p>Pourtype は Mac 上だけで動作し、ネットワーク通信は行わず、データも収集しません。文字認識は Mac 上で行われ、履歴は Mac の中だけに保存されて、いつでも消去できます。ソースコードは GitHub で公開しています。</p></details><details><summary>入力中に止めるには？</summary><p>Esc キーを押してください。入力はすぐに止まり、キーボードとマウスが解放されます。別の App が前面に来たときも自動で停止します。パスワード欄では Control-Option-Command-ピリオドを押します。</p></details><details><summary>日本語・中国語・韓国語の文字も入力できますか？</summary><p>はい。Pourtype は日本語・中国語・韓国語の文字と絵文字を入力できます。画面から文字をコピーするときは、簡体字中国語、繁体字中国語、英語、日本語を認識します。</p></details><details><summary>パスワード欄にも入力できますか？</summary><p>はい。ただし制限が一つあります。パスワード欄では macOS が Secure Input を有効にするため、キーボードを固定できず、Pourtype は通常の入力に切り替わります。Control-Option-Command-ピリオドで停止できます。</p></details><details><summary>入力の速さは変えられますか？</summary><p>はい。↑ または ↓ を押し続けると速度を毎秒 3〜150 文字の範囲で、← または → を押し続けるとリズムを一定からランダムまで変えられます。</p></details><details><summary>いくらですか？どこで入手できますか？</summary><p>Pourtype は Mac App Store で 2.99 米ドル（買い切り）での公開を予定しています。現時点ではまだ公開されていません。macOS 14 以降が必要です。ソースコードは PolyForm Noncommercial 1.0.0 ライセンスで GitHub に公開しています。ソース公開（source-available）で、個人・非営利利用は無料ですが、オープンソースではありません。</p></details></section>
+<section id="faq"><h2>よくある質問</h2><details><summary>Mac で貼り付け禁止の入力欄に文字を入れるには？</summary><p>文字をコピーして入力欄をクリックし、Command-Shift-V を押します。Pourtype がクリップボードの文字を実際のキー入力として打ち込むので、貼り付けが禁止されている場所でも使えます。入力中は入力先のウインドウ以外がすりガラス状になり、Esc キーですぐに止められます。</p></details><details><summary>Mac で画像の中の文字をコピーするには？</summary><p>Command-Shift-C を押して、文字の上をドラッグして囲みます。Pourtype が Apple の Vision で Mac 上で文字を認識し、クリップボードにコピーします。簡体字中国語、繁体字中国語、英語、日本語に対応しています。</p></details><details><summary>安全ですか？データはどこかに送られますか？</summary><p>Pourtype は Mac 上だけで動作し、ネットワーク通信は行わず、データも収集しません。文字認識は Mac 上で行われ、履歴は Mac の中だけに保存されて、いつでも消去できます。ソースコードは GitHub で公開しています。</p></details><details><summary>入力中に止めるには？</summary><p>Esc キーを押してください。入力はすぐに止まり、キーボードとマウスが解放されます。別の App が前面に来たときも自動で停止します。パスワード欄では Control-Option-Command-ピリオドを押します。</p></details><details><summary>日本語・中国語・韓国語の文字も入力できますか？</summary><p>はい。Pourtype は日本語・中国語・韓国語の文字と絵文字を入力できます。画面から文字をコピーするときは、簡体字中国語、繁体字中国語、英語、日本語を認識します。</p></details><details><summary>パスワード欄にも入力できますか？</summary><p>はい。ただし制限が一つあります。パスワード欄では macOS が Secure Input を有効にするため、キーボードを固定できず、Pourtype は通常の入力に切り替わります。Control-Option-Command-ピリオドで停止できます。</p></details><details><summary>入力の速さは変えられますか？</summary><p>はい。↑ または ↓ を押し続けると速度を毎秒 3〜150 文字の範囲で、← または → を押し続けるとリズムを一定からランダムまで変えられます。</p></details><details><summary>ショートカットは変更できますか？</summary><p>できます。設定でショートカットをクリックし、新しい組み合わせを押してください。Command・Control・Option のいずれかが必要です。初期設定は、クリップボードの入力が Command-Shift-V、文字の取り込みが Command-Shift-C です。</p></details><details><summary>どの言語に対応していますか？</summary><p>アプリの表示は日本語、英語、簡体字中国語、繁体字中国語に対応し、Mac の言語設定に合わせて切り替わります。</p></details><details><summary>いくらですか？どこで入手できますか？</summary><p>Pourtype は Mac App Store で 2.99 米ドル（買い切り）での公開を予定しています。現時点ではまだ公開されていません。macOS 14 以降が必要です。ソースコードは PolyForm Noncommercial 1.0.0 ライセンスで GitHub に公開しています。ソース公開（source-available）で、個人・非営利利用は無料ですが、オープンソースではありません。</p></details></section>
 <section id="privacy" class="lp-privacy"><h2>プライバシー重視の設計</h2><p>Pourtype は Mac 上だけで動作します。ネットワーク通信は行わず、データも収集しません。</p><p>「アクセシビリティ」の権限（入力のため、また入力中にキーボードとマウスを固定するため）と、「画面収録」の権限（囲んだ範囲の文字を読み取るため）を必要とします。入力をロックするのは入力中だけです。</p><p><a href="../privacy.html">プライバシーポリシーを読む</a></p></section>
 </main>
 <footer class="lp-foot"><p>作者：Leonard Chow（個人の Apple デベロッパ）。</p><p>PolyForm Noncommercial 1.0.0 でソース公開。個人・非営利利用は無料。</p>

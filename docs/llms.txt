@@ -23,6 +23,8 @@ Runs locally. Makes no network requests. Collects no data. Text recognition happ
 - How do I type into a field that blocks paste on Mac? Copy the text, click into the field, press Command-Shift-V.
 - How do I copy text from an image on Mac? Press Command-Shift-C and drag a box over the text.
 - How do I stop it? Press Esc. In a password field, press Control-Option-Command-Period.
+- Can I change the shortcuts? Yes, in Settings: click a shortcut and press the new combination (it needs Command, Control or Option).
+- Which languages is the app in? English, Simplified Chinese, Traditional Chinese and Japanese; it follows the Mac's language.
 
 ## Links
 - Home (English): https://shuaige121.github.io/pourtype/
