@@ -379,11 +379,19 @@ final class HudCheck: NSObject, WKScriptMessageHandler {
         try? FileManager.default.createDirectory(atPath: dir, withIntermediateDirectories: true)
         let tmp = FileManager.default.temporaryDirectory.appendingPathComponent("pourtype-render-\(getpid())")
         let store = HistoryStore(dir: tmp)
-        for (k, t) in [("grab", L.t("收据编号 R-7731 · 2026年10月6日\n桌面台灯 ×1    S$ 39.90", "Receipt R-7731 · 6 Oct 2026\nDesk lamp x1    S$ 39.90")),
-                       ("typed", L.t("你好，订单 A-20481 的台灯收到时底座有裂痕。", "Hi, the desk lamp from order A-20481 arrived with a cracked base.")),
-                       ("grab", L.t("会议改到周四下午 3 点，4B 会议室。", "Meeting moved to Thursday 3 pm, room 4B."))] {
-            store.add(HistoryItem(kind: k == "grab" ? .grab : .typed, text: t, app: "Safari"))
+        let receipt = L.t("收据编号 R-7731 · 2026年10月6日\n桌面台灯 ×1    S$ 39.90\n退货期限：14 天内",
+                          "Receipt R-7731 · 6 Oct 2026\nDesk lamp x1    S$ 39.90\nReturns accepted within 14 days")
+        let samples: [(HistoryItem.Kind, String, String, Double)] = [
+            (.grab, L.t("访客 Wi-Fi：Studio-Guest · 密码见前台卡片", "Wi-Fi: Studio-Guest · password on the card at the front desk"), L.t("照片", "Photos"), 26 * 3600),
+            (.typed, L.t("订单 A-20481：已申请补发，照片已附上。", "Order A-20481: replacement requested, photos attached."), L.t("邮件", "Mail"), 5 * 3600),
+            (.grab, L.t("会议改到周四下午 3 点，4B 会议室，请带上第三季度的数据。", "Meeting moved to Thursday 3 pm, room 4B. Please bring the Q3 numbers."), L.t("预览", "Preview"), 3 * 3600),
+            (.typed, L.t("你好，订单 A-20481 的台灯收到时底座有裂痕。\n照片已附上，麻烦补发一个，或者给我退货标签。\n谢谢！林晓",
+                         "Hi, the desk lamp from order A-20481 arrived with a cracked base.\nPhotos are attached. Could you send a replacement, or a return label?\nThanks, Alex"), "Safari", 25 * 60),
+        ]
+        for (kind, text, app, ago) in samples {
+            store.add(HistoryItem(kind: kind, text: text, date: Date().addingTimeInterval(-ago), app: app))
         }
+        store.add(HistoryItem(kind: .grab, text: receipt, date: Date().addingTimeInterval(-6 * 60), app: "Safari"), png: receiptPNG(receipt))
         var shots: [(String, AnyView, NSSize)] = []
         for step in 0...3 {
             let m = OnboardingModel()
@@ -399,21 +407,31 @@ final class HudCheck: NSObject, WKScriptMessageHandler {
             }
         }
         shots.append(("settings", AnyView(SettingsView(model: SettingsModel())), NSSize(width: 520, height: 760)))
-        shots.append(("history", AnyView(HistoryView(store: store, onType: { _ in })), NSSize(width: 820, height: 520)))
+        shots.append(("history", AnyView(HistoryView(store: store, onType: { _ in }, initialSelection: store.items.first?.id)),
+                      NSSize(width: 860, height: 540)))
         for appearance in [NSAppearance.Name.aqua, .darkAqua] {
             for (name, view, size) in shots {
+                // far off screen; the window server still keeps its contents, so `screencapture -l`
+                // gets the real rendering (sidebars and lists do not draw through cacheDisplay)
                 let w = NSWindow(contentRect: NSRect(x: -30000, y: -30000, width: size.width, height: size.height),
-                                 styleMask: [.titled, .fullSizeContentView], backing: .buffered, defer: false)
+                                 styleMask: [.titled, .closable, .miniaturizable, .fullSizeContentView], backing: .buffered, defer: false)
+                w.title = name.hasPrefix("history") ? L.t("历史记录", "History") : ""
                 w.appearance = NSAppearance(named: appearance)
                 let host = NSHostingView(rootView: view)
                 host.frame = NSRect(origin: .zero, size: size)
                 w.contentView = host
                 w.orderFrontRegardless()
-                RunLoop.main.run(until: Date().addingTimeInterval(0.6))
-                guard let rep = host.bitmapImageRepForCachingDisplay(in: host.bounds) else { continue }
-                host.cacheDisplay(in: host.bounds, to: rep)
+                RunLoop.main.run(until: Date().addingTimeInterval(name.hasPrefix("history") ? 1.2 : 0.6))
                 let file = "\(dir)/\(name)-\(appearance == .aqua ? "light" : "dark").png"
-                try? rep.representation(using: .png, properties: [:])?.write(to: URL(fileURLWithPath: file))
+                let shot = Process()
+                shot.executableURL = URL(fileURLWithPath: "/usr/sbin/screencapture")
+                shot.arguments = ["-x", "-o", "-l", "\(w.windowNumber)", file]
+                try? shot.run(); shot.waitUntilExit()
+                if shot.terminationStatus != 0 || !FileManager.default.fileExists(atPath: file),
+                   let rep = host.bitmapImageRepForCachingDisplay(in: host.bounds) {
+                    host.cacheDisplay(in: host.bounds, to: rep)
+                    try? rep.representation(using: .png, properties: [:])?.write(to: URL(fileURLWithPath: file))
+                }
                 w.orderOut(nil)
             }
         }
@@ -421,4 +439,23 @@ final class HudCheck: NSObject, WKScriptMessageHandler {
         print("rendered into \(dir)")
         exit(0)
     }
+}
+
+/// A small picture of the receipt text, as a grab's screenshot would look (for renders).
+func receiptPNG(_ text: String) -> Data? {
+    let size = NSSize(width: 700, height: 150)
+    let img = NSImage(size: size, flipped: true) { r in
+        NSColor(red: 1, green: 0.973, blue: 0.925, alpha: 1).setFill()
+        NSBezierPath(roundedRect: r, xRadius: 12, yRadius: 12).fill()
+        var y: CGFloat = 18
+        for (k, line) in text.components(separatedBy: "\n").enumerated() {
+            let a: [NSAttributedString.Key: Any] = [.font: NSFont.systemFont(ofSize: k == 0 ? 24 : 20, weight: k == 0 ? .semibold : .regular),
+                                                    .foregroundColor: NSColor(red: 0.23, green: 0.18, blue: 0.12, alpha: 1)]
+            (line as NSString).draw(at: NSPoint(x: 22, y: y), withAttributes: a)
+            y += k == 0 ? 44 : 36
+        }
+        return true
+    }
+    guard let tiff = img.tiffRepresentation, let rep = NSBitmapImageRep(data: tiff) else { return nil }
+    return rep.representation(using: .png, properties: [:])
 }

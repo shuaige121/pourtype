@@ -1,0 +1,162 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Pourtype App Store shot</title>
+<style>
+  html, body { margin: 0; width: 1440px; height: 900px; overflow: hidden; }
+  body { background: radial-gradient(1100px 700px at 15% 0%, #2B2E48 0, transparent 60%),
+                     radial-gradient(900px 600px at 100% 100%, #3a2448 0, transparent 60%), #0E0F1A;
+         font-family: -apple-system, "PingFang SC", "Hiragino Sans", system-ui, sans-serif; color: #F4F5FA; }
+  h1 { margin: 46px 0 0; text-align: center; font-size: 50px; font-weight: 700; letter-spacing: -.01em; }
+  .bar { height: 4px; width: 96px; border-radius: 2px; margin: 18px auto 0;
+         background: linear-gradient(90deg, #5E9BFF, #A27BFF, #FF6FB5, #FFB066); }
+  .stage { position: absolute; left: 60px; top: 160px; width: 1320px; height: 700px; display: flex; gap: 24px; }
+  .screen { position: relative; flex: 1; height: 700px; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.08); }
+  .wall { position: absolute; inset: 0; background:
+          radial-gradient(800px 500px at 20% 20%, #6d7fd6 0, transparent 60%),
+          radial-gradient(700px 500px at 85% 80%, #d77aa8 0, transparent 60%),
+          linear-gradient(135deg, #3b4a8a, #8a4f8f); }
+  .menubar { position: absolute; left: 0; right: 0; top: 0; height: 26px; background: rgba(20,20,30,.35);
+             backdrop-filter: blur(20px); font-size: 13px; display: flex; align-items: center; padding: 0 14px; gap: 18px; }
+  .win { position: absolute; border-radius: 12px; overflow: hidden; background: #f5f6fa;
+         box-shadow: 0 22px 60px rgba(0,0,0,.45), 0 0 0 .5px rgba(0,0,0,.3); }
+  .chrome { height: 38px; background: #e9eaef; display: flex; align-items: center; gap: 8px; padding: 0 14px;
+            border-bottom: 1px solid #d6d8e0; color: #555a70; font-size: 13px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .url { margin-left: 18px; flex: 1; height: 24px; border-radius: 7px; background: #fff; display: flex; align-items: center;
+         justify-content: center; font-size: 12.5px; color: #6b6f85; }
+  .win iframe { border: 0; display: block; width: 100%; background: #f5f6fa; }
+  .frost { position: absolute; inset: 0; backdrop-filter: blur(22px) saturate(1.35); -webkit-backdrop-filter: blur(22px) saturate(1.35); }
+  .hud { position: absolute; inset: 0; border: 0; width: 100%; height: 100%; background: transparent; }
+  .dim { position: absolute; inset: 0; background: rgba(0,0,0,.28); }
+  .sel { position: absolute; outline: 1px solid rgba(255,255,255,.95); box-shadow: 0 0 0 9999px rgba(0,0,0,.28); }
+  .sel .size { position: absolute; right: 0; bottom: -26px; font: 500 11px/1 ui-monospace, Menlo, monospace;
+               background: rgba(0,0,0,.7); color: #fff; padding: 5px 6px; border-radius: 4px; }
+  .toast { position: absolute; left: 50%; top: 40px; transform: translateX(-50%); padding: 9px 16px; border-radius: 17px;
+           background: rgba(40,40,48,.82); backdrop-filter: blur(20px); font-size: 13.5px; font-weight: 500;
+           display: flex; gap: 8px; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+  .zoom { transform-origin: 0 0; }
+</style></head>
+<body>
+<h1 id="cap"></h1><div class="bar"></div>
+<div class="stage" id="stage"></div>
+<script>
+const P = new URLSearchParams(location.search);
+const SHOT = P.get('shot') || 'typing', LANG = P.get('lang') || 'en', ZH = LANG === 'zh';
+const T = {
+  typing: ['Paste blocked? Type it.', '粘贴被拦住？直接敲进去。'],
+  speed: ['Speed and rhythm, your call', '速度和节奏，由你掌握'],
+  grab: ['Grab text from anything you can see', '看得见的文字，都能抓取'],
+  multi: ['Works across multiple displays', '支持多显示器'],
+  history: ['Everything you grabbed or typed, searchable', '抓取和键入过的内容，随时搜索'],
+};
+document.getElementById('cap').textContent = T[SHOT][ZH ? 1 : 0];
+const MESSAGE = ZH ? '你好，订单 A-20481 的台灯收到时底座有裂痕。\n照片已附上，麻烦补发一个，或者给我退货标签。\n谢谢！林晓'
+                   : 'Hi, the desk lamp from order A-20481 arrived with a cracked base.\nPhotos are attached. Could you send a replacement, or a return label?\nThanks, Alex';
+const units = Array.from(new Intl.Segmenter().segment(MESSAGE), s => s.segment);
+
+function screen(parent) {
+  const s = document.createElement('div'); s.className = 'screen';
+  s.innerHTML = '<div class="content" style="position:absolute;inset:0;transform-origin:0 0"><div class="wall"></div>' +
+    '<div class="menubar"><b></b><span>' + (ZH ? 'Safari浏览器' : 'Safari') + '</span></div></div>';
+  parent.appendChild(s); s.content = s.querySelector('.content'); return s;
+}
+function browser(scr, x, y, w, h) {
+  const win = document.createElement('div'); win.className = 'win';
+  Object.assign(win.style, { left: x + 'px', top: y + 'px', width: w + 'px', height: h + 'px' });
+  win.innerHTML = '<div class="chrome"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span>' +
+    '<span class="dot" style="background:#28c840"></span><span class="url">example-shop.test/feedback</span></div>' +
+    '<iframe src="/appstore/demo/index.html' + (ZH ? '?lang=zh' : '') + '" style="height:' + (h - 38) + 'px"></iframe>';
+  scr.content.appendChild(win);
+  return new Promise(r => win.querySelector('iframe').onload = () => r(win));
+}
+function rectIn(scr, win, el) {           // element rect in screen coordinates
+  const f = win.querySelector('iframe').getBoundingClientRect(), s = scr.getBoundingClientRect(), r = el.getBoundingClientRect();
+  return { x: f.left - s.left + r.left, y: f.top - s.top + r.top, w: r.width, h: r.height };
+}
+function frost(scr, hole) {
+  const W = scr.clientWidth, H = scr.clientHeight, f = document.createElement('div'); f.className = 'frost';
+  let d = `M0 0H${W}V${H}H0Z`;
+  if (hole) { const { x, y, w, h } = hole, r = 10;
+    d += `M${x + r} ${y}H${x + w - r}A${r} ${r} 0 0 1 ${x + w} ${y + r}V${y + h - r}A${r} ${r} 0 0 1 ${x + w - r} ${y + h}H${x + r}A${r} ${r} 0 0 1 ${x} ${y + h - r}V${y + r}A${r} ${r} 0 0 1 ${x + r} ${y}Z`; }
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${W}' height='${H}'><path fill-rule='evenodd' d='${d}'/></svg>`;
+  f.style.webkitMaskImage = f.style.maskImage = `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
+  scr.content.appendChild(f);
+}
+function hud(scr, payload) {
+  const fr = document.createElement('iframe'); fr.className = 'hud'; fr.src = '/Resources/hud.html';
+  fr.setAttribute('allowtransparency', 'true'); scr.content.appendChild(fr);
+  return new Promise(r => fr.onload = () => { fr.contentWindow.hud.init(payload); setTimeout(() => r(fr), 700); });
+}
+async function icon(path) {
+  const b = await (await fetch(path)).blob();
+  return await new Promise(r => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(b); });
+}
+function payload(scr, hole, i, extra = {}) {
+  return Object.assign({
+    units, preview: false, lang: LANG, reduceMotion: false, role: 'main', toward: { dx: 0, dy: 0 },
+    target: { app: ZH ? 'Safari浏览器' : 'Safari', title: ZH ? '提交反馈' : 'Send feedback', field: '', icon: ICON },
+    screen: { w: scr.clientWidth, h: scr.clientHeight }, safe: { x: 0, y: 26, w: scr.clientWidth, h: scr.clientHeight - 26 },
+    hole: hole ? { ...hole, r: 10 } : null,
+    state: { i, cps: 42, rand: 0.3, eta: 4.5, held: { up: false, down: false, left: false, right: false }, nudge: 0, phase: 'typing' },
+  }, extra);
+}
+let ICON;
+async function typingScene(scr, i, extra, box = [150, 70, 860, 600]) {
+  const win = await browser(scr, ...box);
+  const doc = win.querySelector('iframe').contentDocument, ta = doc.getElementById('ta');
+  ta.value = units.slice(0, i).join('');
+  const r = rectIn(scr, win, ta), hole = { x: r.x - 8, y: r.y - 6, w: r.w + 16, h: r.h + 12 };
+  frost(scr, hole);
+  await hud(scr, payload(scr, hole, i, extra));
+  return { win, hole };
+}
+(async () => {
+  ICON = await icon('/appstore/shots/img/safari.png');
+  const stage = document.getElementById('stage');
+  const i = Math.round(units.length * 0.58);
+  if (SHOT === 'typing') {
+    await typingScene(screen(stage), i);
+  } else if (SHOT === 'speed') {
+    const scr = screen(stage);
+    const { hole } = await typingScene(scr, i, {});
+    const fr = scr.querySelector('.hud');
+    fr.contentWindow.hud.update({ cps: 96, held: { up: true, down: false, left: false, right: false } });
+    // zoom on the card: the HUD places it under the field
+    const card = fr.contentDocument.getElementById('card').getBoundingClientRect();
+    const s = 1.45, cx = card.left + card.width / 2, cy = (card.top + hole.y + 120) / 2;
+    const inner = scr.content;
+    inner.style.transform = `translate(${scr.clientWidth / 2 - cx * s}px, ${scr.clientHeight / 2 - cy * s}px) scale(${s})`;
+  } else if (SHOT === 'grab') {
+    const scr = screen(stage);
+    const win = await browser(scr, 150, 70, 860, 600);
+    const doc = win.querySelector('iframe').contentDocument;
+    doc.getElementById('cv').scrollIntoView({ block: 'center' });
+    await new Promise(r => setTimeout(r, 200));
+    const r = rectIn(scr, win, doc.getElementById('cv'));
+    const sel = document.createElement('div'); sel.className = 'sel';
+    Object.assign(sel.style, { left: r.x - 10 + 'px', top: r.y - 10 + 'px', width: r.w + 20 + 'px', height: r.h + 20 + 'px' });
+    sel.innerHTML = `<span class="size">${Math.round(r.w + 20)} × ${Math.round(r.h + 20)}</span>`;
+    scr.content.appendChild(sel);
+    const t = document.createElement('div'); t.className = 'toast';
+    t.innerHTML = '<span style="opacity:.75">⌘⇧C</span><span>' + (ZH ? '已复制 3 行文字' : 'Copied 3 lines of text') + '</span>';
+    scr.content.appendChild(t);
+  } else if (SHOT === 'history') {
+    const scr = screen(stage);
+    scr.querySelector('.menubar').innerHTML = '<b></b><span>Pourtype</span>';
+    const img = document.createElement('img');
+    img.src = '/appstore/shots/img/history-' + (ZH ? 'zh' : 'en') + '.png';
+    Object.assign(img.style, { position: 'absolute', left: '50%', top: '58px', width: '860px', transform: 'translateX(-50%)',
+                               borderRadius: '12px', boxShadow: '0 26px 70px rgba(0,0,0,.5)' });
+    scr.content.appendChild(img);
+    await new Promise(r => img.complete ? r() : (img.onload = r));
+  } else if (SHOT === 'multi') {
+    const a = screen(stage), b = screen(stage);
+    b.querySelector('.menubar').innerHTML = '';
+    await typingScene(a, i, {}, [40, 70, 568, 600]);
+    frost(b, null);
+    await hud(b, payload(b, null, i, { role: 'remote', toward: { dx: -1, dy: 0 } }));
+  }
+  document.body.dataset.ready = '1';
+})();
+</script>
+</body></html>

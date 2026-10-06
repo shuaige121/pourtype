@@ -9,6 +9,12 @@ struct HistoryView: View {
     @State private var query = ""
     @State private var selection: HistoryItem.ID?
 
+    init(store: HistoryStore, onType: @escaping (String) -> Void, initialSelection: HistoryItem.ID? = nil) {
+        self.store = store
+        self.onType = onType
+        _selection = State(initialValue: initialSelection)
+    }
+
     private var shown: [HistoryItem] { store.search(query) }
     private var selected: HistoryItem? { store.items.first { $0.id == selection } }
 
