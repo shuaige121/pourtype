@@ -47,7 +47,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleURL(_:_:)),
                                                      forEventClass: AEEventClass(kInternetEventClass),
                                                      andEventID: AEEventID(kAEGetURL))
-        if !Permissions.accessibility { openSettings() }
+        if !Permissions.accessibility { Permissions.requestAccessibility(); openSettings() }
         if !settings.typeHotkeyOK || !settings.grabHotkeyOK {
             Toast.shared.show(L.t("⌘⇧V 或 ⌘⇧C 被别的 App 占用，可以从菜单栏使用", "⌘⇧V or ⌘⇧C is taken by another app; use the menu bar"),
                               seconds: 4, warn: true)
@@ -98,8 +98,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         case "type-slow": typeClipboard(mode: "slow")
         case "grab": grab()
         case "history": openHistory()
+        case "status": writeStatus()
         default: break
         }
+    }
+
+    /// pourtype://status -> Application Support/<bundle id>/status.json (for scripts and tests).
+    private func writeStatus() {
+        let d: [String: Any] = ["accessibility": Permissions.accessibility, "screenRecording": Permissions.screenRecording,
+                                "typeHotkey": settings.typeHotkeyOK, "grabHotkey": settings.grabHotkeyOK,
+                                "slowHotkey": settings.slowHotkeyOK, "pid": Int(getpid()),
+                                "time": ISO8601DateFormatter().string(from: Date())]
+        let dir = HistoryStore.shared.dir.deletingLastPathComponent()
+        try? json(d).data(using: .utf8)?.write(to: dir.appendingPathComponent("status.json"), options: .atomic)
     }
 
     // MARK: typing

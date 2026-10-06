@@ -8,6 +8,8 @@ A small macOS menu-bar utility for two chores:
 
 Everything runs locally. The app makes no network requests and collects no data.
 
+**Status:** not released yet; build it from source (below). Privacy policy: [docs/privacy.html](docs/privacy.html).
+
 ## While it types
 
 | Key | Effect |
