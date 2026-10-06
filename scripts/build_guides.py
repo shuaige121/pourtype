@@ -36,8 +36,9 @@ UI = {
                cta_h="Pourtype does this in one shortcut",
                cta=("Pourtype is a small Mac menu-bar app made for these problems. Press ⌘⇧V and it types your clipboard "
                     "into the field as real keystrokes; press ⌘⇧C and drag a box to copy any text you can see. It runs "
-                    "locally and collects no data. US$2.99, one-time, on the Mac App Store (coming soon)."),
-               cta_btn="About Pourtype", disclosure="Disclosure: this guide is written by the developer of Pourtype."),
+                    "locally and collects no data. US$2.99, one-time, on the Mac App Store."),
+               cta_btn="About Pourtype", disclosure="I make Pourtype. This page lists every method, including free ones.",
+               status="Pourtype is in App Review and not on sale yet."),
     "zh-Hans": dict(home="首页", guides="使用指南", updated="更新于", answer="简短回答", sources="参考来源",
                     related="相关指南", faq="常见问题", by="作者：Leonard Chow（Pourtype 开发者）",
                     all_guides="指南：Mac 上输入框禁止粘贴、截图识字怎么办",
@@ -45,8 +46,9 @@ UI = {
                     cta_h="用 Pourtype，一个快捷键搞定",
                     cta=("Pourtype 是专为这类问题做的 Mac 菜单栏小工具：按 ⌘⇧V，它把剪贴板里的文字当作真实按键打进输入框；"
                          "按 ⌘⇧C 拖一个框，屏幕上看得见的文字就能复制。全部在本机完成，不收集任何数据。"
-                         "Mac App Store 一次买断 US$2.99（即将上架）。"),
-                    cta_btn="了解 Pourtype", disclosure="利益相关：本文作者是 Pourtype 的开发者。"),
+                         "Mac App Store 一次买断 US$2.99。"),
+                    cta_btn="了解 Pourtype", disclosure="利益相关：我是 Pourtype 的开发者。本文列出所有方法，包括免费的。",
+                    status="Pourtype 正在接受 App Store 审核，尚未开卖。"),
     "zh-Hant": dict(home="首頁", guides="使用指南", updated="更新於", answer="簡短回答", sources="參考來源",
                     related="相關指南", faq="常見問題", by="作者：Leonard Chow（Pourtype 開發者）",
                     all_guides="指南：Mac 上欄位禁止貼上、擷取螢幕文字怎麼辦",
@@ -54,8 +56,9 @@ UI = {
                     cta_h="用 Pourtype，一個快速鍵完成",
                     cta=("Pourtype 是專為這類問題做的 Mac 選單列小工具：按 ⌘⇧V，它會把剪貼簿裡的文字當作真實按鍵輸入到欄位中；"
                          "按 ⌘⇧C 拖曳一個框，螢幕上看得到的文字就能複製。全部在本機完成，不收集任何資料。"
-                         "Mac App Store 一次買斷 US$2.99（即將上架）。"),
-                    cta_btn="認識 Pourtype", disclosure="利益揭露：本文作者是 Pourtype 的開發者。"),
+                         "Mac App Store 一次買斷 US$2.99。"),
+                    cta_btn="認識 Pourtype", disclosure="利益揭露：我是 Pourtype 的開發者。本文列出所有方法，包括免費的。",
+                    status="Pourtype 正在接受 App Store 審查，尚未開賣。"),
     "ja": dict(home="ホーム", guides="ガイド", updated="更新日", answer="結論", sources="参考資料",
                related="関連ガイド", faq="よくある質問", by="執筆：Leonard Chow（Pourtype 開発者）",
                all_guides="ガイド：Mac で貼り付けできない欄への入力と、画面の文字のコピー",
@@ -63,8 +66,9 @@ UI = {
                cta_h="Pourtype ならショートカットひとつで",
                cta=("Pourtype は、こうした場面のために作った Mac のメニューバーアプリです。⌘⇧V を押すと、クリップボードの文字を"
                     "実際のキー入力として欄に入力します。⌘⇧C で範囲を囲めば、画面に見える文字をコピーできます。処理はすべて Mac の中で行い、"
-                    "データは収集しません。Mac App Store で US$2.99 の買い切り（近日公開）。"),
-               cta_btn="Pourtype について", disclosure="開示：このガイドは Pourtype の開発者が書いています。"),
+                    "データは収集しません。Mac App Store で US$2.99 の買い切りです。"),
+               cta_btn="Pourtype について", disclosure="開示：私は Pourtype の開発者です。このページでは無料の方法も含め、すべての方法を紹介します。",
+               status="Pourtype は現在 App Store の審査中で、まだ販売していません。"),
 }
 
 
@@ -135,6 +139,11 @@ def render_body(blocks):
             out.append("<ol>" + "".join(f"<li>{inline(x)}</li>" for x in b["ol"]) + "</ol>")
         elif "note" in b:
             out.append(f'<p class="note">{inline(b["note"])}</p>')
+        elif "table" in b:
+            t = b["table"]
+            out.append('<div class="table-wrap"><table><thead><tr>' + "".join(f"<th>{inline(h)}</th>" for h in t["head"]) +
+                       "</tr></thead><tbody>" + "".join("<tr>" + "".join(f"<td>{inline(c)}</td>" for c in r) + "</tr>" for r in t["rows"]) +
+                       "</tbody></table></div>")
         else:
             raise ValueError(f"unknown block {b}")
     return "\n".join(out)
@@ -163,13 +172,14 @@ def build_guide(g, groups, by_lang):
     body = [f'<main class="lp-main guide">',
             f'<nav class="crumbs"><a href="{home_url(lang)}">{t["home"]}</a> › <a href="{index_url(lang)}">{t["guides"]}</a></nav>',
             f"<h1>{inline(g['h1'])}</h1>",
-            f'<p class="meta">{t["by"]} · {t["updated"]} <time datetime="{g["updated"]}">{g["updated"]}</time></p>',
+            f'<p class="meta">{t["by"]} · {t["updated"]} <time datetime="{g["updated"]}">{g["updated"]}</time>'
+            + (f' · {inline(g["tested"])}' if g.get("tested") else "") + f'<br>{t["disclosure"]}</p>',
             f'<div class="answer"><strong>{t["answer"]}</strong><p>{inline(g["answer"])}</p></div>']
     body += [f"<p>{inline(p)}</p>" for p in g.get("intro", [])]
     for s in g["sections"]:
         body.append(f"<h2>{inline(s['h2'])}</h2>\n{render_body(s['body'])}")
     body.append(f'<aside class="cta"><h2>{t["cta_h"]}</h2><p>{t["cta"]}</p>'
-                f'<p><a class="btn" href="{home_url(lang)}">{t["cta_btn"]}</a></p><p class="note">{t["disclosure"]}</p></aside>')
+                f'<p class="note">{t["status"]}</p><p><a class="btn" href="{home_url(lang)}">{t["cta_btn"]}</a></p></aside>')
     if g.get("faq"):
         body.append(f'<section class="faq"><h2>{t["faq"]}</h2>' + "".join(
             f"<details><summary>{inline(f['q'])}</summary><p>{inline(f['a'])}</p></details>" for f in g["faq"]) + "</section>")
@@ -249,6 +259,11 @@ def main():
                 sys.exit(f"{g.get('group')}.{g.get('lang')}: missing {k}")
         if g["lang"] not in LANGS:
             sys.exit(f"{g['group']}: unknown lang {g['lang']}")
+        cjk = g["lang"] != "en"
+        if len(g["title"]) > (32 if cjk else 60):
+            sys.exit(f"{g['group']}.{g['lang']}: title is {len(g['title'])} chars (max {32 if cjk else 60})")
+        if len(g["description"]) > (110 if cjk else 170):
+            sys.exit(f"{g['group']}.{g['lang']}: description is {len(g['description'])} chars")
         if g["lang"] in groups.setdefault(g["group"], {}):
             sys.exit(f"{g['group']}: two {g['lang']} versions")
         groups[g["group"]][g["lang"]] = g

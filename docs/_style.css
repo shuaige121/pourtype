@@ -72,3 +72,6 @@ body.lp main.lp-main { max-width:1040px; padding:24px 20px 40px; }
 .guide-list { list-style:none; padding:0; } .guide-list li { padding:16px 0; border-top:1px solid var(--line); } .guide-list p { margin:4px 0 0; color:var(--dim); font-size:15px; }
 html:lang(ja) body { font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", system-ui, sans-serif; }
 html:lang(zh-Hant) body { font-family: -apple-system, "PingFang TC", system-ui, sans-serif; }
+.table-wrap { overflow-x:auto; margin:14px 0; }
+.guide table { border-collapse:collapse; width:100%; font-size:14.5px; } .guide th, .guide td { text-align:left; vertical-align:top; padding:9px 10px; border-bottom:1px solid var(--line); }
+.guide th { font-weight:650; background:var(--card); }
