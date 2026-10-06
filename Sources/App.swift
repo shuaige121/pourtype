@@ -11,6 +11,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     static func main() {
         if CommandLine.arguments.contains("--probe") { Probe.run() }
         if CommandLine.arguments.contains("--hud-check") { HudCheck.run() }
+        if let i = CommandLine.arguments.firstIndex(of: "--render-ui"), i + 1 < CommandLine.arguments.count {
+            UIRender.run(dir: CommandLine.arguments[i + 1])
+        }
         let app = NSApplication.shared
         let delegate = AppDelegate()
         app.delegate = delegate
@@ -21,6 +24,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var status: NSStatusItem!
     private var historyWindow: NSWindow?
     private var settingsWindow: NSWindow?
+    private var welcomeWindow: NSWindow?
     private let settings = SettingsModel()
     private var picker: RegionPicker?
     private var plain: Engine?               // the fallback typing (Secure Input), no veil
@@ -47,7 +51,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(handleURL(_:_:)),
                                                      forEventClass: AEEventClass(kInternetEventClass),
                                                      andEventID: AEEventID(kAEGetURL))
-        if !Permissions.accessibility { Permissions.requestAccessibility(); openSettings() }
+        // first run (or a run interrupted by "Quit & Reopen" while granting): the guide
+        if !UserDefaults.standard.bool(forKey: "onboarding.done") || !Permissions.accessibility { openWelcome() }
         if !settings.typeHotkeyOK || !settings.grabHotkeyOK {
             Toast.shared.show(L.t("⌘⇧V 或 ⌘⇧C 被别的 App 占用，可以从菜单栏使用", "⌘⇧V or ⌘⇧C is taken by another app; use the menu bar"),
                               seconds: 4, warn: true)
@@ -74,6 +79,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         item(L.t("历史记录…", "History…"), "", [], #selector(historyAction), "clock.arrow.circlepath")
         menu.addItem(.separator())
         item(L.t("设置…", "Settings…"), ",", [.command], #selector(settingsAction), "gearshape")
+        item(L.t("使用指南…", "Getting Started…"), "", [], #selector(welcomeAction), "questionmark.circle")
         menu.addItem(.separator())
         let quit = NSMenuItem(title: L.t("退出", "Quit"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         menu.addItem(quit)
@@ -83,6 +89,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @objc private func grabAction() { afterMenuCloses { self.grab() } }
     @objc private func historyAction() { openHistory() }
     @objc private func settingsAction() { openSettings() }
+    @objc private func welcomeAction() { openWelcome() }
     @objc private func stopPlainAction() { stopPlain() }
 
     /// The menu was in front; give the previous app its focus back before typing into it.
@@ -98,6 +105,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         case "type-slow": typeClipboard(mode: "slow")
         case "grab": grab()
         case "history": openHistory()
+        case "settings": openSettings()
+        case "welcome": openWelcome()
         case "status": writeStatus()
         default: break
         }
@@ -123,7 +132,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func type(_ text: String, mode: String, replace: Bool = false) {
         guard !busy else { Toast.shared.show(L.t("正在输入中", "Already typing"), warn: true); return }
         let pace = Prefs.pace(mode)
-        let started = TypeSession.start(text: text, pace: pace, replace: replace, lang: L.lang) { [weak self] r in
+        // the guide's practice box is ours: typing into ourselves is allowed only there
+        let practicing = welcomeWindow?.isKeyWindow == true
+        let started = TypeSession.start(text: text, pace: pace, replace: replace, lang: L.lang, allowSelf: practicing) { [weak self] r in
             TypeSessionTracker.running = false
             self?.finished(r, text: text, mode: mode, start: pace)
         }
@@ -257,6 +268,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { self.type(text, mode: "normal") }
     }
 
+    func openWelcome() {
+        if welcomeWindow == nil {
+            let model = OnboardingModel()
+            let w = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 680, height: 540),
+                             styleMask: [.titled, .closable, .fullSizeContentView], backing: .buffered, defer: false)
+            w.titlebarAppearsTransparent = true
+            w.titleVisibility = .hidden
+            w.isMovableByWindowBackground = true
+            w.isReleasedWhenClosed = false
+            w.contentViewController = NSHostingController(rootView: OnboardingView(model: model))
+            model.onFinish = { [weak self, weak w] in
+                w?.close()
+                self?.welcomeWindow = nil
+                Toast.shared.show(L.t("Pourtype 在菜单栏里，随时可用", "Pourtype is in the menu bar, ready"), symbol: "checkmark.circle")
+            }
+            w.center()
+            welcomeWindow = w
+        }
+        NSApp.activate(ignoringOtherApps: true)
+        welcomeWindow?.makeKeyAndOrderFront(nil)
+    }
+
     func openSettings() {
         if settingsWindow == nil {
             let w = NSWindow(contentViewController: NSHostingController(rootView: SettingsView(model: settings)))
@@ -333,6 +366,59 @@ final class HudCheck: NSObject, WKScriptMessageHandler {
     func userContentController(_ u: WKUserContentController, didReceive m: WKScriptMessage) {
         print(json(["hud": "loaded", "message": "\(m.body)",
                     "sandboxed": ProcessInfo.processInfo.environment["APP_SANDBOX_CONTAINER_ID"] != nil]))
+        exit(0)
+    }
+}
+
+/// `Pourtype --render-ui DIR`: draw the windows offscreen into PNGs (light and dark) for design
+/// review, without showing anything. POURTYPE_LANG=en|zh picks the language.
+@MainActor enum UIRender {
+    static func run(dir: String) -> Never {
+        let app = NSApplication.shared
+        app.setActivationPolicy(.prohibited)
+        try? FileManager.default.createDirectory(atPath: dir, withIntermediateDirectories: true)
+        let tmp = FileManager.default.temporaryDirectory.appendingPathComponent("pourtype-render-\(getpid())")
+        let store = HistoryStore(dir: tmp)
+        for (k, t) in [("grab", L.t("收据编号 R-7731 · 2026年10月6日\n桌面台灯 ×1    S$ 39.90", "Receipt R-7731 · 6 Oct 2026\nDesk lamp x1    S$ 39.90")),
+                       ("typed", L.t("你好，订单 A-20481 的台灯收到时底座有裂痕。", "Hi, the desk lamp from order A-20481 arrived with a cracked base.")),
+                       ("grab", L.t("会议改到周四下午 3 点，4B 会议室。", "Meeting moved to Thursday 3 pm, room 4B."))] {
+            store.add(HistoryItem(kind: k == "grab" ? .grab : .typed, text: t, app: "Safari"))
+        }
+        var shots: [(String, AnyView, NSSize)] = []
+        for step in 0...3 {
+            let m = OnboardingModel()
+            m.freeze(accessibility: false, screenRecording: false)
+            m.step = step
+            shots.append(("welcome-\(step)", AnyView(OnboardingView(model: m)), NSSize(width: 680, height: 540)))
+            if step == 3 {
+                let done = OnboardingModel()
+                done.freeze(accessibility: true, screenRecording: true)
+                done.step = 3
+                done.practice = done.sample
+                shots.append(("welcome-3-done", AnyView(OnboardingView(model: done)), NSSize(width: 680, height: 540)))
+            }
+        }
+        shots.append(("settings", AnyView(SettingsView(model: SettingsModel())), NSSize(width: 520, height: 760)))
+        shots.append(("history", AnyView(HistoryView(store: store, onType: { _ in })), NSSize(width: 820, height: 520)))
+        for appearance in [NSAppearance.Name.aqua, .darkAqua] {
+            for (name, view, size) in shots {
+                let w = NSWindow(contentRect: NSRect(x: -30000, y: -30000, width: size.width, height: size.height),
+                                 styleMask: [.titled, .fullSizeContentView], backing: .buffered, defer: false)
+                w.appearance = NSAppearance(named: appearance)
+                let host = NSHostingView(rootView: view)
+                host.frame = NSRect(origin: .zero, size: size)
+                w.contentView = host
+                w.orderFrontRegardless()
+                RunLoop.main.run(until: Date().addingTimeInterval(0.6))
+                guard let rep = host.bitmapImageRepForCachingDisplay(in: host.bounds) else { continue }
+                host.cacheDisplay(in: host.bounds, to: rep)
+                let file = "\(dir)/\(name)-\(appearance == .aqua ? "light" : "dark").png"
+                try? rep.representation(using: .png, properties: [:])?.write(to: URL(fileURLWithPath: file))
+                w.orderOut(nil)
+            }
+        }
+        UserDefaults.standard.set(0, forKey: "onboarding.step")
+        print("rendered into \(dir)")
         exit(0)
     }
 }

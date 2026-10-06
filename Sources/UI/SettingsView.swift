@@ -5,6 +5,20 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
+            Section {
+                HStack(spacing: 14) {
+                    Image(nsImage: NSApp.applicationIconImage).resizable().frame(width: 52, height: 52)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Pourtype").font(.system(size: 17, weight: .semibold))
+                        Text(L.t("版本 ", "Version ") + (Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""))
+                            .font(.caption).foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                    Button(L.t("使用指南", "Getting Started")) { NSWorkspace.shared.open(URL(string: "pourtype://welcome")!) }
+                    Button(L.t("帮助", "Help")) { NSWorkspace.shared.open(URL(string: "https://shuaige121.github.io/pourtype/support.html")!) }
+                }
+                .padding(.vertical, 4)
+            }
             Section(L.t("权限", "Permissions")) {
                 PermissionRow(title: L.t("辅助功能", "Accessibility"),
                               detail: L.t("用来打字，并在打字时暂时锁住键盘和鼠标。", "To type, and to hold the keyboard and mouse while it types."),

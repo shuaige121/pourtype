@@ -49,7 +49,25 @@ func frontWindow(_ pid: pid_t) -> (number: Int, frame: CGRect, title: String?)? 
     return nil
 }
 
+/// Our own window (the guide's practice box): read it from AppKit. Asking AX about ourselves
+/// from the main thread would wait on the main thread, which is busy asking.
+@MainActor func selfFocus() -> Focus {
+    var f = Focus()
+    guard let w = NSApp.keyWindow else { return f }
+    f.windowFrame = cgFrame(w.frame)
+    f.title = w.title
+    if let v = w.firstResponder as? NSView {
+        let target = v.enclosingScrollView ?? v
+        f.fieldFrame = cgFrame(w.convertToScreen(target.convert(target.bounds, to: nil)))
+    }
+    f.windowNumber = w.windowNumber
+    return f
+}
+
 func readFocus(_ pid: pid_t) -> Focus {
+    if pid == getpid() {
+        return Thread.isMainThread ? MainActor.assumeIsolated { selfFocus() } : DispatchQueue.main.sync { MainActor.assumeIsolated { selfFocus() } }
+    }
     let app = AXUIElementCreateApplication(pid)
     AXUIElementSetMessagingTimeout(app, 0.3)
     var f = Focus()

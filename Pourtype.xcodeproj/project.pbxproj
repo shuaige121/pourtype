@@ -18,6 +18,7 @@
 		81964DF472B5BA7A36136008 /* Grabber.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68D101A4FDF5170AB647456 /* Grabber.swift */; };
 		8AAEAE5C9AEA00085131874B /* RegionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BFC504B0D3ED8163592406 /* RegionPicker.swift */; };
 		9B7D5A93187B0E293336FFA2 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324E13A5BA46332B93823AEA /* Target.swift */; };
+		BC75A0B10319A3ED112822AE /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E99A0C954CECA8B1203227 /* OnboardingView.swift */; };
 		C75F2434B5864B5EAB0352FC /* HistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC179E499D26086C222E5FED /* HistoryStore.swift */; };
 		CE1078958351E144D5113BE3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8427C665087ACBC142C38DF /* SettingsView.swift */; };
 		F2AD3457562480E99D3F1946 /* CoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9F2F247C68F2F5869A1EBD /* CoreTests.swift */; };
@@ -35,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		0845FF9AF5F164F9951D9CFE /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		18E99A0C954CECA8B1203227 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		24C93BB7D0D64803004C678D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		324E13A5BA46332B93823AEA /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
 		327590DCE29A383BABFDDD20 /* TypeSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeSession.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 		8211C44FA2DBD4AFBF8A8BB4 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				18E99A0C954CECA8B1203227 /* OnboardingView.swift */,
 				B8427C665087ACBC142C38DF /* SettingsView.swift */,
 			);
 			path = UI;
@@ -247,6 +250,7 @@
 				81964DF472B5BA7A36136008 /* Grabber.swift in Sources */,
 				C75F2434B5864B5EAB0352FC /* HistoryStore.swift in Sources */,
 				254DC2BBA13AACDF8ECA3C9A /* HistoryView.swift in Sources */,
+				BC75A0B10319A3ED112822AE /* OnboardingView.swift in Sources */,
 				4F0D9EB9364EB097580C14EC /* Overlay.swift in Sources */,
 				8AAEAE5C9AEA00085131874B /* RegionPicker.swift in Sources */,
 				CE1078958351E144D5113BE3 /* SettingsView.swift in Sources */,

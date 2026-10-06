@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-Hans"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pourtype：把剪贴板敲进禁止粘贴的输入框（Mac）</title>
+<meta name="description" content="Pourtype 是 macOS 菜单栏小工具。按 Command-Shift-V，把剪贴板文字当作真实按键敲进禁止粘贴的输入框；按 Command-Shift-C，复制屏幕上任何文字。本机运行，不收集数据。">
+<link rel="canonical" href="https://shuaige121.github.io/pourtype/zh-hans/">
+<link rel="alternate" hreflang="en" href="https://shuaige121.github.io/pourtype/">
+<link rel="alternate" hreflang="zh-Hans" href="https://shuaige121.github.io/pourtype/zh-hans/">
+<link rel="alternate" hreflang="zh-Hant" href="https://shuaige121.github.io/pourtype/zh-hant/">
+<link rel="alternate" hreflang="ja" href="https://shuaige121.github.io/pourtype/ja/">
+<link rel="alternate" hreflang="x-default" href="https://shuaige121.github.io/pourtype/">
+<meta name="theme-color" content="#0E0F1A">
+<link rel="icon" type="image/png" href="../img/icon.png">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Pourtype">
+<meta property="og:title" content="Pourtype：把剪贴板敲进禁止粘贴的输入框（Mac）"><meta property="og:description" content="键入你复制的，复制你看见的。一切都在你的 Mac 上：不发起网络请求，不收集数据。">
+<meta property="og:url" content="https://shuaige121.github.io/pourtype/zh-hans/"><meta property="og:image" content="https://shuaige121.github.io/pourtype/img/og.png">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Pourtype：把剪贴板敲进禁止粘贴的输入框（Mac）">
+<meta name="twitter:description" content="键入你复制的，复制你看见的。一切都在你的 Mac 上：不发起网络请求，不收集数据。"><meta name="twitter:image" content="https://shuaige121.github.io/pourtype/img/og.png">
+<link rel="stylesheet" href="../_style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Pourtype",
+  "operatingSystem": "macOS 14 or later",
+  "applicationCategory": "UtilitiesApplication",
+  "description": "把剪贴板文字键入禁止粘贴的输入框，并复制屏幕上任何位置的文字。本机运行，不收集数据。",
+  "url": "https://shuaige121.github.io/pourtype/zh-hans/",
+  "inLanguage": "zh-Hans",
+  "offers": {
+    "@type": "Offer",
+    "price": "2.99",
+    "priceCurrency": "USD",
+    "description": "即将在 Mac App Store 上架，一次性购买。"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Leonard Chow"
+  },
+  "sameAs": [
+    "https://github.com/shuaige121/pourtype"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "zh-Hans",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Mac 上输入框禁止粘贴，怎么把文字输进去？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "复制文字，点进输入框，按 Command-Shift-V。Pourtype 会把剪贴板文字当作真实按键敲进去，所以粘贴被拦住的地方也能用。键入时，屏幕会盖上磨砂遮罩，只留出正在输入的窗口，按 Esc 立即停止。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Mac 上怎么复制图片里的文字？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "按 Command-Shift-C，在文字上拖一个框。Pourtype 用 Apple 的 Vision 在本机识别文字，并复制到剪贴板。支持简体中文、繁体中文、英文和日文。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "安全吗？会把我的数据发到哪里吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pourtype 在本机运行，不发起任何网络请求，也不收集任何数据。文字识别在你的 Mac 上完成，历史记录只保存在你的 Mac 上，随时可以清除。源码公开在 GitHub 上。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "键入过程中怎么停下来？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "按 Esc。键入立即停止，键盘和鼠标随即释放。如果有其他 App 切到前台，它也会自动停止。在密码框里，请按 Control-Option-Command-句号。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "支持中文、日文和韩文吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "支持。Pourtype 可以键入中文、日文、韩文和表情符号。从屏幕抓取文字时，可识别简体中文、繁体中文、英文和日文。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "能在密码框里键入吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "可以，但有一个限制。在密码框里 macOS 会开启 Secure Input，键盘无法被锁定，Pourtype 会退回为普通键入。按 Control-Option-Command-句号可以停止。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "可以调整键入速度吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "可以。按住 ↑ 或 ↓ 调整速度，范围是每秒 3 到 150 个字符；按住 ← 或 → 调整节奏，从匀速到随机。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "多少钱？在哪里获取？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pourtype 计划在 Mac App Store 上架，价格 2.99 美元，一次性买断，目前尚未上架。需要 macOS 14 或更高版本。源码在 GitHub 上，采用 PolyForm Noncommercial 1.0.0 许可：源码公开，个人和非商业使用免费，但不是开源软件。"
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="lp">
+<header class="lp-top"><a class="lp-brand" href="https://shuaige121.github.io/pourtype/zh-hans/"><span class="lp-dot" aria-hidden="true"></span>Pourtype</a>
+<nav class="lp-lang" aria-label="语言"><a href="../" hreflang="en" lang="en">English</a> · <a href="../zh-hans/" hreflang="zh-Hans" lang="zh-Hans" aria-current="page">简体中文</a> · <a href="../zh-hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> · <a href="../ja/" hreflang="ja" lang="ja">日本語</a></nav></header>
+<main class="lp-main">
+<section class="lp-hero">
+<div class="lp-copy"><p class="lp-tag">macOS 菜单栏工具</p><h1>键入你复制的文字，<br>复制你看见的文字。</h1><p class="lp-lead">有些输入框和对话框不允许粘贴，Pourtype 会把剪贴板的文字当作真实按键敲进去。图片里的文字也能复制出来。一切都在你的 Mac 上完成。</p>
+<div class="lp-badges"><span class="badge">Mac App Store：即将上架</span><span class="badge">2.99 美元，一次性买断</span><span class="badge">需要 macOS 14 或更高版本</span></div>
+<p class="lp-cta"><a class="btn" href="#how">看看怎么用</a> <a class="btn ghost" href="https://github.com/shuaige121/pourtype">GitHub 源码</a></p></div>
+<div class="lp-mock" aria-hidden="true"><div class="mock-card"><div class="mock-app">目标：备忘录，无标题</div>
+<div class="mock-text">你好，这段文字正在被一个键一个键地敲进去<span class="caret"></span></div>
+<div class="mock-bar"><i></i></div><div class="mock-foot"><span>剩余 4 秒</span><span>按 Esc 停止</span></div></div></div>
+</section>
+<section id="features"><h2>三件事</h2><div class="cards"><article class="card"><div class="key">⌘⇧V</div><h3>键入剪贴板</h3><p>有些网站和对话框不让你粘贴。照常复制文字，点进输入框，按下快捷键，Pourtype 会替你一个键一个键地敲进去。换行以 Shift+Return 输入，聊天框不会提前发送。</p></article><article class="card"><div class="key">⌘⇧C</div><h3>抓取文字</h3><p>在屏幕上任意位置拖一个框，哪怕文字在图片里。Pourtype 用 Apple 的 Vision 在本机识别并复制。支持简体中文、繁体中文、英文和日文。</p></article><article class="card"><div class="key">历史记录</div><h3>随时找回</h3><p>抓取过和键入过的内容，都保存在你 Mac 上一份可搜索的列表里。可以再次复制，或再次键入。随时清除，也可以选择保留 7、30、90 或 365 天。</p></article></div></section>
+<section class="lp-control"><h2>键入时，一切由你掌控</h2><ul><li>屏幕会盖上一层磨砂遮罩，只留出正在输入的窗口。键盘和鼠标被锁定，焦点不会被移走。</li><li>按 Esc 立即停止。如果有其他 App 切到前台，键入也会停止；按键只会送给目标 App。</li><li>按住 ↑ 或 ↓ 调整速度，范围是每秒 3 到 150 个字符；按住 ← 或 → 调整节奏，从匀速到随机。</li><li>一张卡片会显示目标 App 和窗口、正在流出的文字、进度和剩余秒数。有多个显示器时，其他显示器会出现一张小卡片，指向目标显示器。</li></ul></section>
+<section id="how"><h2>怎么用</h2><div class="how"><div><h3>键入剪贴板</h3><ol><li>照常复制文字。</li><li>点进禁止粘贴的输入框，按 ⌘⇧V。</li><li>看着卡片就行，想停就按 Esc。</li></ol></div><div><h3>抓取文字</h3><ol><li>按 ⌘⇧C。</li><li>在文字上拖一个框，文字就复制到剪贴板了。</li></ol></div></div></section>
+<section id="faq"><h2>常见问题</h2><details><summary>Mac 上输入框禁止粘贴，怎么把文字输进去？</summary><p>复制文字，点进输入框，按 Command-Shift-V。Pourtype 会把剪贴板文字当作真实按键敲进去，所以粘贴被拦住的地方也能用。键入时，屏幕会盖上磨砂遮罩，只留出正在输入的窗口，按 Esc 立即停止。</p></details><details><summary>Mac 上怎么复制图片里的文字？</summary><p>按 Command-Shift-C，在文字上拖一个框。Pourtype 用 Apple 的 Vision 在本机识别文字，并复制到剪贴板。支持简体中文、繁体中文、英文和日文。</p></details><details><summary>安全吗？会把我的数据发到哪里吗？</summary><p>Pourtype 在本机运行，不发起任何网络请求，也不收集任何数据。文字识别在你的 Mac 上完成，历史记录只保存在你的 Mac 上，随时可以清除。源码公开在 GitHub 上。</p></details><details><summary>键入过程中怎么停下来？</summary><p>按 Esc。键入立即停止，键盘和鼠标随即释放。如果有其他 App 切到前台，它也会自动停止。在密码框里，请按 Control-Option-Command-句号。</p></details><details><summary>支持中文、日文和韩文吗？</summary><p>支持。Pourtype 可以键入中文、日文、韩文和表情符号。从屏幕抓取文字时，可识别简体中文、繁体中文、英文和日文。</p></details><details><summary>能在密码框里键入吗？</summary><p>可以，但有一个限制。在密码框里 macOS 会开启 Secure Input，键盘无法被锁定，Pourtype 会退回为普通键入。按 Control-Option-Command-句号可以停止。</p></details><details><summary>可以调整键入速度吗？</summary><p>可以。按住 ↑ 或 ↓ 调整速度，范围是每秒 3 到 150 个字符；按住 ← 或 → 调整节奏，从匀速到随机。</p></details><details><summary>多少钱？在哪里获取？</summary><p>Pourtype 计划在 Mac App Store 上架，价格 2.99 美元，一次性买断，目前尚未上架。需要 macOS 14 或更高版本。源码在 GitHub 上，采用 PolyForm Noncommercial 1.0.0 许可：源码公开，个人和非商业使用免费，但不是开源软件。</p></details></section>
+<section id="privacy" class="lp-privacy"><h2>天生私密</h2><p>Pourtype 在本机运行，不发起任何网络请求，也不收集任何数据。</p><p>它需要辅助功能权限（用于键入，以及在键入时锁定键盘和鼠标）和屏幕录制权限（用于识别你框选区域内的文字）。只有在键入时才会锁定你的输入。</p><p><a href="../privacy.html">阅读隐私政策</a></p></section>
+</main>
+<footer class="lp-foot"><p>作者 Leonard Chow，个人 Apple 开发者。</p><p>源码公开，采用 PolyForm Noncommercial 1.0.0 许可。个人和非商业使用免费。</p>
+<p><a href="https://github.com/shuaige121/pourtype">GitHub</a> · <a href="../privacy.html">隐私政策</a> · <a href="../support.html">支持</a></p></footer>
+</body></html>

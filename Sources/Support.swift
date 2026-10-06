@@ -6,7 +6,7 @@ import ServiceManagement
 // MARK: - language
 
 enum L {
-    static let zh = (Locale.preferredLanguages.first ?? "").hasPrefix("zh")
+    static let zh = (ProcessInfo.processInfo.environment["POURTYPE_LANG"] ?? Locale.preferredLanguages.first ?? "").hasPrefix("zh")
     static var lang: String { zh ? "zh" : "en" }
     static func t(_ zhText: String, _ en: String) -> String { zh ? zhText : en }
 }

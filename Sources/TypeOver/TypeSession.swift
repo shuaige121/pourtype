@@ -35,7 +35,7 @@ final class TypeSession {
     enum Phase { case waiting, typing, draining, ending }
 
     /// Check everything that can be checked before anything is shown, then start.
-    static func start(text: String, pace: Pace, replace: Bool, lang: String,
+    static func start(text: String, pace: Pace, replace: Bool, lang: String, allowSelf: Bool = false,
                       onFinish: @escaping (TypeResult) -> Void) -> Result<TypeSession, TypeStartError> {
         if gSession != nil { return .failure(.busy) }
         let units = splitUnits(prepareText(text))
@@ -43,7 +43,7 @@ final class TypeSession {
         if let holder = secureInputHolder() { return .failure(.secureInput(holder)) }
         guard AXIsProcessTrusted() else { return .failure(.untrusted) }
         guard let front = NSWorkspace.shared.frontmostApplication,
-              front.processIdentifier != getpid() else { return .failure(.noTarget) }
+              allowSelf || front.processIdentifier != getpid() else { return .failure(.noTarget) }
 
         let focus = readFocus(front.processIdentifier)
         let screens = NSScreen.screens.map { ScreenInfo(frame: cgFrame($0.frame), visible: cgFrame($0.visibleFrame)) }

@@ -1,0 +1,34 @@
+# Pourtype
+
+> Pourtype is a macOS menu-bar app that types your clipboard into fields that block paste, and copies text out of anything visible on screen. It runs locally, makes no network requests and collects no data.
+
+Pourtype is made by Leonard Chow, an individual Apple developer. It requires macOS 14 or later. It is planned for the Mac App Store at US$2.99 (one-time purchase) and is not on the App Store yet. The source code is available on GitHub under the PolyForm Noncommercial 1.0.0 license: source-available, free for personal and noncommercial use. It is not open source.
+
+## Who it is for
+Mac users who meet fields or dialogs that refuse paste, people who need text out of images, PDFs or video, and people who prefer tools that do not send data anywhere.
+
+## Features
+- Type the clipboard (Command-Shift-V): types the clipboard into the focused field as real keystrokes, for fields that block paste. While it types, the screen is frosted except the window being typed into, and the keyboard and mouse are held so focus cannot move. Esc stops it at once. Hold Up/Down to change speed (3-150 characters per second); hold Left/Right to change rhythm from steady to random. A card shows the target app and window, the text streaming, progress and seconds left. With several displays, the other displays show a small card pointing to the target display. If another app comes to the front it stops, and keystrokes are delivered only to the target app. Newlines are typed as Shift+Return so chat boxes do not send early; tabs become spaces. Chinese, Japanese and Korean text and emoji are supported.
+- Grab text (Command-Shift-C): drag a box anywhere on screen; the text inside is recognised on-device with Apple Vision (Simplified Chinese, Traditional Chinese, English, Japanese) and copied to the clipboard.
+- History: grabbed and typed texts are kept locally and are searchable; copy or type them again; they can be cleared; retention can be 7, 30, 90 or 365 days.
+
+## Limits
+- In password fields macOS turns on Secure Input. The keyboard cannot be held there, so Pourtype falls back to plain typing. Control-Option-Command-Period stops it.
+- Not yet available on the Mac App Store.
+
+## Privacy
+Runs locally. Makes no network requests. Collects no data. Text recognition happens on the Mac. History is stored only on the Mac and can be cleared. Permissions used: Accessibility (to type and to hold the keyboard and mouse while typing) and Screen Recording (to read the box the user draws).
+
+## Frequently asked
+- How do I type into a field that blocks paste on Mac? Copy the text, click into the field, press Command-Shift-V.
+- How do I copy text from an image on Mac? Press Command-Shift-C and drag a box over the text.
+- How do I stop it? Press Esc. In a password field, press Control-Option-Command-Period.
+
+## Links
+- Home (English): https://shuaige121.github.io/pourtype/
+- Home (简体中文): https://shuaige121.github.io/pourtype/zh-hans/
+- Home (繁體中文): https://shuaige121.github.io/pourtype/zh-hant/
+- Home (日本語): https://shuaige121.github.io/pourtype/ja/
+- Privacy policy: https://shuaige121.github.io/pourtype/privacy.html
+- Support: https://shuaige121.github.io/pourtype/support.html
+- Source: https://github.com/shuaige121/pourtype
