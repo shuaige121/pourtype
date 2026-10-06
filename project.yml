@@ -1,0 +1,65 @@
+name: Pourtype
+options:
+  bundleIdPrefix: com.leonardchow
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+configs:
+  Debug: debug
+  Release: release
+  AppStore: release
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: VKSJ2FY567
+    ENABLE_HARDENED_RUNTIME: YES
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+targets:
+  Pourtype:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources
+      - path: Resources
+    info:
+      path: Info.plist
+      properties:
+        LSUIElement: true
+        CFBundleDisplayName: Pourtype
+        LSApplicationCategoryType: public.app-category.productivity
+        NSHumanReadableCopyright: "© 2026 Leonard Chow"
+        CFBundleURLTypes:
+          - CFBundleURLName: com.leonardchow.pourtype
+            CFBundleURLSchemes: [pourtype]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.leonardchow.pourtype
+        PRODUCT_NAME: Pourtype
+        CODE_SIGN_ENTITLEMENTS: Direct.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      configs:
+        AppStore:
+          CODE_SIGN_ENTITLEMENTS: AppStore.entitlements
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: APPSTORE
+  PourtypeTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources: [Tests]
+    dependencies:
+      - target: Pourtype
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.leonardchow.pourtype.tests
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Pourtype.app/Contents/MacOS/Pourtype"
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  Pourtype:
+    build:
+      targets:
+        Pourtype: all
+    test:
+      targets: [PourtypeTests]

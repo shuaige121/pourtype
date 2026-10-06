@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>com.apple.security.app-sandbox</key>
+	<true/>
+	<!-- WKWebView needs it to start its web content process, even for the bundled hud.html.
+	     The app makes no network requests (measured 2026-10-06: without it the HUD never loads). -->
+	<key>com.apple.security.network.client</key>
+	<true/>
+</dict>
+</plist>
