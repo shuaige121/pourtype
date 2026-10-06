@@ -23,9 +23,9 @@ body.lp main.lp-main { max-width:1040px; padding:24px 20px 40px; }
 .lp-main section { margin-top:72px; } .lp-main section:first-child { margin-top:24px; }
 .lp-main h2 { font-size:28px; line-height:1.25; margin:0 0 22px; letter-spacing:-.01em; }
 .lp-main h3 { font-size:18px; margin:0 0 8px; }
-.lp-hero { display:grid; grid-template-columns:1.15fr .85fr; gap:40px; align-items:center; }
+.lp-hero { display:grid; grid-template-columns:1.3fr .7fr; gap:40px; align-items:center; }
 .lp-tag { margin:0 0 10px; font-size:14px; color:var(--dim); letter-spacing:.04em; }
-.lp-hero h1 { font-size:clamp(34px,5.4vw,56px); line-height:1.12; letter-spacing:-.02em; margin:0 0 18px; }
+.lp-hero h1 { font-size:clamp(30px,4.4vw,48px); line-height:1.15; text-wrap:balance; word-break:auto-phrase; letter-spacing:-.02em; margin:0 0 18px; }
 .lp-lead { font-size:18px; color:var(--dim); margin:0 0 20px; max-width:34em; }
 .lp-badges { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px; }
 .badge { font-size:13px; padding:5px 12px; border-radius:99px; border:1px solid var(--cardline); background:var(--card); color:var(--text); }
