@@ -1,0 +1,11 @@
+:root { --bg:#FAFAFD; --text:#14152B; --dim:#5b5e78; --line:#e6e7f0; --a1:#5E9BFF; --a2:#A27BFF; --a3:#FF6FB5; }
+@media (prefers-color-scheme: dark) { :root { --bg:#0E0F1A; --text:#F4F5FA; --dim:#A9ADC4; --line:#2B2E48; } }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--text); font:16px/1.65 -apple-system, "PingFang SC", system-ui, sans-serif; }
+main { max-width: 720px; margin: 0 auto; padding: 56px 20px 80px; }
+h1 { font-size: 30px; line-height:1.2; margin: 0 0 6px; }
+h2 { font-size: 19px; margin: 34px 0 8px; }
+.rule { height:3px; width:72px; border-radius:2px; margin: 14px 0 28px; background: linear-gradient(90deg,var(--a1),var(--a2),var(--a3)); }
+p, li { color: var(--text); } .dim { color: var(--dim); font-size: 14px; }
+a { color: var(--a2); }
+hr { border: 0; border-top: 1px solid var(--line); margin: 44px 0; }

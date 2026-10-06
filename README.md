@@ -46,4 +46,12 @@ Automation hooks: `open -g pourtype://type`, `pourtype://type-slow`, `pourtype:/
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+Source-available under the [PolyForm Noncommercial License 1.0.0](LICENSE.md): free for personal use and for
+noncommercial organisations (study, research, hobby projects, charities, schools, public institutions); any
+commercial use is not permitted. This is not an OSI open-source licence.
+
+The ready-to-use build on the Mac App Store is how the project is paid for.
+
+源码公开，采用 [PolyForm Noncommercial 1.0.0](LICENSE.md) 许可：个人使用不限，非营利组织（学习、研究、个人项目、慈善、学校、公共机构）也可使用；禁止任何商业用途。注意这不是 OSI 定义的开源许可。
+
+Contributions: see [CONTRIBUTING.md](CONTRIBUTING.md).
