@@ -5,10 +5,50 @@ import ServiceManagement
 
 // MARK: - language
 
+// Strings are written inline as (Simplified Chinese, English). Traditional Chinese and Japanese
+// come from Resources/strings-<lang>.json, keyed by the English text; scripts/l10n.py checks
+// that every inline pair has both translations.
+
 enum L {
-    static let zh = (ProcessInfo.processInfo.environment["POURTYPE_LANG"] ?? Locale.preferredLanguages.first ?? "").hasPrefix("zh")
-    static var lang: String { zh ? "zh" : "en" }
-    static func t(_ zhText: String, _ en: String) -> String { zh ? zhText : en }
+    /// en, zh-Hans, zh-Hant or ja: the first of the user's preferred languages that we have.
+    static let lang: String = {
+        let prefs = ProcessInfo.processInfo.environment["POURTYPE_LANG"].map { [$0] } ?? Locale.preferredLanguages
+        for p in prefs {
+            if ["zh-Hant", "zh-TW", "zh-HK", "zh-MO"].contains(where: p.hasPrefix) { return "zh-Hant" }
+            if p.hasPrefix("zh") { return "zh-Hans" }
+            if p.hasPrefix("ja") { return "ja" }
+            if p.hasPrefix("en") { return "en" }
+        }
+        return "en"
+    }()
+    static var zh: Bool { lang.hasPrefix("zh") }
+    /// dates and numbers in the UI language, keeping the user's region when it matches
+    static var locale: Locale {
+        let cur = Locale.current
+        return cur.identifier.hasPrefix(lang) ? cur : Locale(identifier: lang)
+    }
+
+    private static let table: [String: String] = {
+        guard lang == "ja" || lang == "zh-Hant",
+              let url = Bundle.main.url(forResource: "strings-\(lang)", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let t = try? JSONDecoder().decode([String: String].self, from: data) else { return [:] }
+        return t
+    }()
+
+    static func t(_ zhText: String, _ en: String) -> String {
+        switch lang {
+        case "zh-Hans": return zhText
+        case "zh-Hant": return table[en] ?? zhText
+        case "ja": return table[en] ?? en
+        default: return en
+        }
+    }
+
+    /// Formatted: placeholders are %1$@, %2$@ … so a translation may reorder them.
+    static func f(_ zhText: String, _ en: String, _ args: String...) -> String {
+        String(format: t(zhText, en), arguments: args)
+    }
 }
 
 // MARK: - preferences

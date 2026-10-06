@@ -4,6 +4,7 @@ options:
   deploymentTarget:
     macOS: "14.0"
   createIntermediateGroups: true
+  developmentLanguage: en
 configs:
   Debug: debug
   Release: release
@@ -12,7 +13,7 @@ settings:
   base:
     SWIFT_VERSION: "5.0"
     MARKETING_VERSION: "1.0.0"
-    CURRENT_PROJECT_VERSION: "3"
+    CURRENT_PROJECT_VERSION: "4"
     DEVELOPMENT_TEAM: VKSJ2FY567
     ENABLE_HARDENED_RUNTIME: YES
     CODE_SIGN_STYLE: Manual
@@ -32,6 +33,9 @@ targets:
         CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         CFBundleDisplayName: Pourtype
+        CFBundleDevelopmentRegion: en
+        # the UI languages (L in Support.swift); the App Store lists these from the .lproj folders
+        CFBundleLocalizations: [en, zh-Hans, zh-Hant, ja]
         LSApplicationCategoryType: public.app-category.productivity
         NSHumanReadableCopyright: "© 2026 Leonard Chow"
         CFBundleURLTypes:

@@ -69,7 +69,7 @@ struct OnboardingView: View {
                         title: L.t("允许 Pourtype 替你按键", "Let Pourtype press keys for you"),
                         why: L.t("Pourtype 要替你一个键一个键地打字，并在打字时暂时锁住键盘鼠标，防止打到别的地方。macOS 需要你亲手允许一次。",
                                  "Pourtype types for you key by key, and holds the keyboard and mouse while it types so nothing lands in the wrong place. macOS asks you to allow this once."),
-                        pane: L.t("辅助功能", "Accessibility"),
+                        pane: L.t("辅助功能（无障碍）", "Accessibility"),
                         granted: model.accessibility,
                         open: { Permissions.requestAccessibility(); Permissions.open("Privacy_Accessibility") },
                         help: L.t("开关已经打开却还显示没开？把 Pourtype 的开关关掉再打开一次；还不行就在列表里选中 Pourtype，点「−」删掉，再回来点上面的按钮。",
@@ -78,9 +78,10 @@ struct OnboardingView: View {
                     case 2: PermissionStep(
                         number: 2,
                         title: L.t("允许 Pourtype 读取你框选的区域", "Let Pourtype read the area you select"),
-                        why: L.t("只在你按 ⌘⇧C 框选时，读取框里那一小块画面来识别文字。识别在本机完成，不上传。",
-                                 "Only when you press ⌘⇧C and drag a box, Pourtype reads that area to recognise the text. It happens on your Mac; nothing is uploaded."),
-                        pane: L.t("屏幕与系统录音", "Screen & System Audio Recording"),
+                        why: L.f("只在你按 %1$@ 框选时，读取框里那一小块画面来识别文字。识别在本机完成，不上传。",
+                                 "Only when you press %1$@ and drag a box, Pourtype reads that area to recognise the text. It happens on your Mac; nothing is uploaded.",
+                                 Shortcuts.get(.grab).display),
+                        pane: L.t("录屏与系统录音", "Screen & System Audio Recording"),
                         granted: model.screenRecording,
                         open: { Permissions.requestScreenRecording(); Permissions.open("Privacy_ScreenCapture") },
                         help: L.t("打开开关后，macOS 会提示「退出并重新打开」，点它就行，Pourtype 会回到这一步。",
@@ -182,6 +183,7 @@ private struct Welcome: View {
                                   "Drag a box; the text inside is recognised and copied — from images, PDFs, videos."),
                         symbol: "text.viewfinder")
             }
+            .fixedSize(horizontal: false, vertical: true)   // both cards as tall as the taller one
             .padding(.horizontal, 36).padding(.top, 6)
             Label(L.t("全部在你的 Mac 上完成，不联网、不收集任何数据。", "Everything stays on your Mac. No network, no data collected."),
                   systemImage: "lock.shield").font(.system(size: 12)).foregroundStyle(.secondary)
@@ -205,7 +207,7 @@ private struct Feature: View {
             Text(text).font(.system(size: 12.5)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
         }
         .padding(16)
-        .frame(maxWidth: .infinity, alignment: .topLeading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(RoundedRectangle(cornerRadius: 14).fill(Color.primary.opacity(0.045)))
         .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.primary.opacity(0.08)))
     }
@@ -219,7 +221,7 @@ private struct PermissionStep: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            Text(L.t("第 \(number) 步，共 2 步", "Step \(number) of 2")).font(.system(size: 12, weight: .medium)).foregroundStyle(.secondary)
+            Text(L.f("第 %1$@ 步，共 2 步", "Step %1$@ of 2", "\(number)")).font(.system(size: 12, weight: .medium)).foregroundStyle(.secondary)
                 .padding(.top, 30)
             Text(title).font(.system(size: 24, weight: .bold, design: .rounded)).multilineTextAlignment(.center)
             Text(why).font(.system(size: 13.5)).foregroundStyle(.secondary).multilineTextAlignment(.center)
@@ -228,7 +230,7 @@ private struct PermissionStep: View {
             if !granted {
                 // what the user will see in System Settings, drawn so they recognise it
                 VStack(alignment: .leading, spacing: 10) {
-                    Text(L.t("在打开的「\(pane)」列表里：", "In the \(pane) list that opens:"))
+                    Text(L.f("在打开的「%1$@」列表里：", "In the %1$@ list that opens:", pane))
                         .font(.system(size: 12.5, weight: .medium)).foregroundStyle(.secondary)
                     HStack(spacing: 10) {
                         Image(nsImage: AppIcon.image).resizable().frame(width: 22, height: 22)

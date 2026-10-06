@@ -1,0 +1,964 @@
+[
+ {
+  "en": "A shortcut is taken by another app: change it in Settings, or use the menu bar",
+  "zh-Hans": "快捷键被别的 App 占用，可在设置里更换，或从菜单栏使用",
+  "where": [
+   "App.swift:58"
+  ]
+ },
+ {
+  "en": "Stop Typing",
+  "zh-Hans": "停止输入",
+  "where": [
+   "App.swift:88"
+  ]
+ },
+ {
+  "en": "Type Clipboard",
+  "zh-Hans": "打出剪贴板",
+  "where": [
+   "App.swift:92"
+  ]
+ },
+ {
+  "en": "Grab Text",
+  "zh-Hans": "截图识字",
+  "where": [
+   "App.swift:93"
+  ]
+ },
+ {
+  "en": "History…",
+  "zh-Hans": "历史记录…",
+  "where": [
+   "App.swift:94"
+  ]
+ },
+ {
+  "en": "Settings…",
+  "zh-Hans": "设置…",
+  "where": [
+   "App.swift:96"
+  ]
+ },
+ {
+  "en": "Getting Started…",
+  "zh-Hans": "使用指南…",
+  "where": [
+   "App.swift:97"
+  ]
+ },
+ {
+  "en": "Quit",
+  "zh-Hans": "退出",
+  "where": [
+   "App.swift:99"
+  ]
+ },
+ {
+  "en": "Already typing",
+  "zh-Hans": "正在输入中",
+  "where": [
+   "App.swift:148",
+   "App.swift:162"
+  ]
+ },
+ {
+  "en": "The clipboard has no text",
+  "zh-Hans": "剪贴板里没有文字",
+  "where": [
+   "App.swift:160"
+  ]
+ },
+ {
+  "en": "Typing needs the Accessibility permission",
+  "zh-Hans": "需要「辅助功能」权限才能打字",
+  "where": [
+   "App.swift:164"
+  ]
+ },
+ {
+  "en": "Click into the field to type into first",
+  "zh-Hans": "先点一下要输入的地方",
+  "where": [
+   "App.swift:167"
+  ]
+ },
+ {
+  "en": "Cannot hold the keyboard; typing without it. ⌃⌥⌘. stops",
+  "zh-Hans": "无法锁定键鼠，改为直接输入；⌃⌥⌘. 停止",
+  "where": [
+   "App.swift:169"
+  ]
+ },
+ {
+  "en": "Secure Input is on (%1$@): typing without holding input. ⌃⌥⌘. stops",
+  "zh-Hans": "安全输入中（%1$@），不锁键鼠直接输入；⌃⌥⌘. 停止",
+  "where": [
+   "App.swift:172"
+  ]
+ },
+ {
+  "en": "focus moved",
+  "zh-Hans": "焦点变了",
+  "where": [
+   "App.swift:180"
+  ]
+ },
+ {
+  "en": "displays changed",
+  "zh-Hans": "显示器有变化",
+  "where": [
+   "App.swift:180"
+  ]
+ },
+ {
+  "en": "Secure Input turned on",
+  "zh-Hans": "进入了安全输入",
+  "where": [
+   "App.swift:181"
+  ]
+ },
+ {
+  "en": "the system stopped the hold",
+  "zh-Hans": "系统停用了拦截",
+  "where": [
+   "App.swift:181"
+  ]
+ },
+ {
+  "en": "time limit",
+  "zh-Hans": "超时",
+  "where": [
+   "App.swift:182"
+  ]
+ },
+ {
+  "en": "permission revoked",
+  "zh-Hans": "权限被收回",
+  "where": [
+   "App.swift:182"
+  ]
+ },
+ {
+  "en": "keys were held down",
+  "zh-Hans": "按键没有松开",
+  "where": [
+   "App.swift:183"
+  ]
+ },
+ {
+  "en": "Typed %1$@ characters in %2$@ s",
+  "zh-Hans": "已输入 %1$@ 字 · %2$@ 秒",
+  "where": [
+   "App.swift:185",
+   "App.swift:208"
+  ]
+ },
+ {
+  "en": "Stopped at %1$@/%2$@ (%3$@)",
+  "zh-Hans": "停在 %1$@/%2$@（%3$@）",
+  "where": [
+   "App.swift:189"
+  ]
+ },
+ {
+  "en": "Stopped at %1$@/%2$@",
+  "zh-Hans": "停在 %1$@/%2$@",
+  "where": [
+   "App.swift:209",
+   "App.swift:219"
+  ]
+ },
+ {
+  "en": "Grab Text needs the Screen Recording permission",
+  "zh-Hans": "需要「屏幕录制」权限才能截图识字",
+  "where": [
+   "App.swift:228"
+  ]
+ },
+ {
+  "en": "No text found there",
+  "zh-Hans": "这块区域里没有找到文字",
+  "where": [
+   "App.swift:246"
+  ]
+ },
+ {
+  "en": "Copied %1$@ characters, %2$@ lines",
+  "zh-Hans": "已复制 %1$@ 字 · %2$@ 行",
+  "where": [
+   "App.swift:253"
+  ]
+ },
+ {
+  "en": "Grab failed: %1$@",
+  "zh-Hans": "截图识字失败：%1$@",
+  "where": [
+   "App.swift:256"
+  ]
+ },
+ {
+  "en": "History",
+  "zh-Hans": "历史记录",
+  "where": [
+   "App.swift:269",
+   "App.swift:433",
+   "SettingsView.swift:59"
+  ]
+ },
+ {
+  "en": "Pourtype is in the menu bar, ready",
+  "zh-Hans": "Pourtype 在菜单栏里，随时可用",
+  "where": [
+   "App.swift:299"
+  ]
+ },
+ {
+  "en": "Settings",
+  "zh-Hans": "设置",
+  "where": [
+   "App.swift:311"
+  ]
+ },
+ {
+  "en": "Receipt R-7731 · 6 Oct 2026\nDesk lamp x1    S$ 39.90\nReturns accepted within 14 days",
+  "zh-Hans": "收据编号 R-7731 · 2026年10月6日\n桌面台灯 ×1    S$ 39.90\n退货期限：14 天内",
+  "where": [
+   "App.swift:397"
+  ]
+ },
+ {
+  "en": "Wi-Fi: Studio-Guest · password on the card at the front desk",
+  "zh-Hans": "访客 Wi-Fi：Studio-Guest · 密码见前台卡片",
+  "where": [
+   "App.swift:400"
+  ]
+ },
+ {
+  "en": "Photos",
+  "zh-Hans": "照片",
+  "where": [
+   "App.swift:400"
+  ]
+ },
+ {
+  "en": "Order A-20481: replacement requested, photos attached.",
+  "zh-Hans": "订单 A-20481：已申请补发，照片已附上。",
+  "where": [
+   "App.swift:401"
+  ]
+ },
+ {
+  "en": "Mail",
+  "zh-Hans": "邮件",
+  "where": [
+   "App.swift:401"
+  ]
+ },
+ {
+  "en": "Meeting moved to Thursday 3 pm, room 4B. Please bring the Q3 numbers.",
+  "zh-Hans": "会议改到周四下午 3 点，4B 会议室，请带上第三季度的数据。",
+  "where": [
+   "App.swift:402"
+  ]
+ },
+ {
+  "en": "Preview",
+  "zh-Hans": "预览",
+  "where": [
+   "App.swift:402"
+  ]
+ },
+ {
+  "en": "Hi, the desk lamp from order A-20481 arrived with a cracked base.\nPhotos are attached. Could you send a replacement, or a return label?\nThanks, Alex",
+  "zh-Hans": "你好，订单 A-20481 的台灯收到时底座有裂痕。\n照片已附上，麻烦补发一个，或者给我退货标签。\n谢谢！林晓",
+  "where": [
+   "App.swift:403"
+  ]
+ },
+ {
+  "en": "Drag a box around the text · Esc to cancel",
+  "zh-Hans": "拖出一个框来识别文字 · Esc 取消",
+  "where": [
+   "RegionPicker.swift:110"
+  ]
+ },
+ {
+  "en": "Copy",
+  "zh-Hans": "复制",
+  "where": [
+   "HistoryView.swift:26",
+   "HistoryView.swift:102",
+   "OnboardingView.swift:305"
+  ]
+ },
+ {
+  "en": "Type again",
+  "zh-Hans": "再打一次",
+  "where": [
+   "HistoryView.swift:27",
+   "HistoryView.swift:106"
+  ]
+ },
+ {
+  "en": "Delete",
+  "zh-Hans": "删除",
+  "where": [
+   "HistoryView.swift:29",
+   "HistoryView.swift:101"
+  ]
+ },
+ {
+  "en": "Search text or app",
+  "zh-Hans": "搜索文字或 App",
+  "where": [
+   "HistoryView.swift:32"
+  ]
+ },
+ {
+  "en": "Nothing yet",
+  "zh-Hans": "还没有记录",
+  "where": [
+   "HistoryView.swift:36"
+  ]
+ },
+ {
+  "en": "Text you grab with %1$@ or type with %2$@ shows up here.",
+  "zh-Hans": "用 %1$@ 识别的文字和用 %2$@ 打出的文字会出现在这里。",
+  "where": [
+   "HistoryView.swift:37"
+  ]
+ },
+ {
+  "en": "Select an entry",
+  "zh-Hans": "选择一条记录",
+  "where": [
+   "HistoryView.swift:46"
+  ]
+ },
+ {
+  "en": "Grabbed text",
+  "zh-Hans": "识别的文字",
+  "where": [
+   "HistoryView.swift:82"
+  ]
+ },
+ {
+  "en": "Typed text",
+  "zh-Hans": "打出的文字",
+  "where": [
+   "HistoryView.swift:82"
+  ]
+ },
+ {
+  "en": "chars",
+  "zh-Hans": "字",
+  "where": [
+   "HistoryView.swift:86",
+   "Overlay.swift:241"
+  ]
+ },
+ {
+  "en": "Typing into",
+  "zh-Hans": "正在输入到",
+  "where": [
+   "Overlay.swift:230"
+  ]
+ },
+ {
+  "en": "Typing on another display into",
+  "zh-Hans": "正在另一块屏幕上输入到",
+  "where": [
+   "Overlay.swift:231"
+  ]
+ },
+ {
+  "en": "Remaining",
+  "zh-Hans": "预计剩余",
+  "where": [
+   "Overlay.swift:232"
+  ]
+ },
+ {
+  "en": "Speed",
+  "zh-Hans": "速度",
+  "where": [
+   "Overlay.swift:233"
+  ]
+ },
+ {
+  "en": "chars/s",
+  "zh-Hans": "字/秒",
+  "where": [
+   "Overlay.swift:234",
+   "SettingsView.swift:43"
+  ]
+ },
+ {
+  "en": "Rhythm",
+  "zh-Hans": "节奏",
+  "where": [
+   "Overlay.swift:235"
+  ]
+ },
+ {
+  "en": "Steady",
+  "zh-Hans": "平稳",
+  "where": [
+   "Overlay.swift:236",
+   "SettingsView.swift:49"
+  ]
+ },
+ {
+  "en": "Random",
+  "zh-Hans": "随机",
+  "where": [
+   "Overlay.swift:237",
+   "SettingsView.swift:51"
+  ]
+ },
+ {
+  "en": "Stop",
+  "zh-Hans": "停止",
+  "where": [
+   "Overlay.swift:238"
+  ]
+ },
+ {
+  "en": "s",
+  "zh-Hans": "秒",
+  "where": [
+   "Overlay.swift:239"
+  ]
+ },
+ {
+  "en": "m",
+  "zh-Hans": "分",
+  "where": [
+   "Overlay.swift:240"
+  ]
+ },
+ {
+  "en": "Starts when you let go",
+  "zh-Hans": "松开按键后开始",
+  "where": [
+   "Overlay.swift:242"
+  ]
+ },
+ {
+  "en": "Done",
+  "zh-Hans": "已完成",
+  "where": [
+   "Overlay.swift:243"
+  ]
+ },
+ {
+  "en": "Stopped",
+  "zh-Hans": "已停止",
+  "where": [
+   "Overlay.swift:244"
+  ]
+ },
+ {
+  "en": "Focus moved, stopped",
+  "zh-Hans": "焦点变了，已停止",
+  "where": [
+   "Overlay.swift:245"
+  ]
+ },
+ {
+  "en": "the lock screen",
+  "zh-Hans": "锁屏界面",
+  "where": [
+   "Target.swift:139"
+  ]
+ },
+ {
+  "en": "an unknown app",
+  "zh-Hans": "未知程序",
+  "where": [
+   "Target.swift:140"
+  ]
+ },
+ {
+  "en": "Hello! Pourtype typed this — it was not pasted.",
+  "zh-Hans": "你好！这段文字是用 Pourtype 打出来的，不是粘贴的。",
+  "where": [
+   "OnboardingView.swift:21"
+  ]
+ },
+ {
+  "en": "Let Pourtype press keys for you",
+  "zh-Hans": "允许 Pourtype 替你按键",
+  "where": [
+   "OnboardingView.swift:69"
+  ]
+ },
+ {
+  "en": "Pourtype types for you key by key, and holds the keyboard and mouse while it types so nothing lands in the wrong place. macOS asks you to allow this once.",
+  "zh-Hans": "Pourtype 要替你一个键一个键地打字，并在打字时暂时锁住键盘鼠标，防止打到别的地方。macOS 需要你亲手允许一次。",
+  "where": [
+   "OnboardingView.swift:70"
+  ]
+ },
+ {
+  "en": "Accessibility",
+  "zh-Hans": "辅助功能（无障碍）",
+  "where": [
+   "OnboardingView.swift:72",
+   "SettingsView.swift:23"
+  ]
+ },
+ {
+  "en": "Switched on but still shown as off? Turn Pourtype's switch off and on again. If that fails, select Pourtype in the list, click −, then use the button above again.",
+  "zh-Hans": "开关已经打开却还显示没开？把 Pourtype 的开关关掉再打开一次；还不行就在列表里选中 Pourtype，点「−」删掉，再回来点上面的按钮。",
+  "where": [
+   "OnboardingView.swift:75"
+  ]
+ },
+ {
+  "en": "Let Pourtype read the area you select",
+  "zh-Hans": "允许 Pourtype 读取你框选的区域",
+  "where": [
+   "OnboardingView.swift:80"
+  ]
+ },
+ {
+  "en": "Only when you press %1$@ and drag a box, Pourtype reads that area to recognise the text. It happens on your Mac; nothing is uploaded.",
+  "zh-Hans": "只在你按 %1$@ 框选时，读取框里那一小块画面来识别文字。识别在本机完成，不上传。",
+  "where": [
+   "OnboardingView.swift:81"
+  ]
+ },
+ {
+  "en": "Screen & System Audio Recording",
+  "zh-Hans": "录屏与系统录音",
+  "where": [
+   "OnboardingView.swift:84"
+  ]
+ },
+ {
+  "en": "After you switch it on, macOS offers to Quit & Reopen Pourtype. Click it; this guide comes back to this step.",
+  "zh-Hans": "打开开关后，macOS 会提示「退出并重新打开」，点它就行，Pourtype 会回到这一步。",
+  "where": [
+   "OnboardingView.swift:87"
+  ]
+ },
+ {
+  "en": "Type your clipboard into fields that block paste,\nand grab any text you can see on screen.",
+  "zh-Hans": "把剪贴板「打」进禁止粘贴的输入框，\n也能把屏幕上看得见的文字抓下来。",
+  "where": [
+   "OnboardingView.swift:173"
+  ]
+ },
+ {
+  "en": "Type the clipboard",
+  "zh-Hans": "打出剪贴板",
+  "where": [
+   "OnboardingView.swift:177",
+   "Shortcuts.swift:60"
+  ]
+ },
+ {
+  "en": "Copy, click where it should go, press the shortcut. It types it for you. Esc stops.",
+  "zh-Hans": "先复制，点一下要输入的地方，按下快捷键，它替你一个字一个字地打进去。按 Esc 随时停。",
+  "where": [
+   "OnboardingView.swift:178"
+  ]
+ },
+ {
+  "en": "Grab text",
+  "zh-Hans": "截图识字",
+  "where": [
+   "OnboardingView.swift:181",
+   "SettingsView.swift:55",
+   "Shortcuts.swift:61"
+  ]
+ },
+ {
+  "en": "Drag a box; the text inside is recognised and copied — from images, PDFs, videos.",
+  "zh-Hans": "拖一个框，框里的中英文自动识别并复制，图片、PDF、视频里的字都行。",
+  "where": [
+   "OnboardingView.swift:182"
+  ]
+ },
+ {
+  "en": "Everything stays on your Mac. No network, no data collected.",
+  "zh-Hans": "全部在你的 Mac 上完成，不联网、不收集任何数据。",
+  "where": [
+   "OnboardingView.swift:187"
+  ]
+ },
+ {
+  "en": "Set up (about 1 minute)",
+  "zh-Hans": "开始设置（约 1 分钟）",
+  "where": [
+   "OnboardingView.swift:190"
+  ]
+ },
+ {
+  "en": "Step %1$@ of 2",
+  "zh-Hans": "第 %1$@ 步，共 2 步",
+  "where": [
+   "OnboardingView.swift:223"
+  ]
+ },
+ {
+  "en": "In the %1$@ list that opens:",
+  "zh-Hans": "在打开的「%1$@」列表里：",
+  "where": [
+   "OnboardingView.swift:232"
+  ]
+ },
+ {
+  "en": "← switch this on",
+  "zh-Hans": "← 打开这个开关",
+  "where": [
+   "OnboardingView.swift:242"
+  ]
+ },
+ {
+  "en": "macOS may ask for your Mac password or Touch ID.",
+  "zh-Hans": "可能需要输入 Mac 的开机密码或按一下指纹。",
+  "where": [
+   "OnboardingView.swift:247"
+  ]
+ },
+ {
+  "en": "Next",
+  "zh-Hans": "下一步",
+  "where": [
+   "OnboardingView.swift:255"
+  ]
+ },
+ {
+  "en": "Open System Settings",
+  "zh-Hans": "打开系统设置",
+  "where": [
+   "OnboardingView.swift:257"
+  ]
+ },
+ {
+  "en": "Hide",
+  "zh-Hans": "收起",
+  "where": [
+   "OnboardingView.swift:258"
+  ]
+ },
+ {
+  "en": "Switched on but still shown as off?",
+  "zh-Hans": "打开了还是显示没开？",
+  "where": [
+   "OnboardingView.swift:258"
+  ]
+ },
+ {
+  "en": "Allowed",
+  "zh-Hans": "已允许",
+  "where": [
+   "OnboardingView.swift:281"
+  ]
+ },
+ {
+  "en": "Not yet allowed · turns green by itself once you do",
+  "zh-Hans": "还没允许 · 允许后这里会自动变绿",
+  "where": [
+   "OnboardingView.swift:281"
+  ]
+ },
+ {
+  "en": "Try it",
+  "zh-Hans": "试一下",
+  "where": [
+   "OnboardingView.swift:296"
+  ]
+ },
+ {
+  "en": "Copy this text:",
+  "zh-Hans": "复制这段文字：",
+  "where": [
+   "OnboardingView.swift:301"
+  ]
+ },
+ {
+  "en": "Copied",
+  "zh-Hans": "已复制",
+  "where": [
+   "OnboardingView.swift:305"
+  ]
+ },
+ {
+  "en": "Click the box below (it blocks paste), then press",
+  "zh-Hans": "点一下下面的输入框（它禁止粘贴），然后按",
+  "where": [
+   "OnboardingView.swift:318"
+  ]
+ },
+ {
+  "en": "It worked. Use it the same way anywhere paste is blocked.",
+  "zh-Hans": "成功了！以后在任何禁止粘贴的地方都这样用。",
+  "where": [
+   "OnboardingView.swift:332"
+  ]
+ },
+ {
+  "en": "While it types: Esc stops, hold ↑ ↓ to change speed.",
+  "zh-Hans": "打字时按 Esc 可以随时停；按住 ↑ ↓ 调速度。",
+  "where": [
+   "OnboardingView.swift:336"
+  ]
+ },
+ {
+  "en": "Start using Pourtype",
+  "zh-Hans": "开始使用",
+  "where": [
+   "OnboardingView.swift:340"
+  ]
+ },
+ {
+  "en": "Skip and start",
+  "zh-Hans": "跳过，开始使用",
+  "where": [
+   "OnboardingView.swift:340"
+  ]
+ },
+ {
+  "en": "Pourtype lives in the menu bar at the top of the screen.",
+  "zh-Hans": "Pourtype 住在屏幕顶部的菜单栏里。",
+  "where": [
+   "OnboardingView.swift:342"
+  ]
+ },
+ {
+  "en": "Version ",
+  "zh-Hans": "版本 ",
+  "where": [
+   "SettingsView.swift:13"
+  ]
+ },
+ {
+  "en": "Getting Started",
+  "zh-Hans": "使用指南",
+  "where": [
+   "SettingsView.swift:17"
+  ]
+ },
+ {
+  "en": "Help",
+  "zh-Hans": "帮助",
+  "where": [
+   "SettingsView.swift:18"
+  ]
+ },
+ {
+  "en": "Permissions",
+  "zh-Hans": "权限",
+  "where": [
+   "SettingsView.swift:22"
+  ]
+ },
+ {
+  "en": "To type, and to hold the keyboard and mouse while it types.",
+  "zh-Hans": "用来打字，并在打字时暂时锁住键盘和鼠标。",
+  "where": [
+   "SettingsView.swift:24"
+  ]
+ },
+ {
+  "en": "Screen Recording",
+  "zh-Hans": "屏幕录制",
+  "where": [
+   "SettingsView.swift:27"
+  ]
+ },
+ {
+  "en": "Only for the area you select with %1$@.",
+  "zh-Hans": "只在 %1$@ 截取你框选的区域时使用。",
+  "where": [
+   "SettingsView.swift:28"
+  ]
+ },
+ {
+  "en": "Shortcuts",
+  "zh-Hans": "快捷键",
+  "where": [
+   "SettingsView.swift:32"
+  ]
+ },
+ {
+  "en": "Click a shortcut to change it. While typing: ↑↓ speed, ←→ rhythm, Esc stops.",
+  "zh-Hans": "点击快捷键可以更换。打字时：↑↓ 调速度，←→ 调节奏，Esc 停止。",
+  "where": [
+   "SettingsView.swift:36"
+  ]
+ },
+ {
+  "en": "Typing",
+  "zh-Hans": "打字",
+  "where": [
+   "SettingsView.swift:39"
+  ]
+ },
+ {
+  "en": "Default speed",
+  "zh-Hans": "默认速度",
+  "where": [
+   "SettingsView.swift:40"
+  ]
+ },
+ {
+  "en": "Default rhythm",
+  "zh-Hans": "默认节奏",
+  "where": [
+   "SettingsView.swift:47"
+  ]
+ },
+ {
+  "en": "Half-width punctuation after Latin text",
+  "zh-Hans": "英文和数字后的全角标点改成半角",
+  "where": [
+   "SettingsView.swift:56"
+  ]
+ },
+ {
+  "en": "Keep the screenshot in history",
+  "zh-Hans": "在历史里保留截图",
+  "where": [
+   "SettingsView.swift:57"
+  ]
+ },
+ {
+  "en": "Keep grabbed and typed text",
+  "zh-Hans": "记录识别和打出的文字",
+  "where": [
+   "SettingsView.swift:60"
+  ]
+ },
+ {
+  "en": "Keep for",
+  "zh-Hans": "保留",
+  "where": [
+   "SettingsView.swift:61"
+  ]
+ },
+ {
+  "en": "7 days",
+  "zh-Hans": "7 天",
+  "where": [
+   "SettingsView.swift:62"
+  ]
+ },
+ {
+  "en": "30 days",
+  "zh-Hans": "30 天",
+  "where": [
+   "SettingsView.swift:63"
+  ]
+ },
+ {
+  "en": "90 days",
+  "zh-Hans": "90 天",
+  "where": [
+   "SettingsView.swift:64"
+  ]
+ },
+ {
+  "en": "1 year",
+  "zh-Hans": "1 年",
+  "where": [
+   "SettingsView.swift:65"
+  ]
+ },
+ {
+  "en": "Stored on this Mac only. Nothing leaves it.",
+  "zh-Hans": "只存在这台 Mac 上，不联网。",
+  "where": [
+   "SettingsView.swift:68"
+  ]
+ },
+ {
+  "en": "Clear History…",
+  "zh-Hans": "清空历史…",
+  "where": [
+   "SettingsView.swift:71"
+  ]
+ },
+ {
+  "en": "General",
+  "zh-Hans": "通用",
+  "where": [
+   "SettingsView.swift:74"
+  ]
+ },
+ {
+  "en": "Launch at login",
+  "zh-Hans": "登录时启动",
+  "where": [
+   "SettingsView.swift:75"
+  ]
+ },
+ {
+  "en": "Clear all history?",
+  "zh-Hans": "清空全部历史记录？",
+  "where": [
+   "SettingsView.swift:83"
+  ]
+ },
+ {
+  "en": "Clear",
+  "zh-Hans": "清空",
+  "where": [
+   "SettingsView.swift:84"
+  ]
+ },
+ {
+  "en": "Texts and screenshots are deleted and cannot be restored.",
+  "zh-Hans": "文字和截图都会删除，无法恢复。",
+  "where": [
+   "SettingsView.swift:86"
+  ]
+ },
+ {
+  "en": "Grant…",
+  "zh-Hans": "授权…",
+  "where": [
+   "SettingsView.swift:102"
+  ]
+ },
+ {
+  "en": "Type slowly",
+  "zh-Hans": "慢速打出",
+  "where": [
+   "Shortcuts.swift:62"
+  ]
+ },
+ {
+  "en": "In use by another app",
+  "zh-Hans": "被别的 App 占用",
+  "where": [
+   "Shortcuts.swift:106"
+  ]
+ },
+ {
+  "en": "Include ⌘, ⌃ or ⌥",
+  "zh-Hans": "需要带 ⌘、⌃ 或 ⌥",
+  "where": [
+   "Shortcuts.swift:109"
+  ]
+ },
+ {
+  "en": "Press new shortcut…",
+  "zh-Hans": "按下新快捷键…",
+  "where": [
+   "Shortcuts.swift:112"
+  ]
+ },
+ {
+  "en": "Restore default",
+  "zh-Hans": "恢复默认",
+  "where": [
+   "Shortcuts.swift:120"
+  ]
+ }
+]

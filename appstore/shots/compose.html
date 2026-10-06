@@ -41,23 +41,41 @@
 <div class="stage" id="stage"></div>
 <script>
 const P = new URLSearchParams(location.search);
-const SHOT = P.get('shot') || 'typing', LANG = P.get('lang') || 'en', ZH = LANG === 'zh';
+const SHOT = P.get('shot') || 'typing', LANG = P.get('lang') || 'en';   // en | zh | zh-Hant | ja
+// zh-Hant and ja use the app's own translation tables, so the store shots match the app
+function table(lang) {
+  if (lang !== 'ja' && lang !== 'zh-Hant') return {};
+  const x = new XMLHttpRequest(); x.open('GET', `/Resources/strings-${lang}.json`, false); x.send();
+  return JSON.parse(x.responseText);
+}
+const TABLE = table(LANG);
+const tr = (en, zh) => LANG === 'en' ? en : LANG === 'zh' ? zh : (TABLE[en] ?? (LANG === 'zh-Hant' ? zh : en));
+const pick = o => o[LANG] ?? o.en;
 const T = {
-  typing: ['Paste blocked? Type it.', '粘贴被拦住？直接敲进去。'],
-  speed: ['Speed and rhythm, your call', '速度和节奏，由你掌握'],
-  grab: ['Grab text from anything you can see', '看得见的文字，都能抓取'],
-  multi: ['Works across multiple displays', '支持多显示器'],
-  history: ['Everything you grabbed or typed, searchable', '抓取和键入过的内容，随时搜索'],
+  typing: { en: 'Paste blocked? Type it.', zh: '粘贴被拦住？直接敲进去。', 'zh-Hant': '不能貼上？直接打進去。', ja: '貼り付けできない欄に、キー入力で。' },
+  speed: { en: 'Speed and rhythm, your call', zh: '速度和节奏，由你掌握', 'zh-Hant': '速度和節奏，由你掌握', ja: '速度もリズムも、思いのままに' },
+  grab: { en: 'Grab text from anything you can see', zh: '看得见的文字，都能抓取', 'zh-Hant': '看得見的文字，都能擷取', ja: '画面に見える文字を、そのままテキストに' },
+  multi: { en: 'Works across multiple displays', zh: '支持多显示器', 'zh-Hant': '支援多台顯示器', ja: '複数のディスプレイに対応' },
+  history: { en: 'Everything you grabbed or typed, searchable', zh: '抓取和键入过的内容，随时搜索', 'zh-Hant': '擷取和輸入過的內容，隨時搜尋', ja: '取り込んだ文字も入力した文字も、あとから検索' },
 };
-document.getElementById('cap').textContent = T[SHOT][ZH ? 1 : 0];
-const MESSAGE = ZH ? '你好，订单 A-20481 的台灯收到时底座有裂痕。\n照片已附上，麻烦补发一个，或者给我退货标签。\n谢谢！林晓'
-                   : 'Hi, the desk lamp from order A-20481 arrived with a cracked base.\nPhotos are attached. Could you send a replacement, or a return label?\nThanks, Alex';
+document.documentElement.lang = LANG === 'zh' ? 'zh-Hans' : LANG;
+document.getElementById('cap').textContent = pick(T[SHOT]);
+const SAFARI = LANG === 'zh' ? 'Safari浏览器' : 'Safari';
+const MESSAGE = tr('Hi, the desk lamp from order A-20481 arrived with a cracked base.\nPhotos are attached. Could you send a replacement, or a return label?\nThanks, Alex',
+                   '你好，订单 A-20481 的台灯收到时底座有裂痕。\n照片已附上，麻烦补发一个，或者给我退货标签。\n谢谢！林晓');
+const RECEIPT = tr('Receipt R-7731 · 6 Oct 2026\nDesk lamp x1    S$ 39.90\nReturns accepted within 14 days',
+                   '收据编号 R-7731 · 2026年10月6日\n桌面台灯 ×1    S$ 39.90\n退货期限：14 天内');
+const HUD_EN = { typingInto: 'Typing into', remote: 'Typing on another display into', remaining: 'Remaining', speed: 'Speed',
+  cps: 'chars/s', rhythm: 'Rhythm', steady: 'Steady', random: 'Random', stop: 'Stop', sec: 's', min: 'm', chars: 'chars',
+  wait: 'Starts when you let go', done: 'Done', stopped: 'Stopped', focus: 'Focus moved, stopped' };
+const HUD_STR = Object.fromEntries(Object.entries(HUD_EN).filter(([, en]) => TABLE[en]).map(([k, en]) => [k, TABLE[en]]));
+const graphemes = t => Array.from(new Intl.Segmenter().segment(t)).length;
 const units = Array.from(new Intl.Segmenter().segment(MESSAGE), s => s.segment);
 
 function screen(parent) {
   const s = document.createElement('div'); s.className = 'screen';
   s.innerHTML = '<div class="content" style="position:absolute;inset:0;transform-origin:0 0"><div class="wall"></div>' +
-    '<div class="menubar"><b></b><span>' + (ZH ? 'Safari浏览器' : 'Safari') + '</span></div></div>';
+    '<div class="menubar"><b></b><span>' + SAFARI + '</span></div></div>';
   parent.appendChild(s); s.content = s.querySelector('.content'); return s;
 }
 function browser(scr, x, y, w, h) {
@@ -65,7 +83,7 @@ function browser(scr, x, y, w, h) {
   Object.assign(win.style, { left: x + 'px', top: y + 'px', width: w + 'px', height: h + 'px' });
   win.innerHTML = '<div class="chrome"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span>' +
     '<span class="dot" style="background:#28c840"></span><span class="url">example-shop.test/feedback</span></div>' +
-    '<iframe src="/appstore/demo/index.html' + (ZH ? '?lang=zh' : '') + '" style="height:' + (h - 38) + 'px"></iframe>';
+    '<iframe src="/appstore/demo/index.html?lang=' + LANG + '" style="height:' + (h - 38) + 'px"></iframe>';
   scr.content.appendChild(win);
   return new Promise(r => win.querySelector('iframe').onload = () => r(win));
 }
@@ -93,8 +111,8 @@ async function icon(path) {
 }
 function payload(scr, hole, i, extra = {}) {
   return Object.assign({
-    units, preview: false, lang: LANG, reduceMotion: false, role: 'main', toward: { dx: 0, dy: 0 },
-    target: { app: ZH ? 'Safari浏览器' : 'Safari', title: ZH ? '提交反馈' : 'Send feedback', field: '', icon: ICON },
+    units, preview: false, lang: LANG === 'zh' ? 'zh-Hans' : LANG, str: HUD_STR, reduceMotion: false, role: 'main', toward: { dx: 0, dy: 0 },
+    target: { app: SAFARI, title: pick({ en: 'Send feedback', zh: '提交反馈', 'zh-Hant': '提交意見回饋', ja: 'フィードバックを送信' }), field: '', icon: ICON },
     screen: { w: scr.clientWidth, h: scr.clientHeight }, safe: { x: 0, y: 26, w: scr.clientWidth, h: scr.clientHeight - 26 },
     hole: hole ? { ...hole, r: 10 } : null,
     state: { i, cps: 42, rand: 0.3, eta: 4.5, held: { up: false, down: false, left: false, right: false }, nudge: 0, phase: 'typing' },
@@ -138,13 +156,14 @@ async function typingScene(scr, i, extra, box = [150, 70, 860, 600]) {
     sel.innerHTML = `<span class="size">${Math.round(r.w + 20)} × ${Math.round(r.h + 20)}</span>`;
     scr.content.appendChild(sel);
     const t = document.createElement('div'); t.className = 'toast';
-    t.innerHTML = '<span style="opacity:.75">⌘⇧C</span><span>' + (ZH ? '已复制 3 行文字' : 'Copied 3 lines of text') + '</span>';
+    t.innerHTML = '<span style="opacity:.75">⇧⌘C</span><span>' + tr('Copied %1$@ characters, %2$@ lines', '已复制 %1$@ 字 · %2$@ 行')
+      .replace('%1$@', graphemes(RECEIPT)).replace('%2$@', RECEIPT.split('\n').length) + '</span>';
     scr.content.appendChild(t);
   } else if (SHOT === 'history') {
     const scr = screen(stage);
     scr.querySelector('.menubar').innerHTML = '<b></b><span>Pourtype</span>';
     const img = document.createElement('img');
-    img.src = '/appstore/shots/img/history-' + (ZH ? 'zh' : 'en') + '.png';
+    img.src = '/appstore/shots/img/history-' + LANG + '.png';
     Object.assign(img.style, { position: 'absolute', left: '50%', top: '58px', width: '860px', transform: 'translateX(-50%)',
                                borderRadius: '12px', boxShadow: '0 26px 70px rgba(0,0,0,.5)' });
     scr.content.appendChild(img);

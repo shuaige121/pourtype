@@ -34,8 +34,9 @@ struct HistoryView: View {
             .overlay {
                 if store.items.isEmpty {
                     ContentUnavailableView(L.t("还没有记录", "Nothing yet"), systemImage: "clock",
-                                           description: Text(L.t("用 ⌘⇧C 识别的文字和用 ⌘⇧V 打出的文字会出现在这里。",
-                                                                 "Text you grab with ⌘⇧C or type with ⌘⇧V shows up here.")))
+                                           description: Text(L.f("用 %1$@ 识别的文字和用 %2$@ 打出的文字会出现在这里。",
+                                                                 "Text you grab with %1$@ or type with %2$@ shows up here.",
+                                                                 Shortcuts.get(.grab).display, Shortcuts.get(.type).display)))
                 }
             }
         } detail: {
@@ -62,7 +63,7 @@ private struct Row: View {
                 .foregroundStyle(.secondary).frame(width: 18)
             VStack(alignment: .leading, spacing: 3) {
                 Text(item.text.replacingOccurrences(of: "\n", with: " ")).lineLimit(2)
-                Text([item.app, item.date.formatted(date: .abbreviated, time: .shortened)].compactMap { $0 }.joined(separator: " · "))
+                Text([item.app, item.date.formatted(Date.FormatStyle(date: .abbreviated, time: .shortened).locale(L.locale))].compactMap { $0 }.joined(separator: " · "))
                     .font(.caption).foregroundStyle(.secondary)
             }
         }

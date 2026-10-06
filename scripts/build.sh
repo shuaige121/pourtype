@@ -7,6 +7,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 CONFIG="${CONFIG:-Release}"
+python3 scripts/l10n.py check
 command -v xcodegen >/dev/null && xcodegen generate >/dev/null
 xcodebuild -project Pourtype.xcodeproj -scheme Pourtype -configuration "$CONFIG" \
   -derivedDataPath build/dd CODE_SIGNING_ALLOWED=NO build | grep -E "error:|BUILD (SUCCEEDED|FAILED)"

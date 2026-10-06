@@ -41,23 +41,38 @@
 <script>
   // like many real forms: paste and drop are blocked
   for (const ev of ['paste', 'drop']) document.getElementById('ta').addEventListener(ev, e => e.preventDefault());
-  const zh = location.search.includes('lang=zh');
-  if (zh) {
-    document.documentElement.lang = 'zh-CN';
-    const t = { h: '提交反馈', sub: 'Pourtype 截图演示页，不会发送任何内容。', l1: '姓名', l2: '订单号', l3: '留言',
-                n: '此输入框已禁止粘贴。', l4: '附件：收据', b: '提交' };
-    for (const [id, s] of Object.entries(t)) document.getElementById(id).textContent = s;
-    document.getElementById('name').value = '林晓';
+  const lang = new URLSearchParams(location.search).get('lang') || 'en';   // en | zh | zh-Hant | ja
+  const UI = {
+    zh: { h: '提交反馈', sub: 'Pourtype 截图演示页，不会发送任何内容。', l1: '姓名', l2: '订单号', l3: '留言',
+          n: '此输入框已禁止粘贴。', l4: '附件：收据', b: '提交', name: '林晓' },
+    'zh-Hant': { h: '提交意見回饋', sub: 'Pourtype 截圖示範頁，不會傳送任何內容。', l1: '姓名', l2: '訂單編號', l3: '留言',
+          n: '此欄位已禁止貼上。', l4: '附件：收據', b: '送出', name: '林曉' },
+    ja: { h: 'フィードバックを送信', sub: 'Pourtype のスクリーンショット用デモページです。何も送信されません。', l1: 'お名前', l2: '注文番号', l3: 'メッセージ',
+          n: 'この欄には貼り付けできません。', l4: '添付：レシート', b: '送信', name: '佐藤 美咲' },
+  }[lang];
+  if (UI) {
+    document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : lang;
+    for (const [id, s] of Object.entries(UI)) if (id !== 'name') document.getElementById(id).textContent = s;
+    document.getElementById('name').value = UI.name;
   }
+  // the receipt text comes from the app's own tables, like the history sample
+  let receipt = 'Receipt R-7731 · 6 Oct 2026\nDesk lamp x1    S$ 39.90\nReturns accepted within 14 days';
+  if (lang === 'zh') receipt = '收据编号 R-7731 · 2026年10月6日\n桌面台灯 ×1    S$ 39.90\n退货期限：14 天内';
+  if (lang === 'ja' || lang === 'zh-Hant') {
+    const x = new XMLHttpRequest(); x.open('GET', `/Resources/strings-${lang}.json`, false); x.send();
+    receipt = JSON.parse(x.responseText)[receipt] || receipt;
+  }
+  const lines = receipt.split('\n');
+  const font = { ja: '"Hiragino Sans"', 'zh-Hant': '"PingFang TC"' }[lang] || '"PingFang SC"';
   // text drawn on a canvas: visible, but no script or selection can copy it
   const c = document.getElementById('cv').getContext('2d');
   c.fillStyle = '#fff8ec'; c.fillRect(0, 0, 1400, 300);
   c.fillStyle = '#3a2f1f';
-  c.font = '600 46px -apple-system, "PingFang SC", sans-serif';
-  c.fillText(zh ? '收据编号 R-7731 · 2026年10月6日' : 'Receipt R-7731 · 6 Oct 2026', 40, 90);
-  c.font = '40px -apple-system, "PingFang SC", sans-serif';
-  c.fillText(zh ? '桌面台灯 ×1    S$ 39.90' : 'Desk lamp x1    S$ 39.90', 40, 170);
-  c.fillText(zh ? '退货期限：14 天内' : 'Returns accepted within 14 days', 40, 240);
+  c.font = `600 46px -apple-system, ${font}, sans-serif`;
+  c.fillText(lines[0], 40, 90);
+  c.font = `40px -apple-system, ${font}, sans-serif`;
+  c.fillText(lines[1] || '', 40, 170);
+  c.fillText(lines[2] || '', 40, 240);
 </script>
 </body>
 </html>

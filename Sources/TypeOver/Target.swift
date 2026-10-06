@@ -136,8 +136,8 @@ func iconDataURL(_ icon: NSImage?) -> String? {
 func secureInputHolder() -> String? {
     guard IsSecureEventInputEnabled() else { return nil }
     let d = (CGSessionCopyCurrentDictionary() as? [String: Any]) ?? [:]
-    if (d["CGSSessionScreenIsLocked"] as? Bool) == true { return "锁屏界面" }
-    guard let pid = (d["kCGSSessionSecureInputPID"] as? NSNumber)?.int32Value else { return "未知程序" }
+    if (d["CGSSessionScreenIsLocked"] as? Bool) == true { return L.t("锁屏界面", "the lock screen") }
+    guard let pid = (d["kCGSSessionSecureInputPID"] as? NSNumber)?.int32Value else { return L.t("未知程序", "an unknown app") }
     return NSRunningApplication(processIdentifier: pid)?.localizedName ?? "pid \(pid)"
 }
 

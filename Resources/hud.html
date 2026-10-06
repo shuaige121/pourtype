@@ -46,6 +46,8 @@ html, body {
   font-family: -apple-system, "PingFang SC", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased; user-select: none; cursor: default;
 }
+html:lang(zh-Hant), html:lang(zh-Hant) body { font-family: -apple-system, "PingFang TC", system-ui, sans-serif; }
+html:lang(ja), html:lang(ja) body { font-family: -apple-system, "Hiragino Sans", system-ui, sans-serif; }
 .aurora { background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3), var(--a4)); }
 
 /* the dim layer with a hole where the field is */
@@ -402,8 +404,8 @@ body.preview #fakefield { display: block; }
   // ---- public API (called from Swift) --------------------------------------
   window.hud = {
     init(d) {
-      T = STR[d.lang] || STR.zh;
-      document.documentElement.lang = d.lang === 'en' ? 'en' : 'zh-CN';
+      T = Object.assign({}, STR[d.lang && d.lang.startsWith('zh') ? 'zh' : 'en'], d.str || {});
+      document.documentElement.lang = d.lang || 'en';
       document.querySelectorAll('[data-t]').forEach(el => { el.textContent = T[el.dataset.t]; });
       S.units = d.units; S.preview = !!d.preview; S.remote = d.role === 'remote';
       document.body.classList.toggle('remote', S.remote);

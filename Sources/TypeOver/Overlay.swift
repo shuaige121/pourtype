@@ -128,6 +128,7 @@ final class Overlay: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         var d = payload
         let v = toward(p.screen.frame, targetFrame), vis = p.local(p.screen.visible)
         d["role"] = roleOverride ?? (p.isTarget ? "main" : "remote")
+        d["str"] = hudStrings()
         d["toward"] = ["dx": v.dx, "dy": v.dy]
         d["screen"] = ["w": p.screen.frame.width, "h": p.screen.frame.height]
         d["safe"] = ["x": vis.minX, "y": vis.minY, "w": vis.width, "h": vis.height]
@@ -221,4 +222,26 @@ final class Overlay: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
             then()
         })
     }
+}
+
+/// The HUD's words, from the same (zh-Hans, en) + translation tables as the rest of the app.
+func hudStrings() -> [String: String] {
+    [
+        "typingInto": L.t("正在输入到", "Typing into"),
+        "remote": L.t("正在另一块屏幕上输入到", "Typing on another display into"),
+        "remaining": L.t("预计剩余", "Remaining"),
+        "speed": L.t("速度", "Speed"),
+        "cps": L.t("字/秒", "chars/s"),
+        "rhythm": L.t("节奏", "Rhythm"),
+        "steady": L.t("平稳", "Steady"),
+        "random": L.t("随机", "Random"),
+        "stop": L.t("停止", "Stop"),
+        "sec": L.t("秒", "s"),
+        "min": L.t("分", "m"),
+        "chars": L.t("字", "chars"),
+        "wait": L.t("松开按键后开始", "Starts when you let go"),
+        "done": L.t("已完成", "Done"),
+        "stopped": L.t("已停止", "Stopped"),
+        "focus": L.t("焦点变了，已停止", "Focus moved, stopped"),
+    ]
 }

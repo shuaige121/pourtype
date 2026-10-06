@@ -169,8 +169,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             Toast.shared.show(L.t("无法锁定键鼠，改为直接输入；⌃⌥⌘. 停止", "Cannot hold the keyboard; typing without it. ⌃⌥⌘. stops"), seconds: 3, warn: true)
             typePlain(text, pace: pace)
         case .failure(.secureInput(let holder)):
-            Toast.shared.show(L.t("安全输入中（\(holder)），不锁键鼠直接输入；⌃⌥⌘. 停止",
-                                  "Secure Input is on (\(holder)): typing without holding input. ⌃⌥⌘. stops"), seconds: 3, warn: true)
+            Toast.shared.show(L.f("安全输入中（%1$@），不锁键鼠直接输入；⌃⌥⌘. 停止",
+                                  "Secure Input is on (%1$@): typing without holding input. ⌃⌥⌘. stops", holder), seconds: 3, warn: true)
             typePlain(text, pace: pace)
         }
     }
@@ -182,11 +182,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                                      "timeout": L.t("超时", "time limit"), "untrusted": L.t("权限被收回", "permission revoked"),
                                      "keys_held": L.t("按键没有松开", "keys were held down")]
         if r.finished {
-            Toast.shared.show(L.t("已输入 \(r.typed) 字 · \(String(format: "%.1f", r.seconds)) 秒", "Typed \(r.typed) characters in \(String(format: "%.1f", r.seconds)) s"),
+            Toast.shared.show(L.f("已输入 %1$@ 字 · %2$@ 秒", "Typed %1$@ characters in %2$@ s", "\(r.typed)", String(format: "%.1f", r.seconds)),
                               symbol: "checkmark.circle")
         } else {
             let reason = why[r.reason] ?? r.reason
-            Toast.shared.show(L.t("停在 \(r.typed)/\(r.total)（\(reason)）", "Stopped at \(r.typed)/\(r.total) (\(reason))"),
+            Toast.shared.show(L.f("停在 %1$@/%2$@（%3$@）", "Stopped at %1$@/%2$@ (%3$@)", "\(r.typed)", "\(r.total)", reason),
                               seconds: 2.6, warn: r.reason != "esc")
         }
         if r.typed > 0 {
@@ -205,8 +205,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         e.onEnd = { [weak self] all in
             guard let self else { return }
             self.plain = nil
-            Toast.shared.show(all ? L.t("已输入 \(units.count) 字 · \(String(format: "%.1f", now() - t0)) 秒", "Typed \(units.count) characters")
-                                  : L.t("停在 \(e.index)/\(units.count)", "Stopped at \(e.index)/\(units.count)"),
+            Toast.shared.show(all ? L.f("已输入 %1$@ 字 · %2$@ 秒", "Typed %1$@ characters in %2$@ s", "\(units.count)", String(format: "%.1f", now() - t0))
+                                  : L.f("停在 %1$@/%2$@", "Stopped at %1$@/%2$@", "\(e.index)", "\(units.count)"),
                               symbol: all ? "checkmark.circle" : "stop.circle")
         }
         e.start(replace: false)
@@ -216,7 +216,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard let e = plain else { return }
         e.stop()
         plain = nil
-        Toast.shared.show(L.t("停在 \(e.index)/\(e.units.count)", "Stopped at \(e.index)/\(e.units.count)"), symbol: "stop.circle")
+        Toast.shared.show(L.f("停在 %1$@/%2$@", "Stopped at %1$@/%2$@", "\(e.index)", "\(e.units.count)"), symbol: "stop.circle")
     }
 
     // MARK: grabbing
@@ -250,10 +250,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
                     NSPasteboard.general.setString(text, forType: .string)
                     HistoryStore.shared.add(HistoryItem(kind: .grab, text: text, app: front), png: Grabber.pngThumbnail(img))
                     let lines = text.components(separatedBy: "\n").count
-                    Toast.shared.show(L.t("已复制 \(text.count) 字 · \(lines) 行", "Copied \(text.count) characters, \(lines) lines"),
+                    Toast.shared.show(L.f("已复制 %1$@ 字 · %2$@ 行", "Copied %1$@ characters, %2$@ lines", "\(text.count)", "\(lines)"),
                                       symbol: "text.viewfinder")
                 } catch {
-                    Toast.shared.show(L.t("截图识字失败：\(error.localizedDescription)", "Grab failed: \(error.localizedDescription)"),
+                    Toast.shared.show(L.f("截图识字失败：%1$@", "Grab failed: %1$@", error.localizedDescription),
                                       seconds: 3, warn: true)
                 }
             }

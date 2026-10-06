@@ -20,12 +20,12 @@ struct SettingsView: View {
                 .padding(.vertical, 4)
             }
             Section(L.t("权限", "Permissions")) {
-                PermissionRow(title: L.t("辅助功能", "Accessibility"),
+                PermissionRow(title: L.t("辅助功能（无障碍）", "Accessibility"),
                               detail: L.t("用来打字，并在打字时暂时锁住键盘和鼠标。", "To type, and to hold the keyboard and mouse while it types."),
                               granted: model.accessibility,
                               grant: { Permissions.requestAccessibility(); Permissions.open("Privacy_Accessibility") })
                 PermissionRow(title: L.t("屏幕录制", "Screen Recording"),
-                              detail: L.t("只在 \(Shortcuts.get(.grab).display) 截取你框选的区域时使用。", "Only for the area you select with \(Shortcuts.get(.grab).display)."),
+                              detail: L.f("只在 %1$@ 截取你框选的区域时使用。", "Only for the area you select with %1$@.", Shortcuts.get(.grab).display),
                               granted: model.screenRecording,
                               grant: { Permissions.requestScreenRecording(); Permissions.open("Privacy_ScreenCapture") })
             }
