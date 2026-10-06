@@ -3,12 +3,16 @@
 A small macOS menu-bar utility for two chores:
 
 - **⌘⇧V — type the clipboard.** Some fields and dialogs block paste. Pourtype types the clipboard into the focused field as real keystrokes. While it types, every display is frosted except the target field and your keyboard and mouse are held, so focus cannot wander off. **Esc** stops it at once.
-- **⌘⇧C — grab text.** Drag a box anywhere on screen; the text inside (Chinese, English, Japanese) is recognised on your Mac with Apple's Vision framework and copied.
+- **⌘⇧C — grab text.** Drag a box anywhere on screen; the text inside (Simplified Chinese, Traditional Chinese, English, Japanese) is recognised on your Mac with Apple's Vision framework and copied.
 - **History.** Every grab and every typed text is kept in a local, searchable history: copy it again or type it again.
 
 Everything runs locally. The app makes no network requests and collects no data.
 
-**Status:** not released yet; build it from source (below). Privacy policy: [docs/privacy.html](docs/privacy.html).
+**Status:** in App Review for the Mac App Store (US$2.99, one-time); not on sale yet. Meanwhile you can build it from source (below).
+
+Website: <https://shuaige121.github.io/pourtype/> · Privacy policy: [docs/privacy.html](docs/privacy.html)
+
+The shortcuts can be changed in Settings. The app is in English, Simplified Chinese, Traditional Chinese and Japanese.
 
 ## While it types
 
