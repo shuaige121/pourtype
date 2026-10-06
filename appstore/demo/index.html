@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Feedback form (demo)</title>
+<style>
+  :root { --bg:#f5f6fa; --card:#fff; --text:#1d1f2b; --dim:#6b6f85; --line:#e3e5ee; --accent:#5b6cff; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.55 -apple-system, "PingFang SC", system-ui, sans-serif; }
+  main { max-width: 760px; margin: 40px auto; padding: 0 20px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:26px 28px; box-shadow:0 8px 24px rgba(20,24,60,.06); }
+  h1 { font-size:22px; margin:0 0 4px; }
+  .dim { color:var(--dim); font-size:13px; }
+  label { display:block; font-weight:600; margin:18px 0 6px; }
+  input, textarea { width:100%; font:inherit; color:inherit; border:1px solid var(--line); border-radius:9px; padding:10px 12px; background:#fbfbfd; }
+  textarea { height:190px; resize:none; }
+  .note { margin-top:6px; font-size:12.5px; color:#b4532a; }
+  .row { display:flex; gap:12px; }
+  .row > div { flex:1; }
+  button { margin-top:18px; background:var(--accent); color:#fff; border:0; border-radius:9px; padding:10px 18px; font:600 14px/1 -apple-system, system-ui; }
+  canvas { display:block; width:100%; border-radius:10px; margin-top:8px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="card">
+    <h1 id="h">Send feedback</h1>
+    <div class="dim" id="sub">Demo page for Pourtype screenshots. Nothing is sent anywhere.</div>
+    <div class="row">
+      <div><label id="l1">Name</label><input id="name" value="Alex Morgan"></div>
+      <div><label id="l2">Order number</label><input id="order" value="A-20481"></div>
+    </div>
+    <label id="l3">Message</label>
+    <textarea id="ta" autofocus></textarea>
+    <div class="note" id="n">Pasting is disabled in this field.</div>
+    <label id="l4">Attached receipt</label>
+    <canvas id="cv" width="1400" height="300"></canvas>
+    <button id="b">Send</button>
+  </div>
+</main>
+<script>
+  // like many real forms: paste and drop are blocked
+  for (const ev of ['paste', 'drop']) document.getElementById('ta').addEventListener(ev, e => e.preventDefault());
+  const zh = location.search.includes('lang=zh');
+  if (zh) {
+    document.documentElement.lang = 'zh-CN';
+    const t = { h: '提交反馈', sub: 'Pourtype 截图演示页，不会发送任何内容。', l1: '姓名', l2: '订单号', l3: '留言',
+                n: '此输入框已禁止粘贴。', l4: '附件：收据', b: '提交' };
+    for (const [id, s] of Object.entries(t)) document.getElementById(id).textContent = s;
+    document.getElementById('name').value = '林晓';
+  }
+  // text drawn on a canvas: visible, but no script or selection can copy it
+  const c = document.getElementById('cv').getContext('2d');
+  c.fillStyle = '#fff8ec'; c.fillRect(0, 0, 1400, 300);
+  c.fillStyle = '#3a2f1f';
+  c.font = '600 46px -apple-system, "PingFang SC", sans-serif';
+  c.fillText(zh ? '收据编号 R-7731 · 2026年10月6日' : 'Receipt R-7731 · 6 Oct 2026', 40, 90);
+  c.font = '40px -apple-system, "PingFang SC", sans-serif';
+  c.fillText(zh ? '桌面台灯 ×1    S$ 39.90' : 'Desk lamp x1    S$ 39.90', 40, 170);
+  c.fillText(zh ? '退货期限：14 天内' : 'Returns accepted within 14 days', 40, 240);
+</script>
+</body>
+</html>

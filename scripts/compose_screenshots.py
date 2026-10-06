@@ -6,21 +6,25 @@ Crops are in points of the main display (captures are Retina, so pixels = points
 They keep only the test window and the card: the grab capture dims but does not blur the
 rest of the desktop, which must not end up in a screenshot. Check every output by eye.
 
-Usage: compose_screenshots.py OUTDIR      -> OUTDIR/appstore/{en,zh-Hans}/0N.png
+Usage: compose_screenshots.py OUTDIR [--lang en|zh]   -> OUTDIR/appstore/{en,zh-Hans}/0N.png
 """
 import base64, os, subprocess, sys
 
-OUT = sys.argv[1] if len(sys.argv) > 1 else sys.exit(__doc__)
+OUT = next((a for a in sys.argv[1:] if not a.startswith("--") and a not in ("en", "zh")), None) or sys.exit(__doc__)
 DST = os.path.join(OUT, "appstore")
 
-# file, crop (x, y, w, h in points; None = whole image), caption en, caption zh
+# file, crop (x, y, w, h in points of the main display; None = whole image), caption en, caption zh.
+# Crops match capture_screenshots.py's scene: Safari window at {220, 90, 1120, 1000}, the field and
+# the Pourtype card below it. The grab crop stays inside the Safari window, because the picker dims
+# but does not blur whatever else is on the desktop.
 SHOTS = [
-    ("raw-typing-d1.png", (40, 100, 1440, 900), "Paste blocked? Type it.", "粘贴被拦住？直接敲进去。"),
-    ("raw-typing-up-d1.png", (160, 480, 960, 600), "Speed and rhythm, your call", "速度和节奏，由你掌握"),
-    ("raw-grab-d1.png", (40, 60, 1440, 900), "Grab text from anything you can see", "看得见的文字，都能抓取"),
+    ("raw-typing-d1.png", (100, 70, 1440, 900), "Paste blocked? Type it.", "粘贴被拦住？直接敲进去。"),
+    ("raw-typing-up-d1.png", (260, 400, 960, 600), "Speed and rhythm, your call", "速度和节奏，由你掌握"),
+    ("raw-grab-d1.png", (220, 330, 900, 562), "Grab text from anything you can see", "看得见的文字，都能抓取"),
     ("raw-history.png", None, "Everything you grabbed or typed, searchable", "抓取和键入过的内容，随时搜索"),
     (("raw-typing-d1.png", "raw-typing-d2.png"), None, "Works across multiple displays", "支持多显示器"),
 ]
+LANG = sys.argv[sys.argv.index("--lang") + 1] if "--lang" in sys.argv else None
 
 
 def pixels(path):
@@ -83,6 +87,8 @@ def main():
         for i, paths, en, zh in jobs:
             imgs = "".join(f'<img src="{data_url(x)}">' for x in paths)
             for lang, cap in (("en", en), ("zh-Hans", zh)):
+                if LANG and not lang.startswith(LANG):
+                    continue
                 os.makedirs(os.path.join(DST, lang), exist_ok=True)
                 page.set_content(PAGE.replace("{caption}", cap).replace("{imgs}", imgs)
                                  .replace("{cls}", "two" if len(paths) > 1 else ""))
