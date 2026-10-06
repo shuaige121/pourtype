@@ -120,11 +120,20 @@ def textedit_text(wid):
     return t.replace(" ", "\n").replace("\r", "\n")
 
 
+def as_applescript(text):
+    """A string literal for AppleScript: quotes and backslashes escaped, newlines as linefeed."""
+    parts = [json.dumps(line, ensure_ascii=False) for line in text.split("\n")]
+    return " & linefeed & ".join(parts)
+
+
 def textedit_ready(wid, text=""):
-    _, rc, _ = osa(f'tell application "TextEdit"\nset text of document of window id {wid} to {json.dumps(text)}\n'
-                   f'set index of window id {wid} to 1\nactivate\nend tell')
-    time.sleep(0.5)
-    return rc == 0 and frontmost() in TEXTEDIT
+    for _ in range(3):
+        _, rc, _ = osa(f'tell application "TextEdit"\nset text of document of window id {wid} to {as_applescript(text)}\n'
+                       f'set index of window id {wid} to 1\nactivate\nend tell')
+        time.sleep(0.6)
+        if rc == 0 and frontmost() in TEXTEDIT:
+            return True
+    return False
 
 
 results = []
@@ -147,6 +156,22 @@ def typed_count(outcome):
         return -1
 
 
+DOMAIN = "com.leonardchow.pourtype"
+
+
+def read_pref(key):
+    r = subprocess.run(["defaults", "read", DOMAIN, key], capture_output=True, text=True)
+    return r.stdout.strip() if r.returncode == 0 else None
+
+
+def set_pace(cps, rand):
+    """The app remembers the pace the arrows leave it at; pin it so each case runs at a known speed."""
+    subprocess.run(["defaults", "write", DOMAIN, "pace.normal.cps", "-float", str(cps)])
+    subprocess.run(["defaults", "write", DOMAIN, "pace.normal.rand", "-float", str(rand)])
+    time.sleep(0.3)
+
+
+saved_pace = {k: read_pref(k) for k in ("pace.normal.cps", "pace.normal.rand")}
 saved_clipboard = subprocess.run(["pbpaste"], capture_output=True, text=True).stdout
 doc = None
 try:
@@ -157,6 +182,7 @@ try:
         if not textedit_ready(doc):
             skip("1 type", "TextEdit not frontmost: " + frontmost())
         else:
+            set_pace(30, 0.2)
             set_clipboard(TEXT_FULL)
             before = len(history())
             trigger("type")
@@ -174,6 +200,7 @@ try:
         if not textedit_ready(doc):
             skip("2 esc", "TextEdit not frontmost: " + frontmost())
         else:
+            set_pace(30, 0.2)
             set_clipboard(TEXT_LONG)
             before = len(history())
             trigger("type")
@@ -187,27 +214,40 @@ try:
                    {"outcome": item and item.get("outcome"), "docLen": len(got)})
 
     if want(3):
-        if not textedit_ready(doc):
-            skip("3 focus", "TextEdit not frontmost: " + frontmost())
+        # The thief is the paste-blocked test page in Safari: its textarea reports every key it
+        # gets, so any keystroke that leaks out of TextEdit after the switch is counted exactly.
+        report = os.path.join(KEYTYPE_TEST, "report.json")
+        if subprocess.run(["pgrep", "-f", "test/serve.py"], capture_output=True).returncode != 0:
+            subprocess.Popen([sys.executable, os.path.join(KEYTYPE_TEST, "serve.py")], cwd=KEYTYPE_TEST,
+                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
+            time.sleep(1)
+        subprocess.run(["open", "-a", "Safari", f"http://127.0.0.1:8777/paste_blocked.html?focus=ta&t={int(time.time())}"])
+        time.sleep(2.5)
+        thief_ready = "TA len=0" in osa('tell application "Safari" to get name of current tab of front window')[0]
+        if not thief_ready or not textedit_ready(doc):
+            skip("3 focus", f"setup failed (Safari page ready={thief_ready}, front={frontmost()})")
         else:
-            calc_running = subprocess.run(["pgrep", "-x", "Calculator"], capture_output=True).returncode == 0
+            set_pace(30, 0.2)
             set_clipboard(TEXT_LONG)
             before = len(history())
             trigger("type")
             time.sleep(1.4)
-            osa('tell application "Calculator" to activate')
+            osa('tell application "Safari" to activate')
             time.sleep(0.3)
             switched = frontmost()
             item = wait_history(before, "typed")
+            time.sleep(1.3)                              # the page reports once a second
             got, exp = textedit_text(doc), prepared(TEXT_LONG)
-            if switched not in ("Calculator", "计算器"):
-                skip("3 focus", f"Calculator never came to the front ({switched})")
+            leaked = json.load(open(report)).get("ta", "")
+            if switched not in SAFARI:
+                skip("3 focus", f"Safari never came to the front ({switched})")
             else:
-                record("3 focus: another app in front stops it",
-                       item is not None and (item.get("outcome") or "").startswith("focus") and exp.startswith(got),
-                       {"outcome": item and item.get("outcome"), "docLen": len(got)})
-            if not calc_running:
-                osa('tell application "Calculator" to quit')
+                record("3 focus: another app in front stops it, nothing reaches that app",
+                       item is not None and (item.get("outcome") or "").startswith("focus") and exp.startswith(got)
+                       and leaked == "",
+                       {"outcome": item and item.get("outcome"), "docLen": len(got), "leakedToSafari": len(leaked)})
+        osa('tell application "Safari"\nif URL of current tab of front window starts with "http://127.0.0.1:8777/" '
+            'then close current tab of front window\nend tell')
 
     if want(4):
         report = os.path.join(KEYTYPE_TEST, "report.json")
@@ -225,6 +265,7 @@ try:
         if "TA len=0 kd=0" not in title or frontmost() not in SAFARI:
             skip("4 web", f"page not ready or Safari not frontmost ({title!r}, {frontmost()})")
         else:
+            set_pace(40, 0.2)
             set_clipboard(TEXT_FULL)
             before = len(history())
             trigger("type")
@@ -246,7 +287,7 @@ try:
             set_clipboard("")
             trigger("grab")
             time.sleep(0.8)
-            a, b = (170, 200), (1040, 360)                   # the text area of the window set in textedit_doc()
+            a, b = (170, 250), (1040, 370)                   # the text under the ruler of the window set in textedit_doc()
             mouse(Quartz.kCGEventLeftMouseDown, *a)
             for k in range(1, 21):
                 mouse(Quartz.kCGEventLeftMouseDragged, a[0] + (b[0] - a[0]) * k / 20, a[1] + (b[1] - a[1]) * k / 20)
@@ -255,7 +296,7 @@ try:
             mouse(Quartz.kCGEventLeftMouseUp, *b)
             item = wait_history(before, "grab", timeout=15)
             clip = subprocess.run(["pbpaste"], capture_output=True, text=True).stdout
-            ok = item is not None and "2468" in clip and "Pourtype" in clip and "识别" in clip
+            ok = item is not None and "grab check 2468" in clip and "识别这一行中文" in clip
             record("5 grab: text in the box reaches the clipboard", ok, {"clipboard": clip[:80]})
 
     if want(6):
@@ -276,6 +317,11 @@ finally:
     if doc:
         osa(f'tell application "TextEdit" to close (document of window id {doc}) saving no')
     set_clipboard(saved_clipboard)
+    for k, v in saved_pace.items():
+        if v is None:
+            subprocess.run(["defaults", "delete", DOMAIN, k], capture_output=True)
+        else:
+            subprocess.run(["defaults", "write", DOMAIN, k, "-float", v])
     json.dump(results, open(os.path.join(OUT, "results.json"), "w"), ensure_ascii=False, indent=1)
 
 bad = [r for r in results if not r["ok"]]

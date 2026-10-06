@@ -97,12 +97,18 @@ func etaSeconds(_ i: Int, _ n: Int, _ p: Pace, _ s: Suffix) -> Double {
 
 // MARK: - keystrokes
 
+/// Where keystrokes go. A pid sends them to that app only (CGEventPostToPid): if another app
+/// takes the focus mid-run, the keys cannot reach it, however late the switch is noticed
+/// (measured 2026-10-06: ~0.7 s and 21 keys while a launching app took the front).
+/// nil = the system's normal route (the HID tap), for callers without a target.
+var keyTarget: pid_t?
+
 func keyEvent(_ code: CGKeyCode, _ down: Bool, flags: CGEventFlags = [], unicode: [UniChar]? = nil) {
     guard let e = CGEvent(keyboardEventSource: nil, virtualKey: code, keyDown: down) else { return }
     e.flags = flags
     if var u = unicode { e.keyboardSetUnicodeString(stringLength: u.count, unicodeString: &u) }
     e.setIntegerValueField(.eventSourceUserData, value: TAG)
-    e.post(tap: .cghidEventTap)
+    if let pid = keyTarget { e.postToPid(pid) } else { e.post(tap: .cghidEventTap) }
 }
 
 func strike(_ code: CGKeyCode, flags: CGEventFlags = [], unicode: [UniChar]? = nil, gap: Double) {
@@ -121,6 +127,12 @@ final class Engine {
     private var _index = 0
     private var _pace: Pace
     var onEnd: ((Bool) -> Void)?           // on main; true = typed everything
+    /// Asked right before a keystroke (at most every 25 ms): is the target still in front?
+    /// The "another app activated" notification arrives late (measured 2026-10-06: 22 keys
+    /// went out after an app switch), so the typing thread checks the window server itself.
+    var focusGuard: (() -> Bool)?
+    var onFocusLost: (() -> Void)?         // on main
+    private var lastGuard = 0.0
 
     init(_ units: [String], _ pace: Pace) {
         self.units = units
@@ -157,17 +169,31 @@ final class Engine {
         return true
     }
 
+    private func stillFront() -> Bool {
+        guard let g = focusGuard else { return true }
+        let t = now()
+        if t - lastGuard < 0.025 { return true }
+        lastGuard = t
+        return g()
+    }
+
     private func run(_ replace: Bool) {
         let done = { (all: Bool) in DispatchQueue.main.async { self.onEnd?(all) } }
+        let lost = { () -> Void in
+            self.stop()
+            DispatchQueue.main.async { self.onFocusLost?() }
+        }
         if replace {
             guard post({ strike(0, flags: .maskCommand, gap: 0.008) }), wait(until: now() + 0.15) else { return done(false) }
         }
         var next = now()
         for i in 0..<units.count {
             guard wait(until: next) else { return done(false) }
+            guard stillFront() else { lost(); return done(false) }
             let u = units[i], p = pace
             if u == "\n" {
                 guard wait(until: now() + NEWLINE_PAUSE) else { return done(false) }
+                guard stillFront() else { lost(); return done(false) }
                 let t = now()
                 guard post({ strike(36, flags: .maskShift, gap: 0.006); _index = i + 1 }) else { return done(false) }
                 next = t + delayAfter(u, p)

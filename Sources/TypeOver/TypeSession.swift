@@ -227,6 +227,12 @@ final class TypeSession {
         }
         once(MAX_HOLD) { [weak self] in self?.stop("timeout") }
         engine.onEnd = { [weak self] all in if all { self?.stop("done") } }
+        keyTarget = pid
+        // Whatever owned the front window when we started must still own it before each
+        // keystroke (a popover target may sit above another app's window: compare, don't assume).
+        let startOwner = frontWindowOwner()
+        engine.focusGuard = { frontWindowOwner() == startOwner }
+        engine.onFocusLost = { [weak self] in self?.stop("focus") }
 
         // a display added, removed or rearranged: the veil no longer matches the screens
         observe(NotificationCenter.default, NSApplication.didChangeScreenParametersNotification) { [weak self] _ in
@@ -341,6 +347,7 @@ final class TypeSession {
         phase = .ending
         holding = false
         closeTap()
+        keyTarget = nil
         for t in timers { t.invalidate() }
         timers = []
         for (c, o) in observers { c.removeObserver(o) }

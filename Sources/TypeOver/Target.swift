@@ -129,3 +129,18 @@ func userHoldsInput() -> Bool {
     for k in 0..<128 where k != 57 && CGEventSource.keyState(.hidSystemState, key: CGKeyCode(k)) { return true }
     return false
 }
+
+/// Owner of the frontmost ordinary (layer 0) window, ours skipped: a synchronous answer
+/// from the window server, unlike NSWorkspace's frontmostApplication, which follows
+/// notifications and lags an app switch.
+func frontWindowOwner() -> pid_t? {
+    guard let list = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID)
+            as? [[String: Any]] else { return nil }
+    let me = getpid()
+    for w in list {
+        guard let owner = (w[kCGWindowOwnerPID as String] as? NSNumber)?.int32Value, owner != me,
+              (w[kCGWindowLayer as String] as? NSNumber)?.intValue == 0 else { continue }
+        return owner
+    }
+    return nil
+}
