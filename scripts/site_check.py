@@ -74,7 +74,8 @@ def file_of(url):
 
 def main():
     problems = []
-    pages = sorted(ROOT.rglob("*.html"))
+    # search-engine ownership files (google<hex>.html) are not pages
+    pages = sorted(f for f in ROOT.rglob("*.html") if not re.fullmatch(r"google[0-9a-f]+\.html", f.name))
     parsed = {}
     for f in pages:
         src = f.read_text()
