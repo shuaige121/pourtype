@@ -127,6 +127,11 @@ def main():
         problems.append(f"sitemap.xml: missing {u}")
     for u in sorted(sm - want):
         problems.append(f"sitemap.xml: lists {u}, which is not a page")
+    # GitHub Pages runs Jekyll unless .nojekyll exists, and Jekyll drops files whose names start with "_"
+    if not (ROOT / ".nojekyll").exists():
+        underscored = sorted({r for p in parsed.values() for r in p.refs if re.search(r"(^|/)_[^/]+$", urllib.parse.urlparse(r).path)})
+        for r in underscored:
+            problems.append(f"{r}: Jekyll will not publish a file starting with '_' (add docs/.nojekyll)")
     llms = (ROOT / "llms.txt").read_text()
     for f in pages:
         if "/guides/" in f.as_posix() and url_of(f) not in llms:
