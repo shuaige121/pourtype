@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		117209AFAA01C78AAA311680 /* LearnTypingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228B461A787B03B7F1904F0D /* LearnTypingView.swift */; };
 		167BC52E7EEBBD3D7EEC6B38 /* OwnPace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4C6527AB384DA242B06E53 /* OwnPace.swift */; };
 		170DAAA665E4BEF59356A79E /* Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF59122FD3D56D4EBEBE2345 /* Core.swift */; };
 		1D66CA0F251F4BA8AFAF7334 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF32D39C66B0D9409D3686A3 /* Support.swift */; };
@@ -60,6 +61,7 @@
 		0BB27EB6DA8EEB8EA8D2F2D5 /* HabitFitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitFitter.swift; sourceTree = "<group>"; };
 		18B605E30E2BB72ACDE1A10F /* OwnPaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnPaceTests.swift; sourceTree = "<group>"; };
 		18E99A0C954CECA8B1203227 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		228B461A787B03B7F1904F0D /* LearnTypingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnTypingView.swift; sourceTree = "<group>"; };
 		24C93BB7D0D64803004C678D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		324E13A5BA46332B93823AEA /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
 		327590DCE29A383BABFDDD20 /* TypeSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeSession.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 		8211C44FA2DBD4AFBF8A8BB4 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				228B461A787B03B7F1904F0D /* LearnTypingView.swift */,
 				18E99A0C954CECA8B1203227 /* OnboardingView.swift */,
 				B8427C665087ACBC142C38DF /* SettingsView.swift */,
 				B9B09CFACE8F070405A32949 /* Shortcuts.swift */,
@@ -335,6 +338,7 @@
 				C75F2434B5864B5EAB0352FC /* HistoryStore.swift in Sources */,
 				254DC2BBA13AACDF8ECA3C9A /* HistoryView.swift in Sources */,
 				8C8A309C4F3C95D7B1EA30A1 /* KeyGeometry.swift in Sources */,
+				117209AFAA01C78AAA311680 /* LearnTypingView.swift in Sources */,
 				8C50E1903011E97E50F61DBD /* Lognormal.swift in Sources */,
 				BC75A0B10319A3ED112822AE /* OnboardingView.swift in Sources */,
 				4F0D9EB9364EB097580C14EC /* Overlay.swift in Sources */,

@@ -51,6 +51,19 @@ struct SettingsView: View {
                         Text(L.t("随机", "Random")).font(.caption)
                     }
                 }
+                Toggle(L.t("按我自己的节奏打字", "Type at my own pace"),
+                       isOn: Binding(get: { model.ownPace && model.learned != nil }, set: { model.ownPace = $0 }))
+                    .disabled(model.learned == nil)
+                HStack(alignment: .top) {
+                    Text(model.learnedNote).font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                    Spacer()
+                    if model.learned != nil {
+                        Button(L.t("删除…", "Delete…"), role: .destructive) { model.confirmDeleteProfile = true }
+                    }
+                    Button(model.learned == nil ? L.t("学习我的打字习惯…", "Learn my typing…") : L.t("重新学习…", "Learn again…")) {
+                        model.learning = true
+                    }
+                }
             }
             Section(L.t("截图识字", "Grab text")) {
                 Toggle(L.t("英文和数字后的全角标点改成半角", "Half-width punctuation after Latin text"), isOn: $model.asciiPunct)
@@ -80,6 +93,14 @@ struct SettingsView: View {
         .frame(minHeight: 560)
         .onAppear { model.refresh() }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in model.refresh() }
+        .sheet(isPresented: $model.learning) {
+            LearnTypingView { _ in model.learning = false; model.refreshProfile() }
+        }
+        .confirmationDialog(L.t("删除学到的打字习惯？", "Delete your learned typing?"), isPresented: $model.confirmDeleteProfile) {
+            Button(L.t("删除", "Delete"), role: .destructive) { model.deleteProfile() }
+        } message: {
+            Text(L.t("之后按上面的默认速度和节奏打字。", "Pourtype goes back to the default speed and rhythm above."))
+        }
         .confirmationDialog(L.t("清空全部历史记录？", "Clear all history?"), isPresented: $model.confirmClear) {
             Button(L.t("清空", "Clear"), role: .destructive) { HistoryStore.shared.clear() }
         } message: {
@@ -115,6 +136,10 @@ final class SettingsModel: ObservableObject {
     @Published var rhythm: Double = Prefs.pace("normal").rand { didSet { savePace() } }
     @Published var asciiPunct = Prefs.asciiPunct { didSet { Prefs.asciiPunct = asciiPunct } }
     @Published var keepScreenshots = Prefs.keepScreenshots { didSet { Prefs.keepScreenshots = keepScreenshots } }
+    @Published var ownPace = Prefs.ownPace { didSet { Prefs.ownPace = ownPace } }
+    @Published private(set) var learned = ProfileStore.shared.load()
+    @Published var learning = false
+    @Published var confirmDeleteProfile = false
     @Published var historyEnabled = Prefs.historyEnabled { didSet { Prefs.historyEnabled = historyEnabled } }
     @Published var historyDays = Prefs.historyDays { didSet { Prefs.historyDays = historyDays; HistoryStore.shared.prune() } }
     @Published var launchAtLogin = LoginItem.enabled {
@@ -133,4 +158,22 @@ final class SettingsModel: ObservableObject {
     }
 
     private func savePace() { Prefs.setPace("normal", Pace(cps: exp(speedLog), rand: rhythm)) }
+
+    func refreshProfile() { learned = ProfileStore.shared.load() }
+
+    /// Removes the learned profile and turns "Type at my own pace" off.
+    func deleteProfile() {
+        ProfileStore.shared.delete()
+        ownPace = false
+        learned = nil
+    }
+
+    var learnedNote: String {
+        guard let p = learned else {
+            return L.t("先照着一段文字打一遍，Pourtype 会学会你的速度和节奏。", "Type a short passage once and Pourtype learns your speed and rhythm.")
+        }
+        let date = ISO8601DateFormatter().date(from: p.createdUtc).map { $0.formatted(Date.FormatStyle(date: .abbreviated, time: .omitted).locale(L.locale)) } ?? ""
+        return L.f("已于 %1$@ 学习。打开后按你的速度和节奏打字，不用上面的默认值；打字时 ↑↓ ←→ 照样可以调。",
+                   "Learned on %1$@. When on, Pourtype types at your speed and rhythm instead of the defaults above; ↑↓ and ←→ still adjust each run.", date)
+    }
 }
