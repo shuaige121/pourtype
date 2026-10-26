@@ -111,21 +111,30 @@ func keyEvent(_ code: CGKeyCode, _ down: Bool, flags: CGEventFlags = [], unicode
     if let pid = keyTarget { e.postToPid(pid) } else { e.post(tap: .cghidEventTap) }
 }
 
-func strike(_ code: CGKeyCode, flags: CGEventFlags = [], unicode: [UniChar]? = nil, gap: Double) {
-    keyEvent(code, true, flags: flags, unicode: unicode)
+/// What the engine posts each key event with: keyEvent in the app; tests capture the events instead.
+typealias KeySend = (CGKeyCode, Bool, CGEventFlags, [UniChar]?) -> Void
+
+func strike(_ code: CGKeyCode, flags: CGEventFlags = [], unicode: [UniChar]? = nil, gap: Double, send: KeySend = keyEvent) {
+    send(code, true, flags, unicode)
     if gap > 0 { usleep(UInt32(gap * 1e6)) }
-    keyEvent(code, false, flags: flags, unicode: unicode)
+    send(code, false, flags, unicode)
 }
 
-/// Types on its own thread. Every post happens under the lock and after a stop check,
-/// so once stop() returns nothing more reaches the app.
+/// Types on its own thread. Every post happens under the post lock and after a stop check,
+/// and stop() waits for a post in flight, so once stop() returns nothing more reaches the app.
+/// With an OwnPace, each character's hold and the gap before the next come from the learned
+/// profile; the keys sent are the same as without one. Without one, the timing is the fixed pace.
 final class Engine {
     let units: [String]
     private let utf16: [[UniChar]]
-    private let lock = NSLock()
+    private let lock = NSLock()            // _stop, _index, _pace; never held across a sleep
+    private let postLock = NSLock()        // held while one keystroke is posted
     private var _stop = false
     private var _index = 0
     private var _pace: Pace
+    private let own: OwnPace?
+    private let send: KeySend
+    private let rng: RandomSource = SystemRandom()
     var onEnd: ((Bool) -> Void)?           // on main; true = typed everything
     /// Asked right before a keystroke (at most every 25 ms): is the target still in front?
     /// The "another app activated" notification arrives late (measured 2026-10-06: 22 keys
@@ -134,16 +143,22 @@ final class Engine {
     var onFocusLost: (() -> Void)?         // on main
     private var lastGuard = 0.0
 
-    init(_ units: [String], _ pace: Pace) {
+    init(_ units: [String], _ pace: Pace, own: OwnPace? = nil, send: @escaping KeySend = keyEvent) {
         self.units = units
         utf16 = units.map { Array($0.utf16) }
         _pace = pace
+        self.own = own
+        self.send = send
     }
 
     var index: Int { lock.withLock { _index } }
     var pace: Pace { lock.withLock { _pace } }
+    var ownPace: OwnPace? { own }
     func adjust(_ f: (inout Pace) -> Void) { lock.withLock { f(&_pace); _pace.clamp() } }
-    func stop() { lock.withLock { _stop = true } }
+    func stop() {
+        lock.withLock { _stop = true }
+        postLock.withLock {}               // a post in flight ends first; a held key comes up at once
+    }
 
     func start(replace: Bool) {
         let t = Thread { [self] in run(replace) }
@@ -163,10 +178,24 @@ final class Engine {
     }
 
     private func post(_ body: () -> Void) -> Bool {
-        lock.lock(); defer { lock.unlock() }
-        if _stop { return false }
+        postLock.lock(); defer { postLock.unlock() }
+        if stopped { return false }
         body()
         return true
+    }
+
+    private func setIndex(_ i: Int) { lock.withLock { _index = i } }
+
+    /// Key down, held for `seconds` (cut short by stop), key up. The up is always sent, so no key stays down.
+    private func hold(_ code: CGKeyCode, unicode: [UniChar], seconds: Double) {
+        send(code, true, [], unicode)
+        let end = now() + seconds
+        while !stopped {
+            let rem = end - now()
+            if rem <= 0 { break }
+            usleep(UInt32(min(rem, 0.008) * 1e6))
+        }
+        send(code, false, [], unicode)
     }
 
     private func stillFront() -> Bool {
@@ -184,7 +213,7 @@ final class Engine {
             DispatchQueue.main.async { self.onFocusLost?() }
         }
         if replace {
-            guard post({ strike(0, flags: .maskCommand, gap: 0.008) }), wait(until: now() + 0.15) else { return done(false) }
+            guard post({ strike(0, flags: .maskCommand, gap: 0.008, send: send) }), wait(until: now() + 0.15) else { return done(false) }
         }
         var next = now()
         for i in 0..<units.count {
@@ -195,11 +224,16 @@ final class Engine {
                 guard wait(until: now() + NEWLINE_PAUSE) else { return done(false) }
                 guard stillFront() else { lost(); return done(false) }
                 let t = now()
-                guard post({ strike(36, flags: .maskShift, gap: 0.006); _index = i + 1 }) else { return done(false) }
+                guard post({ strike(36, flags: .maskShift, gap: 0.006, send: send); setIndex(i + 1) }) else { return done(false) }
                 next = t + delayAfter(u, p)
+            } else if let own {
+                // timing only: the same key events as below, held and spaced as learned
+                let t = now(), h = own.timing(units, i, p, rng)
+                guard post({ hold(0, unicode: utf16[i], seconds: h.dwellSeconds); setIndex(i + 1) }) else { return done(false) }
+                next = t + h.gapSeconds
             } else {
                 let t = now(), gap = min(0.006, 0.35 / p.cps)
-                guard post({ strike(0, unicode: utf16[i], gap: gap); _index = i + 1 }) else { return done(false) }
+                guard post({ strike(0, unicode: utf16[i], gap: gap, send: send); setIndex(i + 1) }) else { return done(false) }
                 next = t + delayAfter(u, p)
             }
         }

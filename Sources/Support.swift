@@ -69,6 +69,14 @@ enum Prefs {
         d.set((p.rand * 100).rounded() / 100, forKey: "pace.\(mode).rand")
     }
 
+    /// "Type at my own pace": timing from the learned profile (ProfileStore) instead of the fixed pace. Off by default.
+    static var ownPace: Bool {
+        get { ownPace(in: d) }
+        set { d.set(newValue, forKey: ownPaceKey) }
+    }
+    static let ownPaceKey = "typing.profile.enabled"
+    static func ownPace(in defaults: UserDefaults) -> Bool { defaults.object(forKey: ownPaceKey) as? Bool ?? false }
+
     static var historyEnabled: Bool {
         get { d.object(forKey: "history.enabled") as? Bool ?? true }
         set { d.set(newValue, forKey: "history.enabled") }

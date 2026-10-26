@@ -146,12 +146,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func type(_ text: String, mode: String, replace: Bool = false) {
         guard !busy else { Toast.shared.show(L.t("正在输入中", "Already typing"), warn: true); return }
-        let pace = Prefs.pace(mode)
+        // "Type at my own pace": the learned profile sets the timing; otherwise the fixed pace of this mode
+        let own = OwnPace.forRun(mode: mode, enabled: Prefs.ownPace, store: .shared)
+        let pace = own?.start ?? Prefs.pace(mode)
         // the guide's practice box is ours: typing into ourselves is allowed only there
         let practicing = welcomeWindow?.isKeyWindow == true
-        let started = TypeSession.start(text: text, pace: pace, replace: replace, lang: L.lang, allowSelf: practicing) { [weak self] r in
+        let started = TypeSession.start(text: text, pace: pace, replace: replace, lang: L.lang, allowSelf: practicing, own: own) { [weak self] r in
             TypeSessionTracker.running = false
-            self?.finished(r, text: text, mode: mode, start: pace)
+            self?.finished(r, text: text, mode: mode, start: pace, savePace: own == nil)
         }
         switch started {
         case .success:
@@ -167,16 +169,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             Toast.shared.show(L.t("先点一下要输入的地方", "Click into the field to type into first"), warn: true)
         case .failure(.noTap):
             Toast.shared.show(L.t("无法锁定键鼠，改为直接输入；⌃⌥⌘. 停止", "Cannot hold the keyboard; typing without it. ⌃⌥⌘. stops"), seconds: 3, warn: true)
-            typePlain(text, pace: pace)
+            typePlain(text, pace: pace, own: own)
         case .failure(.secureInput(let holder)):
             Toast.shared.show(L.f("安全输入中（%1$@），不锁键鼠直接输入；⌃⌥⌘. 停止",
                                   "Secure Input is on (%1$@): typing without holding input. ⌃⌥⌘. stops", holder), seconds: 3, warn: true)
-            typePlain(text, pace: pace)
+            typePlain(text, pace: pace, own: own)
         }
     }
 
-    private func finished(_ r: TypeResult, text: String, mode: String, start: Pace) {
-        if r.pace != start { Prefs.setPace(mode, r.pace) }
+    /// savePace: false for a run at the user's own pace, whose speed and rhythm are not the fixed defaults.
+    private func finished(_ r: TypeResult, text: String, mode: String, start: Pace, savePace: Bool) {
+        if savePace, r.pace != start { Prefs.setPace(mode, r.pace) }
         let why: [String: String] = ["esc": "Esc", "focus": L.t("焦点变了", "focus moved"), "display": L.t("显示器有变化", "displays changed"),
                                      "secure_input": L.t("进入了安全输入", "Secure Input turned on"), "tap_disabled": L.t("系统停用了拦截", "the system stopped the hold"),
                                      "timeout": L.t("超时", "time limit"), "untrusted": L.t("权限被收回", "permission revoked"),
@@ -197,9 +200,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     /// Secure Input (a password field) hides the keyboard from every tap, so it cannot be
     /// held: type without the veil; the menu and ctrl-alt-cmd-. stop it.
-    private func typePlain(_ text: String, pace: Pace) {
+    private func typePlain(_ text: String, pace: Pace, own: OwnPace?) {
         let units = splitUnits(prepareText(text))
-        let e = Engine(units, pace)
+        let e = Engine(units, pace, own: own)
         plain = e
         let t0 = now()
         e.onEnd = { [weak self] all in

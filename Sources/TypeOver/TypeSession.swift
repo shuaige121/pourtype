@@ -35,7 +35,7 @@ final class TypeSession {
     enum Phase { case waiting, typing, draining, ending }
 
     /// Check everything that can be checked before anything is shown, then start.
-    static func start(text: String, pace: Pace, replace: Bool, lang: String, allowSelf: Bool = false,
+    static func start(text: String, pace: Pace, replace: Bool, lang: String, allowSelf: Bool = false, own: OwnPace? = nil,
                       onFinish: @escaping (TypeResult) -> Void) -> Result<TypeSession, TypeStartError> {
         if gSession != nil { return .failure(.busy) }
         let units = splitUnits(prepareText(text))
@@ -54,10 +54,11 @@ final class TypeSession {
             "reduceMotion": NSWorkspace.shared.accessibilityDisplayShouldReduceMotion,
             "target": ["app": front.localizedName ?? "?", "title": focus.title ?? "", "field": focus.field ?? "",
                        "icon": iconDataURL(front.icon) ?? ""],
-            "state": ["i": 0, "cps": pace.cps, "rand": pace.rand, "eta": etaSeconds(0, units.count, pace, Suffix(units)),
+            "state": ["i": 0, "cps": pace.cps, "rand": pace.rand,
+                      "eta": own?.eta(0, units.count, pace, Suffix(units)) ?? etaSeconds(0, units.count, pace, Suffix(units)),
                       "held": ["up": false, "down": false, "left": false, "right": false], "nudge": 0, "phase": "typing"],
         ]
-        let session = TypeSession(units: units, pace: pace, replace: replace, front: front, focus: focus, onFinish: onFinish)
+        let session = TypeSession(units: units, pace: pace, own: own, replace: replace, front: front, focus: focus, onFinish: onFinish)
         guard session.makeTap() else { return .failure(.noTap) }
         session.overlay = Overlay(screens: screens, target: target, hole: holeFor(focus, screen: screens[target].frame),
                                   payload: payload, htmlURL: hudURL())
@@ -97,9 +98,9 @@ final class TypeSession {
     private let screenFrames = NSScreen.screens.map { $0.frame }
     private var axBusy = false
 
-    private init(units: [String], pace: Pace, replace: Bool, front: NSRunningApplication, focus: Focus,
+    private init(units: [String], pace: Pace, own: OwnPace?, replace: Bool, front: NSRunningApplication, focus: Focus,
                  onFinish: @escaping (TypeResult) -> Void) {
-        engine = Engine(units, pace)
+        engine = Engine(units, pace, own: own)
         suffix = Suffix(units)
         self.replace = replace
         pid = front.processIdentifier
@@ -313,7 +314,8 @@ final class TypeSession {
         let heldNow = ["up": held[KEY_UP] != nil, "down": held[KEY_DOWN] != nil,
                        "left": held[KEY_LEFT] != nil, "right": held[KEY_RIGHT] != nil]
         let state: [String: Any] = ["i": i, "cps": (p.cps * 10).rounded() / 10, "rand": (p.rand * 100).rounded() / 100,
-                                    "eta": (etaSeconds(i, n, p, suffix) * 2).rounded() / 2, "held": heldNow,
+                                    "eta": ((engine.ownPace?.eta(i, n, p, suffix) ?? etaSeconds(i, n, p, suffix)) * 2).rounded() / 2,
+                                    "held": heldNow,
                                     "nudge": nudges, "phase": phaseName]
         let s = json(state)
         guard s != lastHud else { return }
