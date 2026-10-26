@@ -24,6 +24,8 @@ Guides: [website won't let you paste on a Mac](https://shuaige121.github.io/pour
 | hold ↑ / ↓ | faster / slower (3–150 characters per second) |
 | hold ← / → | steadier / more random rhythm |
 
+**Type at my own pace** (Settings, off by default): type a short passage once under *Learn my typing*, and Pourtype times each character the way you type: how long you hold keys and the gaps between them, by kind of key. Only summary numbers are saved, on this Mac; the text you typed and the raw timings are not. With it on, ↑ / ↓ speed your own pace up or down and ← / → make it steadier or more varied. Only the timing changes: the characters typed are the same.
+
 The card shows the app and window being typed into, the text streaming past, progress and time left. On other displays a small card points to the one being typed on. Typing stops by itself if another app comes to the front or the displays change. Newlines go in as Shift+Return so chat boxes do not send early; tabs become spaces.
 
 In a password field macOS turns on Secure Input, which hides the keyboard from every app; there the keyboard cannot be held, so Pourtype types without the veil and **⌃⌥⌘.** stops it.
@@ -51,6 +53,7 @@ Automation hooks: `open -g pourtype://type`, `pourtype://type-slow`, `pourtype:/
 - `Sources/TypeOver` — the typing engine (one CGEvent per grapheme cluster, Unicode string payload, so input methods are bypassed), the HID-level event tap that holds input, and the veil: one window per display with a frosted `NSVisualEffectView` cut out around the field and a `WKWebView` HUD (`Resources/hud.html`).
 - `Sources/Grab` — the region picker, ScreenCaptureKit capture and Vision text recognition.
 - `Sources/History` — a JSON index plus PNG thumbnails under Application Support.
+- `Sources/Habits` — "Type at my own pace": the Learn my typing recorder (keys in its own box only), the fit (lognormal per key class and key-pair geometry, long pauses), and `TypingProfile.json` in Application Support beside the history.
 
 ## License
 
