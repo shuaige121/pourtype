@@ -12,6 +12,7 @@
 		1D66CA0F251F4BA8AFAF7334 /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF32D39C66B0D9409D3686A3 /* Support.swift */; };
 		1F7D8D6550BC2440F0FE22DE /* hud.html in Resources */ = {isa = PBXBuildFile; fileRef = AB928CA2C4A1AA020D9DB28B /* hud.html */; };
 		254DC2BBA13AACDF8ECA3C9A /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD5A26629301D75AA3F0E86 /* HistoryView.swift */; };
+		2674BA6CEA7D30E1B47F8829 /* CalibrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2630EC48D364B4C70A5251 /* CalibrationTests.swift */; };
 		31312D13E93F8A6D2C0DA024 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 4BA2DC961B3593AB7E818F15 /* AppIcon.icon */; };
 		31EC7547FC7DD50FCC97F287 /* HabitFitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB27EB6DA8EEB8EA8D2F2D5 /* HabitFitter.swift */; };
 		4454960BA20B59928ED9AE99 /* TypeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327590DCE29A383BABFDDD20 /* TypeSession.swift */; };
@@ -31,6 +32,7 @@
 		A7C3B35B464567FC8B8D29D4 /* HabitModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51553E3145ADE2E374B56D63 /* HabitModelTests.swift */; };
 		AD5EBF342622304D66CE2BD6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F6E648E9482B8BFD4DA5C646 /* InfoPlist.strings */; };
 		BC75A0B10319A3ED112822AE /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E99A0C954CECA8B1203227 /* OnboardingView.swift */; };
+		BE0EFEA727A2BC4481434487 /* Calibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E925C732E99C161A52D24D0 /* Calibration.swift */; };
 		C27C1CA33F8B655A2D8EA2D0 /* TestRandom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A859BE31F5F47C679394D1 /* TestRandom.swift */; };
 		C75F2434B5864B5EAB0352FC /* HistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC179E499D26086C222E5FED /* HistoryStore.swift */; };
 		CA36956A460EEAFA8D09BC09 /* EngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B595076960DF0594DB3BB6EB /* EngineTests.swift */; };
@@ -63,6 +65,7 @@
 		327590DCE29A383BABFDDD20 /* TypeSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeSession.swift; sourceTree = "<group>"; };
 		3597BE575348160E3B846C1A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		3B4BE8BB9E5EEBB784A0821B /* TypingProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingProfile.swift; sourceTree = "<group>"; };
+		3E925C732E99C161A52D24D0 /* Calibration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calibration.swift; sourceTree = "<group>"; };
 		4BA2DC961B3593AB7E818F15 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		4F4132ABB1BE82CEC9136C94 /* CalibrationPassage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationPassage.swift; sourceTree = "<group>"; };
 		51553E3145ADE2E374B56D63 /* HabitModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitModelTests.swift; sourceTree = "<group>"; };
@@ -78,6 +81,7 @@
 		99A859BE31F5F47C679394D1 /* TestRandom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRandom.swift; sourceTree = "<group>"; };
 		AB928CA2C4A1AA020D9DB28B /* hud.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = hud.html; sourceTree = "<group>"; };
 		AE148616D5932FACEF97F144 /* strings-zh-Hant.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "strings-zh-Hant.json"; sourceTree = "<group>"; };
+		AE2630EC48D364B4C70A5251 /* CalibrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationTests.swift; sourceTree = "<group>"; };
 		B595076960DF0594DB3BB6EB /* EngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineTests.swift; sourceTree = "<group>"; };
 		B68D101A4FDF5170AB647456 /* Grabber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grabber.swift; sourceTree = "<group>"; };
 		B8427C665087ACBC142C38DF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -128,6 +132,7 @@
 		6ADD527ABEFE173CDB953D46 /* Habits */ = {
 			isa = PBXGroup;
 			children = (
+				3E925C732E99C161A52D24D0 /* Calibration.swift */,
 				4F4132ABB1BE82CEC9136C94 /* CalibrationPassage.swift */,
 				0BB27EB6DA8EEB8EA8D2F2D5 /* HabitFitter.swift */,
 				F6001C3E2538E20D1FBA3D83 /* HabitTiming.swift */,
@@ -186,6 +191,7 @@
 		D25AB19521DA2B915A36EDD6 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				AE2630EC48D364B4C70A5251 /* CalibrationTests.swift */,
 				7A9F2F247C68F2F5869A1EBD /* CoreTests.swift */,
 				B595076960DF0594DB3BB6EB /* EngineTests.swift */,
 				51553E3145ADE2E374B56D63 /* HabitModelTests.swift */,
@@ -306,6 +312,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2674BA6CEA7D30E1B47F8829 /* CalibrationTests.swift in Sources */,
 				F2AD3457562480E99D3F1946 /* CoreTests.swift in Sources */,
 				CA36956A460EEAFA8D09BC09 /* EngineTests.swift in Sources */,
 				A7C3B35B464567FC8B8D29D4 /* HabitModelTests.swift in Sources */,
@@ -319,6 +326,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				80C9CCE82C2D5C81C042A150 /* App.swift in Sources */,
+				BE0EFEA727A2BC4481434487 /* Calibration.swift in Sources */,
 				F8F4BD6B06038C9BDD6D0B12 /* CalibrationPassage.swift in Sources */,
 				170DAAA665E4BEF59356A79E /* Core.swift in Sources */,
 				81964DF472B5BA7A36136008 /* Grabber.swift in Sources */,
