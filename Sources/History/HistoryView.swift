@@ -4,6 +4,9 @@ import SwiftUI
 // the right; copy it again or type it again.
 
 struct HistoryView: View {
+    /// "Type again" types into another app, so plain Return (which also ends a search) must never trigger it.
+    static let typeAgainShortcut = KeyboardShortcut(.return, modifiers: .command)
+
     @ObservedObject var store: HistoryStore
     var onType: (String) -> Void
     @State private var query = ""
@@ -103,7 +106,9 @@ private struct Detail: View {
                     NSPasteboard.general.clearContents()
                     NSPasteboard.general.setString(item.text, forType: .string)
                 }
-                Button(L.t("再打一次", "Type again")) { onType(item.text) }.keyboardShortcut(.defaultAction)
+                Button(L.t("再打一次", "Type again")) { onType(item.text) }
+                    .keyboardShortcut(HistoryView.typeAgainShortcut)
+                    .help("⌘↩")
             }
         }
         .padding(16)
