@@ -169,5 +169,6 @@
  "Let links type the clipboard": "允許連結輸入剪貼簿",
  "For scripts that open pourtype://type. When on, any app or web page can make Pourtype type what you copied.": "供開啟 pourtype://type 的指令碼使用。開啟後，任何 App 或網頁都能讓 Pourtype 輸入你複製的內容。",
  "Could not delete": "未能刪除",
- "What could not be deleted is still in the history. %1$@": "沒刪掉的記錄仍留在歷史裡。%1$@"
+ "What could not be deleted is still in the history. %1$@": "沒刪掉的記錄仍留在歷史裡。%1$@",
+ "Recognising…": "正在辨識…"
 }

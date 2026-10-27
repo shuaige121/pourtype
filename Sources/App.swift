@@ -27,6 +27,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var welcomeWindow: NSWindow?
     private let settings = SettingsModel()
     private var picker: RegionPicker?
+    private var grabbing = false             // from the box being drawn until its text is on the clipboard
     private var plain: Engine?               // the fallback typing (Secure Input), no veil
     private var busy: Bool { TypeSessionTracker.running || plain != nil || picker != nil }
 
@@ -46,6 +47,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         registerHotkeys()
         // the retention period applies while the app runs, not only at launch and on add
         HistoryStore.shared.keepPruning()
+        // the first grab would otherwise wait for Vision to load its models; nothing to warm without the permission
+        if Permissions.screenRecording { Grabber.warmUp() }
         NotificationCenter.default.addObserver(forName: Shortcuts.changed, object: nil, queue: .main) { [weak self] _ in
             self?.registerHotkeys()
         }
@@ -238,35 +241,57 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             openSettings()
             return
         }
+        // one grab at a time, so two results cannot reach the clipboard out of order
+        guard !grabbing else { return recognising() }
         let front = NSWorkspace.shared.frontmostApplication?.localizedName
         let p = RegionPicker()
         picker = p
         p.pick { [weak self] rect in
             self?.picker = nil
-            guard let rect else { return }
+            guard let self, let rect else { return }
+            self.grabbing = true
             Task { @MainActor in
                 do {
                     // let the picker's windows leave the screen before the capture
                     try await Task.sleep(nanoseconds: 120_000_000)
                     let img = try await Grabber.capture(rect)
-                    var text = try Grabber.recognize(img).trimmingCharacters(in: .whitespacesAndNewlines)
-                    if Prefs.asciiPunct { text = Grabber.asciiPunct(text) }
-                    guard !text.isEmpty else {
-                        Toast.shared.show(L.t("这块区域里没有找到文字", "No text found there"), symbol: "text.viewfinder")
-                        return
+                    // shown after the capture, so it is never in the picture
+                    self.recognising()
+                    Grabber.read(img, asciiPunct: Prefs.asciiPunct, thumbnail: Prefs.historyEnabled && Prefs.keepScreenshots) { r in
+                        self.grabbing = false
+                        switch r {
+                        case .success(let reading): self.grabbed(reading, front: front)
+                        case .failure(let error): self.grabFailed(error)
+                        }
                     }
-                    NSPasteboard.general.clearContents()
-                    NSPasteboard.general.setString(text, forType: .string)
-                    HistoryStore.shared.add(HistoryItem(kind: .grab, text: text, app: front), png: Grabber.pngThumbnail(img))
-                    let lines = text.components(separatedBy: "\n").count
-                    Toast.shared.show(L.f("已复制 %1$@ 字 · %2$@ 行", "Copied %1$@ characters, %2$@ lines", "\(text.count)", "\(lines)"),
-                                      symbol: "text.viewfinder")
                 } catch {
-                    Toast.shared.show(L.f("截图识字失败：%1$@", "Grab failed: %1$@", error.localizedDescription),
-                                      seconds: 3, warn: true)
+                    self.grabbing = false
+                    self.grabFailed(error)
                 }
             }
         }
+    }
+
+    private func recognising() {
+        Toast.shared.show(L.t("正在识别…", "Recognising…"), symbol: "text.viewfinder", seconds: 60)
+    }
+
+    private func grabbed(_ r: Grabber.Reading, front: String?) {
+        let text = r.text
+        guard !text.isEmpty else {
+            Toast.shared.show(L.t("这块区域里没有找到文字", "No text found there"), symbol: "text.viewfinder")
+            return
+        }
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(text, forType: .string)
+        HistoryStore.shared.add(HistoryItem(kind: .grab, text: text, app: front), png: r.png)
+        let lines = text.components(separatedBy: "\n").count
+        Toast.shared.show(L.f("已复制 %1$@ 字 · %2$@ 行", "Copied %1$@ characters, %2$@ lines", "\(text.count)", "\(lines)"),
+                          symbol: "text.viewfinder")
+    }
+
+    private func grabFailed(_ error: Error) {
+        Toast.shared.show(L.f("截图识字失败：%1$@", "Grab failed: %1$@", error.localizedDescription), seconds: 3, warn: true)
     }
 
     // MARK: windows

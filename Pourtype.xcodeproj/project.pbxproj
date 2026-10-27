@@ -34,6 +34,7 @@
 		A0F402E37008FDE25F13BE9B /* AppShellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E55A223476A4827F5618B1 /* AppShellTests.swift */; };
 		A7C3B35B464567FC8B8D29D4 /* HabitModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51553E3145ADE2E374B56D63 /* HabitModelTests.swift */; };
 		AD5EBF342622304D66CE2BD6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F6E648E9482B8BFD4DA5C646 /* InfoPlist.strings */; };
+		B656666BE9651CA9C63AC876 /* GrabFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99BB6E8F5D320A8FA5E6159 /* GrabFlowTests.swift */; };
 		BC75A0B10319A3ED112822AE /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E99A0C954CECA8B1203227 /* OnboardingView.swift */; };
 		BE0EFEA727A2BC4481434487 /* Calibration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E925C732E99C161A52D24D0 /* Calibration.swift */; };
 		C27C1CA33F8B655A2D8EA2D0 /* TestRandom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A859BE31F5F47C679394D1 /* TestRandom.swift */; };
@@ -93,6 +94,7 @@
 		B595076960DF0594DB3BB6EB /* EngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineTests.swift; sourceTree = "<group>"; };
 		B68D101A4FDF5170AB647456 /* Grabber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grabber.swift; sourceTree = "<group>"; };
 		B8427C665087ACBC142C38DF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B99BB6E8F5D320A8FA5E6159 /* GrabFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrabFlowTests.swift; sourceTree = "<group>"; };
 		B9B09CFACE8F070405A32949 /* Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
 		CB66ACF853DB71C5A3D1B1B4 /* Overlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overlay.swift; sourceTree = "<group>"; };
 		CC7E2AD611874D6E1BE5205C /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				AE2630EC48D364B4C70A5251 /* CalibrationTests.swift */,
 				7A9F2F247C68F2F5869A1EBD /* CoreTests.swift */,
 				B595076960DF0594DB3BB6EB /* EngineTests.swift */,
+				B99BB6E8F5D320A8FA5E6159 /* GrabFlowTests.swift */,
 				51553E3145ADE2E374B56D63 /* HabitModelTests.swift */,
 				A9265F418EC751B0BCE9DA0C /* HistoryTests.swift */,
 				18B605E30E2BB72ACDE1A10F /* OwnPaceTests.swift */,
@@ -328,6 +331,7 @@
 				2674BA6CEA7D30E1B47F8829 /* CalibrationTests.swift in Sources */,
 				F2AD3457562480E99D3F1946 /* CoreTests.swift in Sources */,
 				CA36956A460EEAFA8D09BC09 /* EngineTests.swift in Sources */,
+				B656666BE9651CA9C63AC876 /* GrabFlowTests.swift in Sources */,
 				A7C3B35B464567FC8B8D29D4 /* HabitModelTests.swift in Sources */,
 				715DCB4AC8DA21F7F593B897 /* HistoryTests.swift in Sources */,
 				8DC5CCB394C17DC67CABAE0C /* OwnPaceTests.swift in Sources */,

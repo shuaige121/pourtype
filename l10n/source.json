@@ -3,42 +3,42 @@
   "en": "A shortcut is taken by another app: change it in Settings, or use the menu bar",
   "zh-Hans": "快捷键被别的 App 占用，可在设置里更换，或从菜单栏使用",
   "where": [
-   "App.swift:62"
+   "App.swift:65"
   ]
  },
  {
   "en": "Stop Typing",
   "zh-Hans": "停止输入",
   "where": [
-   "App.swift:92"
+   "App.swift:95"
   ]
  },
  {
   "en": "Type Clipboard",
   "zh-Hans": "打出剪贴板",
   "where": [
-   "App.swift:96"
+   "App.swift:99"
   ]
  },
  {
   "en": "Grab Text",
   "zh-Hans": "截图识字",
   "where": [
-   "App.swift:97"
+   "App.swift:100"
   ]
  },
  {
   "en": "History…",
   "zh-Hans": "历史记录…",
   "where": [
-   "App.swift:98"
+   "App.swift:101"
   ]
  },
  {
   "en": "Settings…",
   "zh-Hans": "设置…",
   "where": [
-   "App.swift:100",
+   "App.swift:103",
    "MainMenu.swift:14"
   ]
  },
@@ -46,172 +46,179 @@
   "en": "Getting Started…",
   "zh-Hans": "使用指南…",
   "where": [
-   "App.swift:101"
+   "App.swift:104"
   ]
  },
  {
   "en": "Quit",
   "zh-Hans": "退出",
   "where": [
-   "App.swift:103"
+   "App.swift:106"
   ]
  },
  {
   "en": "Ignored a link that asked Pourtype to type (Settings › General can allow it)",
   "zh-Hans": "已忽略一个要求打字的链接（可在「设置 › 通用」里允许）",
   "where": [
-   "App.swift:125"
+   "App.swift:128"
   ]
  },
  {
   "en": "Already typing",
   "zh-Hans": "正在输入中",
   "where": [
-   "App.swift:154",
-   "App.swift:170"
+   "App.swift:157",
+   "App.swift:173"
   ]
  },
  {
   "en": "The clipboard has no text",
   "zh-Hans": "剪贴板里没有文字",
   "where": [
-   "App.swift:168"
+   "App.swift:171"
   ]
  },
  {
   "en": "Typing needs the Accessibility permission",
   "zh-Hans": "需要「辅助功能」权限才能打字",
   "where": [
-   "App.swift:172"
+   "App.swift:175"
   ]
  },
  {
   "en": "Click into the field to type into first",
   "zh-Hans": "先点一下要输入的地方",
   "where": [
-   "App.swift:175"
+   "App.swift:178"
   ]
  },
  {
   "en": "Cannot hold the keyboard; typing without it. ⌃⌥⌘. stops",
   "zh-Hans": "无法锁定键鼠，改为直接输入；⌃⌥⌘. 停止",
   "where": [
-   "App.swift:177"
+   "App.swift:180"
   ]
  },
  {
   "en": "Secure Input is on (%1$@): typing without holding input. ⌃⌥⌘. stops",
   "zh-Hans": "安全输入中（%1$@），不锁键鼠直接输入；⌃⌥⌘. 停止",
   "where": [
-   "App.swift:180"
+   "App.swift:183"
   ]
  },
  {
   "en": "focus moved",
   "zh-Hans": "焦点变了",
   "where": [
-   "App.swift:189"
+   "App.swift:192"
   ]
  },
  {
   "en": "displays changed",
   "zh-Hans": "显示器有变化",
   "where": [
-   "App.swift:189"
+   "App.swift:192"
   ]
  },
  {
   "en": "Secure Input turned on",
   "zh-Hans": "进入了安全输入",
   "where": [
-   "App.swift:190"
+   "App.swift:193"
   ]
  },
  {
   "en": "the system stopped the hold",
   "zh-Hans": "系统停用了拦截",
   "where": [
-   "App.swift:190"
+   "App.swift:193"
   ]
  },
  {
   "en": "time limit",
   "zh-Hans": "超时",
   "where": [
-   "App.swift:191"
+   "App.swift:194"
   ]
  },
  {
   "en": "permission revoked",
   "zh-Hans": "权限被收回",
   "where": [
-   "App.swift:191"
+   "App.swift:194"
   ]
  },
  {
   "en": "keys were held down",
   "zh-Hans": "按键没有松开",
   "where": [
-   "App.swift:192"
+   "App.swift:195"
   ]
  },
  {
   "en": "Typed %1$@ characters in %2$@ s",
   "zh-Hans": "已输入 %1$@ 字 · %2$@ 秒",
   "where": [
-   "App.swift:194",
-   "App.swift:217"
+   "App.swift:197",
+   "App.swift:220"
   ]
  },
  {
   "en": "Stopped at %1$@/%2$@ (%3$@)",
   "zh-Hans": "停在 %1$@/%2$@（%3$@）",
   "where": [
-   "App.swift:198"
+   "App.swift:201"
   ]
  },
  {
   "en": "Stopped at %1$@/%2$@",
   "zh-Hans": "停在 %1$@/%2$@",
   "where": [
-   "App.swift:218",
-   "App.swift:228"
+   "App.swift:221",
+   "App.swift:231"
   ]
  },
  {
   "en": "Grab Text needs the Screen Recording permission",
   "zh-Hans": "需要「屏幕录制」权限才能截图识字",
   "where": [
-   "App.swift:237"
+   "App.swift:240"
+  ]
+ },
+ {
+  "en": "Recognising…",
+  "zh-Hans": "正在识别…",
+  "where": [
+   "App.swift:276"
   ]
  },
  {
   "en": "No text found there",
   "zh-Hans": "这块区域里没有找到文字",
   "where": [
-   "App.swift:255"
+   "App.swift:282"
   ]
  },
  {
   "en": "Copied %1$@ characters, %2$@ lines",
   "zh-Hans": "已复制 %1$@ 字 · %2$@ 行",
   "where": [
-   "App.swift:262"
+   "App.swift:289"
   ]
  },
  {
   "en": "Grab failed: %1$@",
   "zh-Hans": "截图识字失败：%1$@",
   "where": [
-   "App.swift:265"
+   "App.swift:294"
   ]
  },
  {
   "en": "History",
   "zh-Hans": "历史记录",
   "where": [
-   "App.swift:279",
-   "App.swift:463",
+   "App.swift:304",
+   "App.swift:488",
    "SettingsView.swift:72"
   ]
  },
@@ -219,70 +226,70 @@
   "en": "Pourtype is in the menu bar, ready",
   "zh-Hans": "Pourtype 在菜单栏里，随时可用",
   "where": [
-   "App.swift:309"
+   "App.swift:334"
   ]
  },
  {
   "en": "Settings",
   "zh-Hans": "设置",
   "where": [
-   "App.swift:321"
+   "App.swift:346"
   ]
  },
  {
   "en": "Receipt R-7731 · 6 Oct 2026\nDesk lamp x1    S$ 39.90\nReturns accepted within 14 days",
   "zh-Hans": "收据编号 R-7731 · 2026年10月6日\n桌面台灯 ×1    S$ 39.90\n退货期限：14 天内",
   "where": [
-   "App.swift:427"
+   "App.swift:452"
   ]
  },
  {
   "en": "Wi-Fi: Studio-Guest · password on the card at the front desk",
   "zh-Hans": "访客 Wi-Fi：Studio-Guest · 密码见前台卡片",
   "where": [
-   "App.swift:430"
+   "App.swift:455"
   ]
  },
  {
   "en": "Photos",
   "zh-Hans": "照片",
   "where": [
-   "App.swift:430"
+   "App.swift:455"
   ]
  },
  {
   "en": "Order A-20481: replacement requested, photos attached.",
   "zh-Hans": "订单 A-20481：已申请补发，照片已附上。",
   "where": [
-   "App.swift:431"
+   "App.swift:456"
   ]
  },
  {
   "en": "Mail",
   "zh-Hans": "邮件",
   "where": [
-   "App.swift:431"
+   "App.swift:456"
   ]
  },
  {
   "en": "Meeting moved to Thursday 3 pm, room 4B. Please bring the Q3 numbers.",
   "zh-Hans": "会议改到周四下午 3 点，4B 会议室，请带上第三季度的数据。",
   "where": [
-   "App.swift:432"
+   "App.swift:457"
   ]
  },
  {
   "en": "Preview",
   "zh-Hans": "预览",
   "where": [
-   "App.swift:432"
+   "App.swift:457"
   ]
  },
  {
   "en": "Hi, the desk lamp from order A-20481 arrived with a cracked base.\nPhotos are attached. Could you send a replacement, or a return label?\nThanks, Alex",
   "zh-Hans": "你好，订单 A-20481 的台灯收到时底座有裂痕。\n照片已附上，麻烦补发一个，或者给我退货标签。\n谢谢！林晓",
   "where": [
-   "App.swift:433"
+   "App.swift:458"
   ]
  },
  {

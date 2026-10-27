@@ -37,7 +37,61 @@ enum Grabber {
 
     private static func area(_ r: CGRect) -> CGFloat { r.isNull ? 0 : r.width * r.height }
 
-    /// Recognised text, rows top to bottom, each row left to right.
+    /// Vision runs here, never on the main thread: the first run in a session loads its models (13 s measured
+    /// once on the owner's Mac), and menus, hotkeys and Esc must keep working meanwhile. Serial, so the warm-up
+    /// and a grab never load the models twice at once.
+    static let visionQueue = DispatchQueue(label: "pourtype.vision", qos: .userInitiated)
+
+    struct Reading { let text: String; let png: Data? }
+
+    /// Recognises `image` on the Vision queue and calls back on main with the text as the clipboard gets it
+    /// (trimmed; half-width punctuation after Latin text when `asciiPunct`) and, when `thumbnail`, the
+    /// screenshot for the history.
+    static func read(_ image: CGImage, asciiPunct: Bool, thumbnail: Bool,
+                     recognize: @escaping (CGImage) throws -> String = Grabber.recognize,
+                     done: @escaping (Result<Reading, Error>) -> Void) {
+        visionQueue.async {
+            let r = Result { () throws -> Reading in
+                let text = clean(try recognize(image), asciiPunct: asciiPunct)
+                return Reading(text: text, png: thumbnail && !text.isEmpty ? pngThumbnail(image) : nil)
+            }
+            DispatchQueue.main.async { done(r) }
+        }
+    }
+
+    static func clean(_ raw: String, asciiPunct: Bool) -> String {
+        let t = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        return asciiPunct ? Grabber.asciiPunct(t) : t
+    }
+
+    /// Loads the text models in the background a moment after launch, so the first grab does not wait for
+    /// them. Returns at once; the work runs on the Vision queue at utility priority.
+    static func warmUp(after delay: Double = 2, recognize: @escaping (CGImage) throws -> String = Grabber.recognize) {
+        visionQueue.asyncAfter(deadline: .now() + delay, qos: .utility) {
+            guard let img = warmUpImage() else { return }
+            _ = try? recognize(img)
+        }
+    }
+
+    /// A small picture of a line of text (drawn with Core Text, safe off the main thread).
+    static func warmUpImage() -> CGImage? {
+        let w = 260, h = 64
+        guard let ctx = CGContext(data: nil, width: w, height: h, bitsPerComponent: 8, bytesPerRow: 0,
+                                  space: CGColorSpaceCreateDeviceRGB(),
+                                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else { return nil }
+        ctx.setFillColor(CGColor(gray: 1, alpha: 1))
+        ctx.fill(CGRect(x: 0, y: 0, width: w, height: h))
+        ctx.setFillColor(CGColor(gray: 0, alpha: 1))
+        let attrs: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key(kCTFontAttributeName as String): CTFontCreateWithName("Helvetica" as CFString, 30, nil),
+            NSAttributedString.Key(kCTForegroundColorFromContextAttributeName as String): true,
+        ]
+        ctx.textPosition = CGPoint(x: 12, y: 20)
+        CTLineDraw(CTLineCreateWithAttributedString(NSAttributedString(string: "Pourtype 2468", attributes: attrs)), ctx)
+        return ctx.makeImage()
+    }
+
+    /// Recognised text, rows top to bottom, each row left to right. Blocks: call it on visionQueue.
     static func recognize(_ image: CGImage) throws -> String {
         let req = VNRecognizeTextRequest()
         req.recognitionLanguages = languages
