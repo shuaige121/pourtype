@@ -19,6 +19,19 @@ enum TypeStartError: Error {
     case empty, busy, secureInput(String), untrusted, noTarget, noTap
 }
 
+/// When a run may begin typing: the frosted veil is up and the user has let go of every key and button.
+/// The veil is up when its fade-in has finished, when the HUD card reports ready (whichever comes first), or
+/// `fallback` seconds after the start. Typing does not wait for the card: its web view can take a while to
+/// load on the first run, and the card fades in when it is ready.
+struct StartGate {
+    static let fallback = 0.2
+    var veilUp = false
+    var hudReady = false
+    func open(elapsed: Double, holdingInput: Bool) -> Bool {
+        (veilUp || hudReady || elapsed >= StartGate.fallback) && !holdingInput
+    }
+}
+
 private weak var gSession: TypeSession?
 
 private let tapCallback: CGEventTapCallBack = { _, type, event, _ in
@@ -82,7 +95,7 @@ final class TypeSession {
     private let onFinish: (TypeResult) -> Void
     private var keepAlive: TypeSession?
 
-    private var hudReady = false
+    private var gate = StartGate()
     private let waitStarted = now()
     private var typingStarted = 0.0
     private var held: [Int64: Double] = [:]      // arrow keycode -> when it went down
@@ -213,19 +226,17 @@ final class TypeSession {
         keepAlive = self
         holding = true
         CGEvent.tapEnable(tap: tap!, enable: true)
-        overlay.onReady = { [weak self] in self?.hudReady = true; self?.maybeBegin() }
-        overlay.show()
+        overlay.onReady = { [weak self] in self?.gate.hudReady = true; self?.maybeBegin() }
+        // a card that loads after typing began must show the run as it is now, not as it was at the start
+        overlay.onLoaded = { [weak self] in self?.lastHud = ""; self?.pushHud() }
+        overlay.show { [weak self] in self?.gate.veilUp = true; self?.maybeBegin() }
         every(0.03) { [weak self] in self?.waitTick() }
         every(1 / 30) { [weak self] in self?.pushHud() }
         every(1 / 60) { [weak self] in self?.ramp() }
         every(0.1) { [weak self] in self?.watchFocus() }
         every(0.25) { [weak self] in self?.watchAX() }
         every(0.25) { [weak self] in self?.watchInput() }
-        once(1.2) { [weak self] in
-            guard let s = self, !s.hudReady else { return }
-            s.hudReady = true
-            s.maybeBegin()
-        }
+        once(StartGate.fallback) { [weak self] in self?.maybeBegin() }
         once(MAX_HOLD) { [weak self] in self?.stop("timeout") }
         engine.onEnd = { [weak self] all in if all { self?.stop("done") } }
         keyTarget = pid
@@ -271,7 +282,7 @@ final class TypeSession {
     }
 
     private func maybeBegin() {
-        guard phase == .waiting, hudReady, !userHoldsInput() else { return }
+        guard phase == .waiting, gate.open(elapsed: now() - waitStarted, holdingInput: userHoldsInput()) else { return }
         phase = .typing
         phaseName = "typing"
         typingStarted = now()

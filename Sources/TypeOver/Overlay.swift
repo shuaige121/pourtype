@@ -58,6 +58,8 @@ final class Overlay: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
     private var hole: (rect: CGRect, radius: CGFloat)?
     private var lastHole: CGRect?
     var onReady: (() -> Void)?
+    /// A pane's HUD has its payload (it may load after the run began).
+    var onLoaded: (() -> Void)?
     private var readyFired = false
     var target: Pane { panes.first(where: { $0.isTarget }) ?? panes[0] }
     var targetFrame: CGRect { target.screen.frame }
@@ -180,6 +182,7 @@ final class Overlay: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         guard let p = paneFor(webView) else { return }
         p.loaded = true
         js(p, "hud.init(\(json(panePayload(p))))")
+        onLoaded?()
     }
 
     func userContentController(_ c: WKUserContentController, didReceive m: WKScriptMessage) {
@@ -189,13 +192,14 @@ final class Overlay: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         onReady?()
     }
 
-    func show() {
+    /// Fades the veil in; `up` runs when it is fully shown.
+    func show(_ up: (() -> Void)? = nil) {
         for w in windows { w.orderFrontRegardless() }
-        NSAnimationContext.runAnimationGroup { ctx in
+        NSAnimationContext.runAnimationGroup({ ctx in
             ctx.duration = 0.14
             ctx.timingFunction = CAMediaTimingFunction(controlPoints: 0.16, 1, 0.3, 1)
             for w in windows { w.animator().alphaValue = 1 }
-        }
+        }, completionHandler: up)
     }
 
     /// Break the WKUserContentController -> self cycle and let the windows and web views go.
@@ -209,6 +213,7 @@ final class Overlay: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         }
         panes = []
         onReady = nil
+        onLoaded = nil
     }
 
     func dismiss(_ then: @escaping () -> Void) {
