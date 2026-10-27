@@ -151,5 +151,18 @@
  "Delete your learned typing?": "学習したタイピングを削除しますか？",
  "Pourtype goes back to the default speed and rhythm above.": "上の標準の速度とリズムで入力するようになります。",
  "Type a short passage once and Pourtype learns your speed and rhythm.": "短い文章を一度入力すると、Pourtype があなたの速度とリズムを学習します。",
- "Learned on %1$@. When on, Pourtype types at your speed and rhythm instead of the defaults above; ↑↓ and ←→ still adjust each run.": "%1$@ に学習しました。オンにすると、上の標準値ではなく、あなたの速度とリズムで入力します。入力中も ↑↓ ←→ で調整できます。"
+ "Learned on %1$@. When on, Pourtype types at your speed and rhythm instead of the defaults above; ↑↓ and ←→ still adjust each run.": "%1$@ に学習しました。オンにすると、上の標準値ではなく、あなたの速度とリズムで入力します。入力中も ↑↓ ←→ で調整できます。",
+ "Hide Pourtype": "Pourtype を隠す",
+ "Quit Pourtype": "Pourtype を終了",
+ "Edit": "編集",
+ "Undo": "取り消す",
+ "Redo": "やり直す",
+ "Cut": "カット",
+ "Paste": "ペースト",
+ "Select All": "すべてを選択",
+ "Window": "ウインドウ",
+ "Minimize": "しまう",
+ "Zoom": "拡大／縮小",
+ "Close": "閉じる",
+ "Bring All to Front": "すべてを手前に移動"
 }

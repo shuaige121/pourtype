@@ -31,7 +31,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var busy: Bool { TypeSessionTracker.running || plain != nil || picker != nil }
 
     func applicationDidFinishLaunching(_ n: Notification) {
-        // hosted unit tests: no menu, no hotkeys, no windows
+        // never shown (accessory app); gives the windows ⌘C, ⌘V, ⌘W, ⌘Q… Also under the unit tests, which check it.
+        MainMenu.install(settingsTarget: self, settingsAction: #selector(settingsAction))
+        // hosted unit tests: no status item, no hotkeys, no windows
         if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil { return }
         status = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         let icon = NSImage(named: "MenuBarIcon") ?? NSImage(systemSymbolName: "character.cursor.ibeam", accessibilityDescription: nil)

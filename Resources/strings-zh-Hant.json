@@ -151,5 +151,18 @@
  "Delete your learned typing?": "刪除學到的打字習慣？",
  "Pourtype goes back to the default speed and rhythm above.": "之後按上面的預設速度和節奏打字。",
  "Type a short passage once and Pourtype learns your speed and rhythm.": "先照著一段文字打一遍，Pourtype 會學會你的速度和節奏。",
- "Learned on %1$@. When on, Pourtype types at your speed and rhythm instead of the defaults above; ↑↓ and ←→ still adjust each run.": "已於 %1$@ 學習。開啟後按你的速度和節奏打字，不用上面的預設值；打字時 ↑↓ ←→ 照樣可以調整。"
+ "Learned on %1$@. When on, Pourtype types at your speed and rhythm instead of the defaults above; ↑↓ and ←→ still adjust each run.": "已於 %1$@ 學習。開啟後按你的速度和節奏打字，不用上面的預設值；打字時 ↑↓ ←→ 照樣可以調整。",
+ "Hide Pourtype": "隱藏 Pourtype",
+ "Quit Pourtype": "結束 Pourtype",
+ "Edit": "編輯",
+ "Undo": "還原",
+ "Redo": "重做",
+ "Cut": "剪下",
+ "Paste": "貼上",
+ "Select All": "全選",
+ "Window": "視窗",
+ "Minimize": "縮到最小",
+ "Zoom": "縮放",
+ "Close": "關閉",
+ "Bring All to Front": "將全部視窗移至最前"
 }
