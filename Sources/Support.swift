@@ -77,6 +77,15 @@ enum Prefs {
     static let ownPaceKey = "typing.profile.enabled"
     static func ownPace(in defaults: UserDefaults) -> Bool { defaults.object(forKey: ownPaceKey) as? Bool ?? false }
 
+    /// pourtype://type and pourtype://type-slow. Any app or web page can open a link, so links that type
+    /// are refused unless this is on (for the user's own scripts). Off by default.
+    static var linkTyping: Bool {
+        get { linkTyping(in: d) }
+        set { d.set(newValue, forKey: linkTypingKey) }
+    }
+    static let linkTypingKey = "automation.typeFromLinks"
+    static func linkTyping(in defaults: UserDefaults) -> Bool { defaults.object(forKey: linkTypingKey) as? Bool ?? false }
+
     static var historyEnabled: Bool {
         get { d.object(forKey: "history.enabled") as? Bool ?? true }
         set { d.set(newValue, forKey: "history.enabled") }

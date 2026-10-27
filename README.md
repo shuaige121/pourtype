@@ -46,7 +46,7 @@ scripts/build.sh             # -> build/Pourtype.app, signed with your Apple Dev
 
 Configurations: `Debug`, `Release` (direct download, hardened runtime), `AppStore` (sandboxed, `APPSTORE` compile flag). Unit tests: `xcodebuild -scheme Pourtype test`.
 
-Automation hooks: `open -g pourtype://type`, `pourtype://type-slow`, `pourtype://grab`, `pourtype://history`.
+Automation hooks: `open -g pourtype://grab`, `pourtype://history`, `pourtype://status`. `pourtype://type` and `pourtype://type-slow` type the clipboard, so they are refused unless Settings › General › Let links type the clipboard is on (`defaults write com.leonardchow.pourtype automation.typeFromLinks -bool true`; `scripts/live_session.py` sets it for its run).
 
 ## How it works
 

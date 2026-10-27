@@ -154,6 +154,9 @@ langs_before = subprocess.run(["defaults", "read", DOMAIN, "AppleLanguages"], ca
 pace_before = {k: subprocess.run(["defaults", "read", DOMAIN, k], capture_output=True, text=True).stdout.strip()
                for k in ("pace.normal.cps", "pace.normal.rand")}
 clip_before = subprocess.run(["pbpaste"], capture_output=True, text=True).stdout
+LINK_TYPING = "automation.typeFromLinks"     # pourtype://type is refused unless this is on (off by default)
+link_before = subprocess.run(["defaults", "read", DOMAIN, LINK_TYPING], capture_output=True, text=True)
+subprocess.run(["defaults", "write", DOMAIN, LINK_TYPING, "-bool", "true"])
 if os.path.exists(hist):
     shutil.copy2(hist, backup)
 try:
@@ -168,7 +171,11 @@ finally:
         if v:
             subprocess.run(["defaults", "write", DOMAIN, k, "-float", v])
     subprocess.run(["pbcopy"], input=clip_before, text=True)
+    if link_before.returncode != 0:
+        subprocess.run(["defaults", "delete", DOMAIN, LINK_TYPING], capture_output=True)
+    else:
+        subprocess.run(["defaults", "write", DOMAIN, LINK_TYPING, "-bool", "true" if link_before.stdout.strip() == "1" else "false"])
     relaunch_back = osa('tell application "Pourtype" to quit')
     time.sleep(1.2)
     subprocess.run(["open", "-g", APP])
-    print("restored history, language, pace and clipboard")
+    print("restored history, language, pace, link typing and clipboard")

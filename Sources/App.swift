@@ -117,15 +117,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // pourtype://type, pourtype://type-slow, pourtype://grab, pourtype://history (automation, tests)
     @objc private func handleURL(_ e: NSAppleEventDescriptor, _ r: NSAppleEventDescriptor) {
         guard let s = e.paramDescriptor(forKeyword: keyDirectObject)?.stringValue, let u = URL(string: s) else { return }
-        switch u.host {
-        case "type": typeClipboard(mode: "normal")
-        case "type-slow": typeClipboard(mode: "slow")
-        case "grab": grab()
-        case "history": openHistory()
-        case "settings": openSettings()
-        case "welcome": openWelcome()
-        case "status": writeStatus()
-        default: break
+        switch LinkCommand.parse(u, typingAllowed: Prefs.linkTyping) {
+        case .type(let mode): typeClipboard(mode: mode)
+        case .typeRefused:
+            Toast.shared.show(L.t("已忽略一个要求打字的链接（可在「设置 › 通用」里允许）", "Ignored a link that asked Pourtype to type (Settings › General can allow it)"),
+                              seconds: 3, warn: true)
+        case .grab: grab()
+        case .history: openHistory()
+        case .settings: openSettings()
+        case .welcome: openWelcome()
+        case .status: writeStatus()
+        case nil: break
         }
     }
 
@@ -326,6 +328,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 }
 
 enum TypeSessionTracker { static var running = false }
+
+/// What a pourtype:// link asks for. Any app or web page can open one, so a link that would type the
+/// clipboard into the front app is refused unless the user allowed it (Prefs.linkTyping). The others type
+/// nothing: they open a window of ours, start a grab the user still has to drag, or write the status file.
+enum LinkCommand: Equatable {
+    case type(mode: String), typeRefused, grab, history, settings, welcome, status
+
+    static func parse(_ url: URL, typingAllowed: Bool) -> LinkCommand? {
+        switch url.host {
+        case "type": return typingAllowed ? .type(mode: "normal") : .typeRefused
+        case "type-slow": return typingAllowed ? .type(mode: "slow") : .typeRefused
+        case "grab": return .grab
+        case "history": return .history
+        case "settings": return .settings
+        case "welcome": return .welcome
+        case "status": return .status
+        default: return nil
+        }
+    }
+}
 
 /// `Pourtype --probe`: what this build may do here (sandbox, permissions, event taps), then exit.
 /// Creates taps disabled and destroys them at once; never holds input.

@@ -36,4 +36,34 @@ final class AppShellTests: XCTestCase {
         let fresh = MainMenu.make(settingsTarget: nil, settingsAction: nil)
         XCTAssertFalse(items(fresh).contains { $0.keyEquivalentModifierMask.contains(.shift) && ["v", "c"].contains($0.keyEquivalent) })
     }
+
+    // MARK: - pourtype:// links
+
+    private func parse(_ s: String, _ allowed: Bool) -> LinkCommand? { LinkCommand.parse(URL(string: s)!, typingAllowed: allowed) }
+
+    /// A web page or another app can open pourtype://type: unless the user allowed it, nothing is typed.
+    func testLinksDoNotTypeUnlessAllowed() {
+        XCTAssertEqual(parse("pourtype://type", false), .typeRefused)
+        XCTAssertEqual(parse("pourtype://type-slow", false), .typeRefused)
+        XCTAssertEqual(parse("pourtype://type", true), .type(mode: "normal"))
+        XCTAssertEqual(parse("pourtype://type-slow", true), .type(mode: "slow"))
+    }
+
+    func testLinkTypingIsOffByDefault() throws {
+        let empty = try XCTUnwrap(UserDefaults(suiteName: "pourtype-tests-\(UUID().uuidString)"))   // read only
+        XCTAssertNil(empty.object(forKey: Prefs.linkTypingKey))
+        XCTAssertFalse(Prefs.linkTyping(in: empty))
+    }
+
+    /// The links that type nothing work as before, whether or not typing links are allowed.
+    func testLinksThatTypeNothingStillWork() {
+        for allowed in [false, true] {
+            XCTAssertEqual(parse("pourtype://grab", allowed), .grab)
+            XCTAssertEqual(parse("pourtype://history", allowed), .history)
+            XCTAssertEqual(parse("pourtype://settings", allowed), .settings)
+            XCTAssertEqual(parse("pourtype://welcome", allowed), .welcome)
+            XCTAssertEqual(parse("pourtype://status", allowed), .status)
+            XCTAssertNil(parse("pourtype://unknown", allowed))
+        }
+    }
 }

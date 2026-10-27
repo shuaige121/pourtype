@@ -86,6 +86,12 @@ struct SettingsView: View {
             }
             Section(L.t("通用", "General")) {
                 Toggle(L.t("登录时启动", "Launch at login"), isOn: $model.launchAtLogin)
+                VStack(alignment: .leading, spacing: 2) {
+                    Toggle(L.t("允许链接打出剪贴板", "Let links type the clipboard"), isOn: $model.linkTyping)
+                    Text(L.t("给打开 pourtype://type 的脚本用。打开后，任何 App 或网页都能让 Pourtype 打出你复制的内容。",
+                             "For scripts that open pourtype://type. When on, any app or web page can make Pourtype type what you copied."))
+                        .font(.caption).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                }
             }
         }
         .formStyle(.grouped)
@@ -140,6 +146,7 @@ final class SettingsModel: ObservableObject {
     @Published private(set) var learned = ProfileStore.shared.load()
     @Published var learning = false
     @Published var confirmDeleteProfile = false
+    @Published var linkTyping = Prefs.linkTyping { didSet { Prefs.linkTyping = linkTyping } }
     @Published var historyEnabled = Prefs.historyEnabled { didSet { Prefs.historyEnabled = historyEnabled } }
     @Published var historyDays = Prefs.historyDays { didSet { Prefs.historyDays = historyDays; HistoryStore.shared.prune() } }
     @Published var launchAtLogin = LoginItem.enabled {
@@ -152,6 +159,7 @@ final class SettingsModel: ObservableObject {
     func refresh() {
         accessibility = Permissions.accessibility
         screenRecording = Permissions.screenRecording
+        if linkTyping != Prefs.linkTyping { linkTyping = Prefs.linkTyping }
         let p = Prefs.pace("normal")
         if abs(exp(speedLog) - p.cps) > 0.5 { speedLog = log(p.cps) }
         if abs(rhythm - p.rand) > 0.01 { rhythm = p.rand }

@@ -171,7 +171,10 @@ def set_pace(cps, rand):
     time.sleep(0.3)
 
 
+LINK_TYPING = "automation.typeFromLinks"     # pourtype://type is refused unless this is on (off by default)
 saved_pace = {k: read_pref(k) for k in ("pace.normal.cps", "pace.normal.rand")}
+saved_link = read_pref(LINK_TYPING)
+subprocess.run(["defaults", "write", DOMAIN, LINK_TYPING, "-bool", "true"])
 saved_clipboard = subprocess.run(["pbpaste"], capture_output=True, text=True).stdout
 doc = None
 try:
@@ -322,6 +325,10 @@ finally:
             subprocess.run(["defaults", "delete", DOMAIN, k], capture_output=True)
         else:
             subprocess.run(["defaults", "write", DOMAIN, k, "-float", v])
+    if saved_link is None:
+        subprocess.run(["defaults", "delete", DOMAIN, LINK_TYPING], capture_output=True)
+    else:
+        subprocess.run(["defaults", "write", DOMAIN, LINK_TYPING, "-bool", "true" if saved_link == "1" else "false"])
     json.dump(results, open(os.path.join(OUT, "results.json"), "w"), ensure_ascii=False, indent=1)
 
 bad = [r for r in results if not r["ok"]]
