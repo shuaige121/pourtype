@@ -2,7 +2,7 @@
 
 A small macOS menu-bar utility for two chores:
 
-- **⌘⇧V — type the clipboard.** Some fields and dialogs block paste. Pourtype types the clipboard into the focused field as real keystrokes. While it types, every display is frosted except the target field and your keyboard and mouse are held, so focus cannot wander off. **Esc** stops it at once.
+- **⌘⇧V — type the clipboard.** Some fields and dialogs block paste. Pourtype types the clipboard into the focused field as real keystrokes. While it types, every display is frosted except the target field and your keyboard and mouse are held, so a stray click or key cannot move the focus; if another app or window comes to the front, typing stops. **Esc** stops it at once.
 - **⌘⇧C — grab text.** Drag a box anywhere on screen; the text inside (Simplified Chinese, Traditional Chinese, English, Japanese) is recognised on your Mac with Apple's Vision framework and copied.
 - **History.** Every grab and every typed text is kept in a local, searchable history: copy it again or type it again.
 
@@ -28,7 +28,7 @@ Guides: [website won't let you paste on a Mac](https://shuaige121.github.io/pour
 
 The card shows the app and window being typed into, the text streaming past, progress and time left. On other displays a small card points to the one being typed on. Typing stops by itself if another app comes to the front or the displays change. Newlines go in as Shift+Return so chat boxes do not send early; tabs become spaces.
 
-In a password field macOS turns on Secure Input, which hides the keyboard from every app; there the keyboard cannot be held, so Pourtype types without the veil and **⌃⌥⌘.** stops it.
+In a password field macOS turns on Secure Input, which hides the keyboard from every app; there the keyboard cannot be held, so Pourtype types without the veil. The keys still go only to the app it started in, typing stops if another app or window comes to the front, and **Esc** or **⌃⌥⌘.** stops it.
 
 ## Permissions
 

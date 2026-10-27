@@ -109,7 +109,8 @@ struct SettingsView: View {
         }
         .confirmationDialog(L.t("清空全部历史记录？", "Clear all history?"), isPresented: $model.confirmClear) {
             Button(L.t("清空", "Clear"), role: .destructive) {
-                if let e = HistoryStore.shared.clear() { model.problem = HistoryView.problemText(e) }
+                // after the dialog has gone, so the alert can show
+                if let e = HistoryStore.shared.clear() { DispatchQueue.main.async { model.problem = HistoryView.problemText(e) } }
             }
         } message: {
             Text(L.t("文字和截图都会删除，无法恢复。", "Texts and screenshots are deleted and cannot be restored."))
