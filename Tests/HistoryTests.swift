@@ -113,28 +113,4 @@ final class HistoryTests: XCTestCase {
         let gone = expectation(for: NSPredicate { _, _ in store.items.isEmpty }, evaluatedWith: nil)
         wait(for: [gone], timeout: 5)
     }
-
-    /// A screenshot no entry refers to (left by an older version's failed delete) is removed; other files stay.
-    func testPruneRemovesOrphanedScreenshots() throws {
-        let a = grab("kept")
-        let d = try folder([a])
-        let orphan = d.appendingPathComponent("\(UUID().uuidString).png"), other = d.appendingPathComponent("notes.png")
-        try Data([1]).write(to: orphan)
-        try Data([1]).write(to: other)
-        let store = HistoryStore(dir: d, days: { 90 })
-        XCTAssertNil(store.prune())
-        XCTAssertFalse(FileManager.default.fileExists(atPath: orphan.path))
-        XCTAssertTrue(FileManager.default.fileExists(atPath: other.path))
-        XCTAssertTrue(FileManager.default.fileExists(atPath: try XCTUnwrap(store.imageURL(a)).path))
-    }
-
-    /// An index that exists but cannot be read: its screenshots are unknown, so none is treated as an orphan.
-    func testAnUnreadableIndexKeepsTheScreenshots() throws {
-        let d = try folder([])
-        let png = d.appendingPathComponent("\(UUID().uuidString).png")
-        try Data([1]).write(to: png)
-        try Data("not json".utf8).write(to: d.appendingPathComponent("history.json"))
-        _ = HistoryStore(dir: d, days: { 90 })
-        XCTAssertTrue(FileManager.default.fileExists(atPath: png.path))
-    }
 }

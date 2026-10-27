@@ -27,8 +27,6 @@ final class HistoryStore: ObservableObject {
     private let clock: () -> Date
     private var pruneTimer: Timer?
     private var wakeObserver: (center: NotificationCenter, token: NSObjectProtocol)?
-    /// The index was there but could not be read: its screenshots are not known, so none count as orphans.
-    private var indexUnreadable = false
 
     /// days: the retention period (Settings); clock: now. Both replaceable for tests.
     init(dir: URL? = nil, days: @escaping () -> Int = { Prefs.historyDays }, clock: @escaping () -> Date = Date.init) {
@@ -41,7 +39,6 @@ final class HistoryStore: ObservableObject {
         try? FileManager.default.createDirectory(at: base, withIntermediateDirectories: true)
         if let data = try? Data(contentsOf: index),
            let list = try? JSONDecoder.history.decode([HistoryItem].self, from: data) { items = list }
-        else if FileManager.default.fileExists(atPath: index.path) { indexUnreadable = true }
         prune()
     }
 
@@ -70,15 +67,13 @@ final class HistoryStore: ObservableObject {
     @discardableResult
     func clear() -> Error? { remove(items) }
 
-    /// Older than the retention period, or beyond 2000 entries, goes; so do screenshots no entry refers to
-    /// (left by an earlier failure). Runs at launch, on add, on a change of the period, and while the app
-    /// runs (keepPruning).
+    /// Older than the retention period, or beyond 2000 entries, goes. Runs at launch, on add, on a change of
+    /// the period, and while the app runs (keepPruning).
     @discardableResult
     func prune(now: Date? = nil) -> Error? {
         let cutoff = (now ?? clock()).addingTimeInterval(-Double(days()) * 86400)
         let old = items.enumerated().filter { $0.offset >= 2000 || $0.element.date < cutoff }.map { $0.element }
-        let swept = sweepOrphans()
-        return (old.isEmpty ? nil : remove(old)) ?? swept
+        return old.isEmpty ? nil : remove(old)
     }
 
     /// Prunes every `interval` seconds and when the Mac wakes, until the store goes away.
@@ -122,17 +117,6 @@ final class HistoryStore: ObservableObject {
     private func removeImage(_ it: HistoryItem) throws {
         guard let u = imageURL(it), FileManager.default.fileExists(atPath: u.path) else { return }
         try FileManager.default.removeItem(at: u)
-    }
-
-    /// Screenshot files (<UUID>.png) that no entry refers to.
-    private func sweepOrphans() -> Error? {
-        guard !indexUnreadable, let names = try? FileManager.default.contentsOfDirectory(atPath: dir.path) else { return nil }
-        let used = Set(items.compactMap(\.image))
-        var firstError: Error?
-        for n in names where n.hasSuffix(".png") && !used.contains(n) && UUID(uuidString: String(n.dropLast(4))) != nil {
-            do { try FileManager.default.removeItem(at: dir.appendingPathComponent(n)) } catch { firstError = firstError ?? error }
-        }
-        return firstError
     }
 
     private func save() throws {
