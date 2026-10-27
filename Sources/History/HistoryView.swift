@@ -11,6 +11,7 @@ struct HistoryView: View {
     var onType: (String) -> Void
     @State private var query = ""
     @State private var selection: HistoryItem.ID?
+    @State private var problem: String?          // a delete that did not happen, shown until dismissed
 
     init(store: HistoryStore, onType: @escaping (String) -> Void, initialSelection: HistoryItem.ID? = nil) {
         self.store = store
@@ -29,7 +30,7 @@ struct HistoryView: View {
                         Button(L.t("复制", "Copy")) { copy(item.text) }
                         Button(L.t("再打一次", "Type again")) { onType(item.text) }
                         Divider()
-                        Button(L.t("删除", "Delete"), role: .destructive) { store.delete([item.id]) }
+                        Button(L.t("删除", "Delete"), role: .destructive) { delete(item.id) }
                     }
             }
             .searchable(text: $query, placement: .sidebar, prompt: L.t("搜索文字或 App", "Search text or app"))
@@ -44,12 +45,25 @@ struct HistoryView: View {
             }
         } detail: {
             if let item = selected {
-                Detail(item: item, store: store, onType: onType)
+                Detail(item: item, store: store, onType: onType, onDelete: { delete(item.id) })
             } else {
                 Text(L.t("选择一条记录", "Select an entry")).foregroundStyle(.secondary)
             }
         }
         .frame(minWidth: 720, minHeight: 440)
+        .alert(L.t("没能删除", "Could not delete"), isPresented: Binding(get: { problem != nil }, set: { if !$0 { problem = nil } })) {
+        } message: {
+            Text(problem ?? "")
+        }
+    }
+
+    /// The store keeps what it could not remove, so the list stays true; say why.
+    private func delete(_ id: HistoryItem.ID) {
+        if let e = store.delete([id]) { problem = HistoryView.problemText(e) }
+    }
+
+    static func problemText(_ e: Error) -> String {
+        L.f("没删掉的记录仍留在历史里。%1$@", "What could not be deleted is still in the history. %1$@", e.localizedDescription)
     }
 
     private func copy(_ s: String) {
@@ -78,6 +92,7 @@ private struct Detail: View {
     let item: HistoryItem
     @ObservedObject var store: HistoryStore
     var onType: (String) -> Void
+    var onDelete: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -101,7 +116,7 @@ private struct Detail: View {
             HStack {
                 if let o = item.outcome { Text(o).font(.caption).foregroundStyle(.secondary) }
                 Spacer()
-                Button(L.t("删除", "Delete"), role: .destructive) { store.delete([item.id]) }
+                Button(L.t("删除", "Delete"), role: .destructive, action: onDelete)
                 Button(L.t("复制", "Copy")) {
                     NSPasteboard.general.clearContents()
                     NSPasteboard.general.setString(item.text, forType: .string)

@@ -44,6 +44,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         status.menu = menu
 
         registerHotkeys()
+        // the retention period applies while the app runs, not only at launch and on add
+        HistoryStore.shared.keepPruning()
         NotificationCenter.default.addObserver(forName: Shortcuts.changed, object: nil, queue: .main) { [weak self] _ in
             self?.registerHotkeys()
         }
@@ -270,6 +272,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: windows
 
     func openHistory() {
+        HistoryStore.shared.prune()
         if historyWindow == nil {
             let view = HistoryView(store: .shared) { [weak self] text in self?.typeFromHistory(text) }
             let w = NSWindow(contentViewController: NSHostingController(rootView: view))

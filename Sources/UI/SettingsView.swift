@@ -108,9 +108,15 @@ struct SettingsView: View {
             Text(L.t("之后按上面的默认速度和节奏打字。", "Pourtype goes back to the default speed and rhythm above."))
         }
         .confirmationDialog(L.t("清空全部历史记录？", "Clear all history?"), isPresented: $model.confirmClear) {
-            Button(L.t("清空", "Clear"), role: .destructive) { HistoryStore.shared.clear() }
+            Button(L.t("清空", "Clear"), role: .destructive) {
+                if let e = HistoryStore.shared.clear() { model.problem = HistoryView.problemText(e) }
+            }
         } message: {
             Text(L.t("文字和截图都会删除，无法恢复。", "Texts and screenshots are deleted and cannot be restored."))
+        }
+        .alert(L.t("没能删除", "Could not delete"), isPresented: Binding(get: { model.problem != nil }, set: { if !$0 { model.problem = nil } })) {
+        } message: {
+            Text(model.problem ?? "")
         }
     }
 }
@@ -138,6 +144,7 @@ final class SettingsModel: ObservableObject {
     @Published var grabHotkeyOK = true
     @Published var slowHotkeyOK = true
     @Published var confirmClear = false
+    @Published var problem: String?              // Clear History could not delete everything
     @Published var speedLog: Double = log(Prefs.pace("normal").cps) { didSet { savePace() } }
     @Published var rhythm: Double = Prefs.pace("normal").rand { didSet { savePace() } }
     @Published var asciiPunct = Prefs.asciiPunct { didSet { Prefs.asciiPunct = asciiPunct } }
