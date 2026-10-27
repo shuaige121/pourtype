@@ -28,7 +28,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private let settings = SettingsModel()
     private var picker: RegionPicker?
     private var grabbing = false             // from the box being drawn until its text is on the clipboard
-    private var plain: Engine?               // the fallback typing (Secure Input), no veil
+    private var plain: PlainSession?         // the fallback typing (Secure Input), no veil
     private var busy: Bool { TypeSessionTracker.running || plain != nil || picker != nil }
 
     func applicationDidFinishLaunching(_ n: Notification) {
@@ -167,38 +167,50 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         switch started {
         case .success:
             TypeSessionTracker.running = true
-        case .failure(.empty):
+        case .failure(.noTap):
+            typePlain(text, pace: pace, own: own, allowSelf: practicing,
+                      notice: L.t("无法锁定键鼠，改为直接输入；Esc 或 ⌃⌥⌘. 停止", "Cannot hold the keyboard; typing without it. Esc or ⌃⌥⌘. stops"))
+        case .failure(.secureInput(let holder)):
+            typePlain(text, pace: pace, own: own, allowSelf: practicing,
+                      notice: L.f("安全输入中（%1$@），不锁键鼠直接输入；Esc 或 ⌃⌥⌘. 停止",
+                                  "Secure Input is on (%1$@): typing without holding input. Esc or ⌃⌥⌘. stops", holder))
+        case .failure(let e):
+            startFailed(e)
+        }
+    }
+
+    private func startFailed(_ e: TypeStartError) {
+        switch e {
+        case .empty:
             Toast.shared.show(L.t("剪贴板里没有文字", "The clipboard has no text"), symbol: "doc.on.clipboard")
-        case .failure(.busy):
+        case .busy:
             Toast.shared.show(L.t("正在输入中", "Already typing"), warn: true)
-        case .failure(.untrusted):
+        case .untrusted:
             Toast.shared.show(L.t("需要「辅助功能」权限才能打字", "Typing needs the Accessibility permission"), seconds: 3, warn: true)
             openSettings()
-        case .failure(.noTarget):
+        case .noTarget:
             Toast.shared.show(L.t("先点一下要输入的地方", "Click into the field to type into first"), warn: true)
-        case .failure(.noTap):
-            Toast.shared.show(L.t("无法锁定键鼠，改为直接输入；⌃⌥⌘. 停止", "Cannot hold the keyboard; typing without it. ⌃⌥⌘. stops"), seconds: 3, warn: true)
-            typePlain(text, pace: pace, own: own)
-        case .failure(.secureInput(let holder)):
-            Toast.shared.show(L.f("安全输入中（%1$@），不锁键鼠直接输入；⌃⌥⌘. 停止",
-                                  "Secure Input is on (%1$@): typing without holding input. ⌃⌥⌘. stops", holder), seconds: 3, warn: true)
-            typePlain(text, pace: pace, own: own)
+        case .noTap, .secureInput:
+            break                                    // the caller types without the hold instead
         }
+    }
+
+    private func stopReason(_ r: String) -> String {
+        let why: [String: String] = ["esc": "Esc", "focus": L.t("焦点变了", "focus moved"), "display": L.t("显示器有变化", "displays changed"),
+                                     "secure_input": L.t("进入了安全输入", "Secure Input turned on"), "tap_disabled": L.t("系统停用了拦截", "the system stopped the hold"),
+                                     "timeout": L.t("超时", "time limit"), "untrusted": L.t("权限被收回", "permission revoked"),
+                                     "keys_held": L.t("按键没有松开", "keys were held down")]
+        return why[r] ?? r
     }
 
     /// savePace: false for a run at the user's own pace, whose speed and rhythm are not the fixed defaults.
     private func finished(_ r: TypeResult, text: String, mode: String, start: Pace, savePace: Bool) {
         if savePace, r.pace != start { Prefs.setPace(mode, r.pace) }
-        let why: [String: String] = ["esc": "Esc", "focus": L.t("焦点变了", "focus moved"), "display": L.t("显示器有变化", "displays changed"),
-                                     "secure_input": L.t("进入了安全输入", "Secure Input turned on"), "tap_disabled": L.t("系统停用了拦截", "the system stopped the hold"),
-                                     "timeout": L.t("超时", "time limit"), "untrusted": L.t("权限被收回", "permission revoked"),
-                                     "keys_held": L.t("按键没有松开", "keys were held down")]
         if r.finished {
             Toast.shared.show(L.f("已输入 %1$@ 字 · %2$@ 秒", "Typed %1$@ characters in %2$@ s", "\(r.typed)", String(format: "%.1f", r.seconds)),
                               symbol: "checkmark.circle")
         } else {
-            let reason = why[r.reason] ?? r.reason
-            Toast.shared.show(L.f("停在 %1$@/%2$@（%3$@）", "Stopped at %1$@/%2$@ (%3$@)", "\(r.typed)", "\(r.total)", reason),
+            Toast.shared.show(L.f("停在 %1$@/%2$@（%3$@）", "Stopped at %1$@/%2$@ (%3$@)", "\(r.typed)", "\(r.total)", stopReason(r.reason)),
                               seconds: 2.6, warn: r.reason != "esc")
         }
         if r.typed > 0 {
@@ -207,28 +219,37 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
 
-    /// Secure Input (a password field) hides the keyboard from every tap, so it cannot be
-    /// held: type without the veil; the menu and ctrl-alt-cmd-. stop it.
-    private func typePlain(_ text: String, pace: Pace, own: OwnPace?) {
-        let units = splitUnits(prepareText(text))
-        let e = Engine(units, pace, own: own)
-        plain = e
-        let t0 = now()
-        e.onEnd = { [weak self] all in
-            guard let self else { return }
-            self.plain = nil
-            Toast.shared.show(all ? L.f("已输入 %1$@ 字 · %2$@ 秒", "Typed %1$@ characters in %2$@ s", "\(units.count)", String(format: "%.1f", now() - t0))
-                                  : L.f("停在 %1$@/%2$@", "Stopped at %1$@/%2$@", "\(e.index)", "\(units.count)"),
-                              symbol: all ? "checkmark.circle" : "stop.circle")
+    /// Secure Input (a password field) hides the keyboard from every tap, so it cannot be held: type without
+    /// the veil, with the protections that need no tap (PlainSession). Esc, the menu and ctrl-alt-cmd-. stop
+    /// it. Not kept in the history (it is mostly passwords).
+    private func typePlain(_ text: String, pace: Pace, own: OwnPace?, allowSelf: Bool, notice: String) {
+        let started = PlainSession.start(text: text, pace: pace, own: own, allowSelf: allowSelf, env: .system) { [weak self] r in
+            self?.plain = nil
+            self?.plainFinished(r)
         }
-        e.start(replace: false)
+        switch started {
+        case .success(let s):
+            plain = s
+            Toast.shared.show(notice, seconds: 3, warn: true)
+        case .failure(let e):
+            startFailed(e)
+        }
+    }
+
+    private func plainFinished(_ r: TypeResult) {
+        if r.finished {
+            Toast.shared.show(L.f("已输入 %1$@ 字 · %2$@ 秒", "Typed %1$@ characters in %2$@ s", "\(r.typed)", String(format: "%.1f", r.seconds)),
+                              symbol: "checkmark.circle")
+        } else if r.reason == "stop" {
+            Toast.shared.show(L.f("停在 %1$@/%2$@", "Stopped at %1$@/%2$@", "\(r.typed)", "\(r.total)"), symbol: "stop.circle")
+        } else {
+            Toast.shared.show(L.f("停在 %1$@/%2$@（%3$@）", "Stopped at %1$@/%2$@ (%3$@)", "\(r.typed)", "\(r.total)", stopReason(r.reason)),
+                              seconds: 2.6, warn: r.reason != "esc")
+        }
     }
 
     private func stopPlain() {
-        guard let e = plain else { return }
-        e.stop()
-        plain = nil
-        Toast.shared.show(L.f("停在 %1$@/%2$@", "Stopped at %1$@/%2$@", "\(e.index)", "\(e.units.count)"), symbol: "stop.circle")
+        plain?.stop("stop")
     }
 
     // MARK: grabbing

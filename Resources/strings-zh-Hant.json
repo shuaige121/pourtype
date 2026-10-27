@@ -11,8 +11,6 @@
  "The clipboard has no text": "剪貼簿裡沒有文字",
  "Typing needs the Accessibility permission": "輸入需要「輔助使用」權限",
  "Click into the field to type into first": "請先點一下要輸入的地方",
- "Cannot hold the keyboard; typing without it. ⌃⌥⌘. stops": "無法鎖定鍵盤，改為直接輸入；⌃⌥⌘. 停止",
- "Secure Input is on (%1$@): typing without holding input. ⌃⌥⌘. stops": "安全輸入已開啟（%1$@），不鎖定鍵盤直接輸入；⌃⌥⌘. 停止",
  "focus moved": "焦點變了",
  "displays changed": "螢幕有變化",
  "Secure Input turned on": "進入了安全輸入",
@@ -170,5 +168,7 @@
  "For scripts that open pourtype://type. When on, any app or web page can make Pourtype type what you copied.": "供開啟 pourtype://type 的指令碼使用。開啟後，任何 App 或網頁都能讓 Pourtype 輸入你複製的內容。",
  "Could not delete": "未能刪除",
  "What could not be deleted is still in the history. %1$@": "沒刪掉的記錄仍留在歷史裡。%1$@",
- "Recognising…": "正在辨識…"
+ "Recognising…": "正在辨識…",
+ "Cannot hold the keyboard; typing without it. Esc or ⌃⌥⌘. stops": "無法鎖定鍵盤，改為直接輸入；Esc 或 ⌃⌥⌘. 停止",
+ "Secure Input is on (%1$@): typing without holding input. Esc or ⌃⌥⌘. stops": "安全輸入已開啟（%1$@），不鎖定鍵盤直接輸入；Esc 或 ⌃⌥⌘. 停止"
 }

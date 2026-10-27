@@ -104,11 +104,16 @@ func etaSeconds(_ i: Int, _ n: Int, _ p: Pace, _ s: Suffix) -> Double {
 var keyTarget: pid_t?
 
 func keyEvent(_ code: CGKeyCode, _ down: Bool, flags: CGEventFlags = [], unicode: [UniChar]? = nil) {
+    postKey(code, down, flags: flags, unicode: unicode, to: keyTarget)
+}
+
+/// One key event, tagged as ours, to that app only (pid) or by the system's normal route (nil).
+func postKey(_ code: CGKeyCode, _ down: Bool, flags: CGEventFlags, unicode: [UniChar]?, to pid: pid_t?) {
     guard let e = CGEvent(keyboardEventSource: nil, virtualKey: code, keyDown: down) else { return }
     e.flags = flags
     if var u = unicode { e.keyboardSetUnicodeString(stringLength: u.count, unicodeString: &u) }
     e.setIntegerValueField(.eventSourceUserData, value: TAG)
-    if let pid = keyTarget { e.postToPid(pid) } else { e.post(tap: .cghidEventTap) }
+    if let pid { e.postToPid(pid) } else { e.post(tap: .cghidEventTap) }
 }
 
 /// What the engine posts each key event with: keyEvent in the app; tests capture the events instead.

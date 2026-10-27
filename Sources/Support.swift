@@ -161,6 +161,12 @@ final class HotKeys {
         refs = [:]
     }
 
+    func unregister(_ id: UInt32) {
+        if let r = refs[id] { UnregisterEventHotKey(r) }
+        refs[id] = nil
+        actions[id] = nil
+    }
+
     /// false when another app already owns that combination.
     @discardableResult
     func register(_ id: UInt32, key: Int, modifiers: Int, _ action: @escaping () -> Void) -> Bool {

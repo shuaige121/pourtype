@@ -11,8 +11,6 @@
  "The clipboard has no text": "クリップボードに文字がありません",
  "Typing needs the Accessibility permission": "入力には「アクセシビリティ」の権限が必要です",
  "Click into the field to type into first": "先に入力先の欄をクリックしてください",
- "Cannot hold the keyboard; typing without it. ⌃⌥⌘. stops": "キーボードを固定できないため、固定せずに入力します。⌃⌥⌘. で停止",
- "Secure Input is on (%1$@): typing without holding input. ⌃⌥⌘. stops": "セキュア入力がオンです（%1$@）。固定せずに入力します。⌃⌥⌘. で停止",
  "focus moved": "フォーカスが移動",
  "displays changed": "ディスプレイの変更",
  "Secure Input turned on": "セキュア入力がオン",
@@ -170,5 +168,7 @@
  "For scripts that open pourtype://type. When on, any app or web page can make Pourtype type what you copied.": "pourtype://type を開くスクリプト用です。オンにすると、どのアプリや Web ページからでも、コピーした内容を Pourtype に入力させられます。",
  "Could not delete": "削除できませんでした",
  "What could not be deleted is still in the history. %1$@": "削除できなかった項目は履歴に残っています。%1$@",
- "Recognising…": "認識しています…"
+ "Recognising…": "認識しています…",
+ "Cannot hold the keyboard; typing without it. Esc or ⌃⌥⌘. stops": "キーボードを固定できないため、固定せずに入力します。Esc または ⌃⌥⌘. で停止",
+ "Secure Input is on (%1$@): typing without holding input. Esc or ⌃⌥⌘. stops": "セキュア入力がオンです（%1$@）。固定せずに入力します。Esc または ⌃⌥⌘. で停止"
 }
